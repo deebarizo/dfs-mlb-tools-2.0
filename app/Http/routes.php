@@ -1,16 +1,28 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+/****************************************************************************************
+PAGES
+****************************************************************************************/
 
-Route::get('/', function () {
-    return view('welcome');
+$router->get('/', function() {
+
+	$titleTag = '';
+	
+	return View::make('pages/home', compact('titleTag'));
+});
+
+$router->get('/scrapers', function() {
+
+	$titleTag = 'Scrapers | ';
+	
+	return View::make('pages/scrapers', compact('titleTag'));
+});
+
+/****************************************************************************************
+SCRAPERS
+****************************************************************************************/
+
+$router->get('scrapers/dk_salaries', function() {
+
+	return View::make('scrapers/dk_salaries');
 });
