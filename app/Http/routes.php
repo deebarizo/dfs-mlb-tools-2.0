@@ -24,5 +24,9 @@ SCRAPERS
 
 $router->get('scrapers/dk_salaries', function() {
 
-	return View::make('scrapers/dk_salaries');
+	$titleTag = 'DK Salaries - Scrapers | ';
+
+	return View::make('scrapers/dk_salaries', compact('titleTag'));
 });
+
+$router->post('scrapers/dk_salaries', 'ScrapersController@storeDkSalaries');
