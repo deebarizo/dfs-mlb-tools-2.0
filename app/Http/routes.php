@@ -4,14 +4,14 @@
 PAGES
 ****************************************************************************************/
 
-$router->get('/', function() {
+Route::get('/', function() {
 
 	$titleTag = '';
 	
 	return View::make('pages/home', compact('titleTag'));
 });
 
-$router->get('/scrapers', function() {
+Route::get('/scrapers', function() {
 
 	$titleTag = 'Scrapers | ';
 	
@@ -22,11 +22,25 @@ $router->get('/scrapers', function() {
 SCRAPERS
 ****************************************************************************************/
 
-$router->get('scrapers/dk_salaries', function() {
+Route::get('/scrapers/dk_salaries', function() {
 
 	$titleTag = 'DK Salaries - Scrapers | ';
 
 	return View::make('scrapers/dk_salaries', compact('titleTag'));
 });
 
-$router->post('scrapers/dk_salaries', 'ScrapersController@storeDkSalaries');
+Route::post('/scrapers/dk_salaries', 'ScrapersController@storeDkSalaries');
+
+
+/****************************************************************************************
+TEAMS
+****************************************************************************************/
+
+Route::resource('/teams', 'TeamsController');
+
+
+/****************************************************************************************
+PLAYERS
+****************************************************************************************/
+
+Route::resource('/players', 'PlayersController');
