@@ -15,7 +15,9 @@ class CreateTeamsTable extends Migration
         Schema::create('teams', function($table)
         {
             $table->increments('id');
-            $table->string('name_dk');      
+            $table->string('name_dk'); 
+            $table->string('name_espn'); 
+            $table->string('name_fg');      
             $table->date('created_at');
             $table->date('updated_at');
         });
