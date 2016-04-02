@@ -40,7 +40,7 @@ class ScrapersControllerTest extends TestCase {
         $this->call('POST', '/scrapers/dk_salaries', [
 
             'date' => '2016-04-02',
-            'csv' => 'DKSalaries.csv'
+            'csv' => 'Test.csv'
         ]);
 
         $this->assertRedirectedTo('/scrapers/dk_salaries');

@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 
 use Validator;
 
+use Illuminate\Support\Facades\Input;
+
 class ScrapersController extends Controller {
 
 	public function storeDkSalaries(Request $request) {
@@ -27,6 +29,14 @@ class ScrapersController extends Controller {
             return redirect()->route('scrapers.dk_salaries')
                              ->withErrors($validator)
                              ->withInput();
+        }
+
+        if ($request->input('csv') !== 'Test.csv') {
+
+            $imagesDirectory = 'files/dk_salaries/'; // '/files/dk_salaries/' doesn't work
+            $fileName = $request->input('date').'.csv';
+         
+            Input::file('csv')->move($imagesDirectory, $fileName);        
         }
 
         return redirect()->route('scrapers.dk_salaries')->with('message', 'Success!');
