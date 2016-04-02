@@ -17,9 +17,9 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        $titleTag = 'Teams | ';
-
         $teams = Team::all();
+
+        $titleTag = 'Teams | ';
 
         return view('teams.index', compact('titleTag', 'teams'));
     }
@@ -53,7 +53,11 @@ class TeamsController extends Controller
      */
     public function show($id)
     {
-        //
+        $team = Team::find($id);
+
+        $titleTag = $team->name_dk.' - Teams | ';
+
+        return view('teams.show', compact('titleTag', 'team'));
     }
 
     /**
