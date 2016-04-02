@@ -32,3 +32,8 @@ Route::get('/scrapers/dk_salaries', function() {
 Route::post('/scrapers/dk_salaries', 'ScrapersController@storeDkSalaries');
 
 
+/****************************************************************************************
+TEAMS
+****************************************************************************************/
+
+Route::resource('teams', 'TeamsController');

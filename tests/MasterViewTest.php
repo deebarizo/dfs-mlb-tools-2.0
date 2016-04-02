@@ -4,8 +4,6 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-use Illuminate\Http\Request;
-
 class MasterViewTest extends TestCase {
 
 	/** @test */
@@ -28,6 +26,5 @@ class MasterViewTest extends TestCase {
        	$this->visit('/scrapers');
        	$this->see('<li class="active"><a href="/scrapers">Scrapers</a></li>');
     }  
-
 
 }
