@@ -29,7 +29,7 @@ Route::get('/scrapers/dk_salaries', ['as' => 'scrapers.dk_salaries', function() 
 	return View::make('scrapers/dk_salaries', compact('titleTag'));
 }]);
 
-Route::post('/scrapers/dk_salaries', 'ScrapersController@storeDkSalaries');
+Route::post('/scrapers/dk_salaries', 'ScrapersController@scrapeDkSalaries');
 
 
 /****************************************************************************************

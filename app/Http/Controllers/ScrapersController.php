@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Input;
 
 class ScrapersController extends Controller {
 
-	public function storeDkSalaries(Request $request) {
+	public function scrapeDkSalaries(Request $request) {
 
         $rules = [
 
@@ -31,12 +31,14 @@ class ScrapersController extends Controller {
                              ->withInput();
         }
 
-        if ($request->input('csv') !== 'Test.csv') {
+        if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
             $imagesDirectory = 'files/dk_salaries/'; // '/files/dk_salaries/' doesn't work
             $fileName = $request->input('date').'.csv';
          
-            Input::file('csv')->move($imagesDirectory, $fileName);        
+            Input::file('csv')->move($imagesDirectory, $fileName);       
+
+            // StoreDkSalaries::perform(); 
         }
 
         return redirect()->route('scrapers.dk_salaries')->with('message', 'Success!');
