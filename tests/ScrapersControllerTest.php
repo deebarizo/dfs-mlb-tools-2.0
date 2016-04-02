@@ -34,4 +34,20 @@ class ScrapersControllerTest extends TestCase {
         $this->see('Please try again.');
     }
 
+    /** @test */
+    public function validates_successful_input() {
+
+        $this->call('POST', '/scrapers/dk_salaries', [
+
+            'date' => '2016-04-02',
+            'csv' => 'DKSalaries.csv'
+        ]);
+
+        $this->assertRedirectedTo('/scrapers/dk_salaries');
+
+        $this->followRedirects();
+
+        $this->see('Success!');
+    }  
+
 }

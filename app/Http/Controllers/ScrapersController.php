@@ -28,6 +28,8 @@ class ScrapersController extends Controller {
                              ->withErrors($validator)
                              ->withInput();
         }
+
+        return redirect()->route('scrapers.dk_salaries')->with('message', 'Success!');
 	}
 
 }
