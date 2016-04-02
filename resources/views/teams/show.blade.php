@@ -8,6 +8,10 @@
 	</div>
 
 	<div class="row">
-
+		<ul>
+			@foreach ($team->players as $player)
+				<li>{{ $player->name_dk }}</li>
+			@endforeach
+		</ul>
 	</div>
 @stop

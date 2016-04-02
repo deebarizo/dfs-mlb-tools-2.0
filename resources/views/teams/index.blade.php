@@ -18,7 +18,7 @@
 				<tbody>
 					@foreach ($teams as $team)
 						<tr>
-							<td>{{ $team->name_dk }}</td>
+							<td><a href="/teams/{{ $team->id }}">{{ $team->name_dk }}</a></td>
 						</tr>
 					@endforeach
 				</tbody>

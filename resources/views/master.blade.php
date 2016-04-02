@@ -29,6 +29,7 @@
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
 						<li class="{!! setActive('scrapers*') !!}"><a href="/scrapers">Scrapers</a></li>
+						<li class="{!! setActive('teams*') !!}"><a href="/teams">Teams</a></li>
 					</ul>
 				</div>
 			</div>
