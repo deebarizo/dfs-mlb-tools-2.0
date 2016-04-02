@@ -22,12 +22,12 @@ Route::get('/scrapers', function() {
 SCRAPERS
 ****************************************************************************************/
 
-Route::get('/scrapers/dk_salaries', function() {
+Route::get('/scrapers/dk_salaries', ['as' => 'scrapers.dk_salaries', function() {
 
 	$titleTag = 'DK Salaries - Scrapers | ';
 
 	return View::make('scrapers/dk_salaries', compact('titleTag'));
-});
+}]);
 
 Route::post('/scrapers/dk_salaries', 'ScrapersController@storeDkSalaries');
 

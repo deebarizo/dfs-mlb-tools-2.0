@@ -4,6 +4,20 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h2>Scrapers - DK Salaries</h2>
+
+			@if (count($errors) > 0)
+			    <div class="alert alert-danger fade in" role="alert">
+					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+			    	
+			    	<p>Please try again.</p>
+
+			        <ul>
+			            @foreach ($errors->all() as $error)
+			                <li>{{ $error }}</li>
+			            @endforeach
+			        </ul>
+			    </div>
+			@endif
 		</div>
 	</div>
 	<div class="row">

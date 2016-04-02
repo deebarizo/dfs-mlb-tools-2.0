@@ -16,4 +16,22 @@ class ScrapersControllerTest extends TestCase {
         $this->press('Submit');
     }
 
+    /** @test */
+    public function validates_required_inputs() {
+
+        $this->call('POST', '/scrapers/dk_salaries', [
+
+            'date' => '',
+            'csv' => ''
+        ]);
+
+        $this->assertRedirectedTo('/scrapers/dk_salaries');
+
+        $this->assertSessionHasErrors(['date', 'csv']);
+
+        $this->followRedirects();
+
+        $this->see('Please try again.');
+    }
+
 }
