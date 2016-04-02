@@ -25,13 +25,7 @@ class ScrapersControllerTest extends TestCase {
             'csv' => ''
         ]);
 
-        $this->assertRedirectedTo('/scrapers/dk_salaries');
-
         $this->assertSessionHasErrors(['date', 'csv']);
-
-        $this->followRedirects();
-
-        $this->see('Please try again.');
     }
 
     /** @test */
