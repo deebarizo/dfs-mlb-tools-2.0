@@ -49,7 +49,12 @@ CONVERT ACCENT LETTERS TO ENGLISH
 function convertAccentLettersToEnglish($string) {
 
 	// http://stackoverflow.com/questions/158241/php-replace-umlauts-with-closest-7-bit-ascii-equivalent-in-an-utf-8-string/158265#158265
+	// http://stackoverflow.com/a/9200854
 
-	return iconv("utf-8", "ascii//TRANSLIT", $string); 
+	// I couldn't figure out a way to test this
+
+	setlocale(LC_ALL, 'en_US.UTF8');
+
+	return iconv("utf-8", "ascii//TRANSLIT", utf8_encode($string)); 
 }
 	

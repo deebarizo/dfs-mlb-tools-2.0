@@ -32,7 +32,7 @@ class StoreDkSalaries {
 				    $this->players[$i] = array( 
 
 				    	'position' => $row[0],
-				       	'playerNameDk' => $row[1],
+				       	'playerNameDk' => convertAccentLettersToEnglish($row[1]),
 				       	'salary' => $row[2],
 				       	'teamNameDk' => $row[5]
 				    );
