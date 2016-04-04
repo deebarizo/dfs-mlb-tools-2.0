@@ -2,12 +2,7 @@
 
 class StoreDkSalaries {
 
-	public static function perform($csvFile) {
-
-		return (new static)->handle($csvFile);
-	}
-
-	private function handle($csvFile) {
+	public function perform($csvFile) {
 
 		$this->parseCsvFile($csvFile);
 
@@ -16,9 +11,7 @@ class StoreDkSalaries {
 			$this->save();
 		}
 
-		# dd($this->message);
-
-		return $this->message;
+		return $this->message;		
 	}
 
 	private function parseCsvFile($csvFile) {
@@ -31,7 +24,7 @@ class StoreDkSalaries {
 				
 				if ($rowCount != 0) { // skip first row because it contains the table names
 				
-				    $player[$rowCount] = array(
+				    $players[$rowCount] = array(
 
 				    	'position' => $row[0],
 				       	'playerNameDk' => $row[1],
@@ -42,21 +35,24 @@ class StoreDkSalaries {
 				    $gameInfo = $row[3];
 				    $gameInfo = preg_replace("/(\w+@\w+)(\s)(.*)/", "$1", $gameInfo);
 				    $gameInfo = preg_replace("/@/", "", $gameInfo);
-				    $player[$rowCount]['oppTeamNameDk'] = preg_replace("/".$player[$rowCount]['teamNameDk']."/", "", $gameInfo);
+				    $players[$rowCount]['oppTeamNameDk'] = preg_replace("/".$players[$rowCount]['teamNameDk']."/", "", $gameInfo);
 
-				    $teamExists = Team::where('name_dk', $player[$row]['teamNameDk'])->count();
+				    # $teamExists = Team::where('name_dk', $player[$row]['teamNameDk'])->count();
 
-				    if (!$teamExists) {
+				    /* if (!$teamExists) {
 
 						$this->message = 'The DraftKings team name, <strong>'.$player[$row]['abbr_dk'].'</strong>, does not exist in the database.'; 
 
 						return $this;
-				    }				    
+				    }	*/			    
+
 				}
 
-				$row++;
+				$rowCount++;
 			}
 		} 
+
+		ddAll($players);
 
 		$this->message = 'Success!';
 
@@ -65,15 +61,13 @@ class StoreDkSalaries {
 
 	private function save() {
 
-	    $playerId = Player::where('name', $player[$row]['name'])->pluck('id');
-
-	    # dd($playerId);
+	/*    $playerId = Player::where('name', $player[$row]['name'])->pluck('id');
 
 	    if (is_null($playerId)) {
 			return 'The player name, <strong>'.$player[$row]['name'].'</strong>, does not exist in the database. You can add him <a target="_blank" href="http://dfstools.dev:8000/admin/nba/add_player">here</a>.'; 
 	    } 
 
-		return $this;
+		return $this; */
 	}
 
 }

@@ -20,7 +20,9 @@ class ScrapersController extends Controller {
 
             $csvFile = $fileDirectory . $fileName;   
 
-            $message = StoreDkSalaries::perform($csvFile); 
+            $storeDkSalaries = new StoreDkSalaries; 
+            
+            $message = $storeDkSalaries->perform($csvFile);
         
         } else {
 
