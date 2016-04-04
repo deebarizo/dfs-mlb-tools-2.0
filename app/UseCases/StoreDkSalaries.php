@@ -1,6 +1,7 @@
 <?php namespace App\UseCases;
 
 use App\Team;
+use App\Player;
 
 class StoreDkSalaries {
 
@@ -32,7 +33,7 @@ class StoreDkSalaries {
 				    $this->players[$i] = array( 
 
 				    	'position' => $row[0],
-				       	'playerNameDk' => convertAccentLettersToEnglish($row[1]),
+				       	'nameDk' => convertAccentLettersToEnglish($row[1]),
 				       	'salary' => $row[2],
 				       	'teamNameDk' => $row[5]
 				    );
@@ -68,15 +69,24 @@ class StoreDkSalaries {
 		return $this;
 	}
 
-	private function save() {
+	public function save() {
 
-	/*    $playerId = Player::where('name', $player[$row]['name'])->pluck('id');
+		foreach ($this->players as $player) {
+			
+			$playerExists = Player::where('name_dk', $player['nameDk'])->count();
 
-	    if (is_null($playerId)) {
-			return 'The player name, <strong>'.$player[$row]['name'].'</strong>, does not exist in the database. You can add him <a target="_blank" href="http://dfstools.dev:8000/admin/nba/add_player">here</a>.'; 
-	    } 
+			if (!$playerExists) {
 
-		return $this; */
+				$ePlayer = new Player;
+
+				$ePlayer->team_id = Team::where('name_dk', $player['teamNameDk'])->pluck('id')[0];
+				$ePlayer->name_dk = $player['nameDk'];
+
+				$ePlayer->save();
+			}
+		}
+
+		return $this; 
 	}
 
 }

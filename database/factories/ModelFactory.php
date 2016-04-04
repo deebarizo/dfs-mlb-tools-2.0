@@ -22,3 +22,14 @@ $factory->define(App\Team::class, function ($faker) {
         'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now')
     ];
 });
+
+$factory->define(App\Player::class, function ($faker) {
+    
+    return [
+        
+        'team_id' => rand(1, 100),
+        'name_dk' => $faker->name,
+        'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now')
+    ];
+});
