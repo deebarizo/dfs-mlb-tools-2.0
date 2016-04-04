@@ -33,3 +33,18 @@ $factory->define(App\Player::class, function ($faker) {
         'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now')
     ];
 });
+
+$factory->define(App\DkSalary::class, function ($faker) {
+    
+    return [
+        
+        'date' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'player_id' => 1,
+        'team_id' => 2,
+        'opp_team_id' => 3,
+        'position' => 'SP',
+        'salary' => '12000',
+        'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now')
+    ];
+});

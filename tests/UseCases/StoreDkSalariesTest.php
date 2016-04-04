@@ -10,6 +10,7 @@ use App\UseCases\StoreDkSalaries;
 
 use App\Team;
 use App\Player;
+use App\DkSalary;
 
 class StoreDkSalariesTest extends TestCase {
 
@@ -109,7 +110,7 @@ class StoreDkSalariesTest extends TestCase {
 
         $storeDkSalaries = new StoreDkSalaries; 
         
-        $results = $storeDkSalaries->perform($root->url().'/test.csv');
+        $results = $storeDkSalaries->perform($root->url().'/test.csv', '2016-04-04');
 
         $players = Player::where('name_dk', 'Max Scherzer')->get();
 
@@ -127,11 +128,15 @@ class StoreDkSalariesTest extends TestCase {
 
         $storeDkSalaries = new StoreDkSalaries; 
         
-        $results = $storeDkSalaries->perform($root->url().'/test.csv');
+        $results = $storeDkSalaries->perform($root->url().'/test.csv', '2016-04-04');
 
-        $dkPlayerPools = DkPlayerPool::where('date', '2016-04-04')->get();
+        $dkSalary = DkSalary::where('date', '2016-04-04')->first();
 
-        $this->assertCount(1, $dkPlayerPools);
+        $this->assertContains($dkSalary->date, '2016-04-04');
+        $this->assertContains((string)$dkSalary->team_id, '2');
+        $this->assertContains((string)$dkSalary->opp_team_id, '1');
+        $this->assertContains($dkSalary->position, 'SP');
+        $this->assertContains((string)$dkSalary->salary, '12300');
     }
 
 }

@@ -22,7 +22,7 @@ class ScrapersController extends Controller {
 
             $storeDkSalaries = new StoreDkSalaries; 
             
-            $results = $storeDkSalaries->perform($csvFile);
+            $results = $storeDkSalaries->perform($csvFile, $request->input('date'));
        
             $message = $results->message;
 

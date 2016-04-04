@@ -2,16 +2,17 @@
 
 use App\Team;
 use App\Player;
+use App\DkSalary;
 
 class StoreDkSalaries {
 
-	public function perform($csvFile) {
+	public function perform($csvFile, $date) {
 
 		$this->parseCsvFile($csvFile);
 
-		if ($this->message === 'Success!') {
+		if ($this->message === 'Csv file was parsed succesfully.') {
 
-			$this->save();
+			$this->save($date);
 		}
 
 		return $this;		
@@ -64,12 +65,12 @@ class StoreDkSalaries {
 		// deleting first row because it contains table names and setting array indexes to normal (start with 0 instead of 1)
 		array_shift($this->players);
 
-		$this->message = 'Success!';
+		$this->message = 'Csv file was parsed succesfully.';
 
 		return $this;
 	}
 
-	public function save() {
+	public function save($date) {
 
 		foreach ($this->players as $player) {
 			
@@ -84,9 +85,22 @@ class StoreDkSalaries {
 
 				$ePlayer->save();
 			}
+
+			$dkSalary = new dkSalary;
+
+			$dkSalary->date = $date;
+			$dkSalary->player_id = Player::where('name_dk', $player['nameDk'])->pluck('id')[0];
+			$dkSalary->team_id = Team::where('name_dk', $player['teamNameDk'])->pluck('id')[0];
+			$dkSalary->opp_team_id = Team::where('name_dk', $player['oppTeamNameDk'])->pluck('id')[0];
+			$dkSalary->position = $player['position'];
+			$dkSalary->salary = $player['salary'];
+
+			$dkSalary->save();
 		}
 
-		return $this; 
+		$this->message = 'Success!';
+
+		return $this;
 	}
 
 }

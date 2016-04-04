@@ -25,7 +25,7 @@ class ScrapeDkSalariesRequest extends Request
     {
         return [
             
-            'date' => 'required',
+            'date' => 'required|unique:dk_salaries',
             'csv' => 'required'
         ];
     }
