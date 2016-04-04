@@ -8,10 +8,29 @@ use org\bovigo\vfs\vfsStream; // http://blog.mauriziobonani.com/phpunit-test-fil
 
 use App\UseCases\StoreDkSalaries;
 
+use App\Team;
+
 class StoreDkSalariesTest extends TestCase {
+
+    use DatabaseTransactions;
+
+    private function dbSetUp() {
+
+        factory(Team::class)->create([
+        
+            'name_dk' => 'Atl'
+        ]);
+
+        factory(Team::class)->create([
+        
+            'name_dk' => 'Was'
+        ]);
+    }
 
 	/** @test */
     public function parses_row_in_csv_excluding_first_row() { // note zero index has a player instead of the table names
+
+    	$this->dbSetUp();
 
 		$structure = [
 
@@ -39,6 +58,8 @@ class StoreDkSalariesTest extends TestCase {
 
 	/** @test */
     public function validates_csv_with_a_team_name_not_in_the_database() { 
+
+    	$this->dbSetUp();
 
 		$structure = [
 

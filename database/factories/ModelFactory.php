@@ -11,11 +11,14 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Team::class, function ($faker) {
+    
     return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        
+        'name_dk' => str_random(3),
+        'name_espn' => str_random(3),
+        'name_fg' => str_random(7),
+        'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now')
     ];
 });
