@@ -1,5 +1,7 @@
 <?php namespace App\UseCases;
 
+use App\Team;
+
 class StoreDkSalaries {
 
 	public function perform($csvFile) {
@@ -11,20 +13,23 @@ class StoreDkSalaries {
 			$this->save();
 		}
 
-		return $this->message;		
+		return $this;		
 	}
 
-	private function parseCsvFile($csvFile) {
+	public function parseCsvFile($csvFile) {
 
 		if (($handle = fopen($csvFile, 'r')) !== false) {
 			
-			$rowCount = 0;
+			$i = 0; // index
+
+			$this->players = [];
 
 			while (($row = fgetcsv($handle, 5000, ',')) !== false) {
 				
-				if ($rowCount != 0) { // skip first row because it contains the table names
+				if ($i != 0) { // do not parse first row because it contains the table names
 				
-				    $players[$rowCount] = array(
+					// $i - 1 to start at zero index since we skip first row because it contains the table names
+				    $this->players[$i] = array( 
 
 				    	'position' => $row[0],
 				       	'playerNameDk' => $row[1],
@@ -35,24 +40,28 @@ class StoreDkSalaries {
 				    $gameInfo = $row[3];
 				    $gameInfo = preg_replace("/(\w+@\w+)(\s)(.*)/", "$1", $gameInfo);
 				    $gameInfo = preg_replace("/@/", "", $gameInfo);
-				    $players[$rowCount]['oppTeamNameDk'] = preg_replace("/".$players[$rowCount]['teamNameDk']."/", "", $gameInfo);
+				    $this->players[$i]['oppTeamNameDk'] = preg_replace("/".$this->players[$i]['teamNameDk']."/", "", $gameInfo);
 
-				    # $teamExists = Team::where('name_dk', $player[$row]['teamNameDk'])->count();
+				    $teamExists = Team::where('name_dk', $this->players[$i]['teamNameDk'])->count();
 
-				    /* if (!$teamExists) {
+				    if (!$teamExists) {
 
-						$this->message = 'The DraftKings team name, <strong>'.$player[$row]['abbr_dk'].'</strong>, does not exist in the database.'; 
+						$this->message = 'The DraftKings team name, <strong>'.$this->players[$i]['teamNameDk'].'</strong>, does not exist in the database.'; 
 
 						return $this;
-				    }	*/			    
+				    }			    
 
+				} else {
+
+					$this->players[$i] = [];
 				}
 
-				$rowCount++;
+				$i++;
 			}
 		} 
 
-		ddAll($players);
+		// deleting first row because it contains table names and setting array indexes to normal (start with 0 instead of 1)
+		array_shift($this->players);
 
 		$this->message = 'Success!';
 

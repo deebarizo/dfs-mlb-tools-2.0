@@ -22,8 +22,10 @@ class ScrapersController extends Controller {
 
             $storeDkSalaries = new StoreDkSalaries; 
             
-            $message = $storeDkSalaries->perform($csvFile);
-        
+            $results = $storeDkSalaries->perform($csvFile);
+       
+            $message = $results->message;
+
         } else {
 
             $message = 'Success!'; // I need this to pass the test
