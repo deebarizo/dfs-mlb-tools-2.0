@@ -39,19 +39,56 @@ class StoreDkSalaries {
 				       	'teamNameDk' => $row[5]
 				    );
 
+				    if (is_numeric($this->players[$i]['position'])) {
+
+						$this->message = 'The CSV format has changed. The position field has numbers.'; 
+
+						return $this;				    	
+				    }
+
+				    if (is_numeric($this->players[$i]['nameDk'])) {
+
+						$this->message = 'The CSV format has changed. The name field has numbers.'; 
+
+						return $this;				    	
+				    }
+
+				    if (!is_numeric($this->players[$i]['salary'])) {
+
+						$this->message = 'The CSV format has changed. The salary field has non-numbers.'; 
+
+						return $this;				    	
+				    }
+
 				    $gameInfo = $row[3];
 				    $gameInfo = preg_replace("/(\w+@\w+)(\s)(.*)/", "$1", $gameInfo);
 				    $gameInfo = preg_replace("/@/", "", $gameInfo);
 				    $this->players[$i]['oppTeamNameDk'] = preg_replace("/".$this->players[$i]['teamNameDk']."/", "", $gameInfo);
 
-				    $teamExists = Team::where('name_dk', $this->players[$i]['teamNameDk'])->count();
+				    $teams = [
 
-				    if (!$teamExists) {
+				    	[	
+				    		'key' => 'teamNameDk',
+				    		'phrase' => ' '
+			    		],
 
-						$this->message = 'The DraftKings team name, <strong>'.$this->players[$i]['teamNameDk'].'</strong>, does not exist in the database.'; 
+			    		[
+			    			'key' => 'oppTeamNameDk',
+			    			'phrase' => ' opposing '
+			    		]
+			    	];
 
-						return $this;
-				    }			    
+				    foreach ($teams as $team) {
+
+					    $teamExists = Team::where('name_dk', $this->players[$i][$team['key']])->count();
+
+					    if (!$teamExists) {
+
+							$this->message = 'The DraftKings'.$team['phrase'].'team name, <strong>'.$this->players[$i][$team['key']].'</strong>, does not exist in the database.'; 
+
+							return $this;
+					    }	
+				    }
 
 				} else {
 

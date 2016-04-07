@@ -61,10 +61,30 @@ class StoreDkSalariesTest extends TestCase {
 
         'invalid' => [
 
-            'newPlayerName' => [
+            'numericPositionField' => [
+
+                'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\n9000,Max Scherzer,12300,Was@Atl 04:10PM ET,0,Was"
+            ],
+
+            'numericNameField' => [
+
+                'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,9000,12300,Was@Atl 04:10PM ET,0,Was"
+            ],
+
+            'notNumericSalaryField' => [
+
+                'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,Max Scherzer,This Should be a Number,Was@Atl 04:10PM ET,0,Was"
+            ],    
+
+            'teamNotFound' => [
 
                 'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,Max Scherzer,12300,Was@Atl 04:10PM ET,0,XYZ"
-            ]
+            ],
+
+            'oppTeamNotFound' => [
+
+                'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,Max Scherzer,12300,Was VS Atl 04:10PM ET,0,Was"
+            ],        
         ]
     ];
 
@@ -77,10 +97,80 @@ class StoreDkSalariesTest extends TestCase {
         return $root;
     }
 
+    /** @test */
+    public function validates_csv_with_number_in_position_field() { 
+
+        $this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['numericPositionField']);
+
+        $storeDkSalaries = new StoreDkSalaries; 
+        
+        $results = $storeDkSalaries->parseCsvFile($root->url().'/test.csv');
+
+        $this->assertContains($results->message, 'The CSV format has changed. The position field has numbers.');
+    }
+
+    /** @test */
+    public function validates_csv_with_number_in_name_field() { 
+
+        $this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['numericNameField']);
+
+        $storeDkSalaries = new StoreDkSalaries; 
+        
+        $results = $storeDkSalaries->parseCsvFile($root->url().'/test.csv');
+
+        $this->assertContains($results->message, 'The CSV format has changed. The name field has numbers.');
+    }
+
+    /** @test */
+    public function validates_csv_with_non_number_in_name_field() { 
+
+        $this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['notNumericSalaryField']);
+
+        $storeDkSalaries = new StoreDkSalaries; 
+        
+        $results = $storeDkSalaries->parseCsvFile($root->url().'/test.csv');
+
+        $this->assertContains($results->message, 'The CSV format has changed. The salary field has non-numbers.');
+    }
+
 	/** @test */
-    public function parses_row_in_csv_excluding_first_row() { // note zero index has a player instead of the table names
+    public function validates_csv_with_team_name_not_in_the_database() { 
 
     	$this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['teamNotFound']);
+
+        $storeDkSalaries = new StoreDkSalaries; 
+        
+        $results = $storeDkSalaries->parseCsvFile($root->url().'/test.csv');
+
+    	$this->assertContains($results->message, 'The DraftKings team name, <strong>XYZ</strong>, does not exist in the database.');
+    }
+
+    /** @test */
+    public function validates_csv_with_opp_team_name_not_in_the_database() { 
+
+        $this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['oppTeamNotFound']);
+
+        $storeDkSalaries = new StoreDkSalaries; 
+        
+        $results = $storeDkSalaries->parseCsvFile($root->url().'/test.csv');
+
+        $this->assertContains($results->message, 'The DraftKings opposing team name, <strong> VS Atl 04:10PM ET</strong>, does not exist in the database.');
+    }
+
+    /** @test */
+    public function parses_row_in_csv_excluding_first_row() { // note zero index has a player instead of the table names
+
+        $this->setUpTeams();
 
         $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
 
@@ -88,25 +178,11 @@ class StoreDkSalariesTest extends TestCase {
         
         $results = $storeDkSalaries->parseCsvFile($root->url().'/test.csv');
 
-    	$this->assertContains($results->players[0]['position'], 'SP'); 
-    	$this->assertContains($results->players[0]['nameDk'], 'Max Scherzer'); 
-    	$this->assertContains($results->players[0]['salary'], '12300'); 
-    	$this->assertContains($results->players[0]['oppTeamNameDk'], 'Atl');
-    	$this->assertContains($results->players[0]['teamNameDk'], 'Was'); 
-    }
-
-	/** @test */
-    public function validates_csv_with_a_team_name_not_in_the_database() { 
-
-    	$this->setUpTeams();
-
-        $root = $this->setUpCsvFile($this->csvFiles['invalid']['newPlayerName']);
-
-        $storeDkSalaries = new StoreDkSalaries; 
-        
-        $results = $storeDkSalaries->parseCsvFile($root->url().'/test.csv');
-
-    	$this->assertContains($results->message, 'The DraftKings team name, <strong>XYZ</strong>, does not exist in the database.');
+        $this->assertContains($results->players[0]['position'], 'SP'); 
+        $this->assertContains($results->players[0]['nameDk'], 'Max Scherzer'); 
+        $this->assertContains($results->players[0]['salary'], '12300'); 
+        $this->assertContains($results->players[0]['oppTeamNameDk'], 'Atl');
+        $this->assertContains($results->players[0]['teamNameDk'], 'Was'); 
     }
 
     /** @test */
