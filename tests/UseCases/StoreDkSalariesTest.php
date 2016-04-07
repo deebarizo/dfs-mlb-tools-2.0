@@ -31,22 +31,41 @@ class StoreDkSalariesTest extends TestCase {
         ]);
     }
 
-    private $validCsvFile = [
+    private function setUpPlayers() {
 
-        // note the formatting
+        factory(Player::class)->create([
+        
+            'team_id' => 1,
+            'name_dk' => 'John Doe'
+        ]);   
+    }
+
+    private $csvFiles = [
+
+        // note the formatting of csv file
         // double quotes are needed to property show the new line (\n)
         // each field does not have any single quotes
-    
-       'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,Max Scherzer,12300,Was@Atl 04:10PM ET,0,Was"
-    ];
 
-    private $invalidCsvFile = [
+        'valid' => [
 
-        // note the formatting
-        // double quotes are needed to property show the new line (\n)
-        // each field does not have any single quotes
-    
-       'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,Max Scherzer,12300,Was@Atl 04:10PM ET,0,XYZ"
+            'newPlayerName' => [
+
+                'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,Max Scherzer,12300,Was@Atl 04:10PM ET,0,Was"
+            ],
+
+            'existingPlayerName' => [
+
+                'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,John Doe,12300,Was@Atl 04:10PM ET,0,Was"
+            ]
+        ],
+
+        'invalid' => [
+
+            'newPlayerName' => [
+
+                'test.csv' => "Position,Name,Salary,GameInfo,AvgPointsPerGame,teamAbbrev\nSP,Max Scherzer,12300,Was@Atl 04:10PM ET,0,XYZ"
+            ]
+        ]
     ];
 
     private function setUpCsvFile($csvFile) {
@@ -63,7 +82,7 @@ class StoreDkSalariesTest extends TestCase {
 
     	$this->setUpTeams();
 
-        $root = $this->setUpCsvFile($this->validCsvFile);
+        $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
 
         $storeDkSalaries = new StoreDkSalaries; 
         
@@ -81,7 +100,7 @@ class StoreDkSalariesTest extends TestCase {
 
     	$this->setUpTeams();
 
-        $root = $this->setUpCsvFile($this->invalidCsvFile);
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['newPlayerName']);
 
         $storeDkSalaries = new StoreDkSalaries; 
         
@@ -90,23 +109,14 @@ class StoreDkSalariesTest extends TestCase {
     	$this->assertContains($results->message, 'The DraftKings team name, <strong>XYZ</strong>, does not exist in the database.');
     }
 
-    private function setUpPlayer() {
-
-        factory(Player::class)->create([
-        
-            'team_id' => 1,
-            'name_dk' => 'John Doe'
-        ]);       
-    }
-
     /** @test */
-    public function saves_a_new_player() { 
+    public function saves_new_player() { 
 
         $this->setUpTeams();
 
-        $this->setUpPlayer();
+        $this->setUpPlayers();
 
-        $root = $this->setUpCsvFile($this->validCsvFile);
+        $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
 
         $storeDkSalaries = new StoreDkSalaries; 
         
@@ -118,13 +128,31 @@ class StoreDkSalariesTest extends TestCase {
     }
 
     /** @test */
-    public function saves_salaries() { 
+    public function saves_new_player_with_same_name_as_existing_player() { 
 
         $this->setUpTeams();
 
-        $this->setUpPlayer();
+        $this->setUpPlayers();
 
-        $root = $this->setUpCsvFile($this->validCsvFile);
+        $root = $this->setUpCsvFile($this->csvFiles['valid']['existingPlayerName']);
+
+        $storeDkSalaries = new StoreDkSalaries; 
+        
+        $results = $storeDkSalaries->perform($root->url().'/test.csv', '2016-04-04');
+
+        $players = Player::where('name_dk', 'John Doe')->where('team_id', 2)->get();
+
+        $this->assertCount(1, $players);
+    }
+
+    /** @test */
+    public function saves_salary() { 
+
+        $this->setUpTeams();
+
+        $this->setUpPlayers();
+
+        $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
 
         $storeDkSalaries = new StoreDkSalaries; 
         

@@ -74,7 +74,7 @@ class StoreDkSalaries {
 
 		foreach ($this->players as $player) {
 			
-			$playerExists = Player::where('name_dk', $player['nameDk'])->count();
+			$playerExists = Player::where('name_dk', $player['nameDk'])->where('team_id', $player['teamNameDk'])->count();
 
 			if (!$playerExists) {
 
