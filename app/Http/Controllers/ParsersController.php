@@ -5,7 +5,7 @@ use App\Http\Requests\ParseDkSalariesRequest;
 
 use Illuminate\Support\Facades\Input;
 
-use App\UseCases\StoreDkSalaries;
+use App\UseCases\UseCase;
 
 class ParsersController extends Controller {
 
@@ -20,9 +20,9 @@ class ParsersController extends Controller {
 
             $csvFile = $fileDirectory . $fileName;   
 
-            $storeDkSalaries = new StoreDkSalaries; 
+            $useCase = new UseCase;
             
-            $results = $storeDkSalaries->perform($csvFile, $request->input('date'));
+            $results = $useCase->parseDkSalaries($csvFile, $request->input('date'));
        
             $message = $results->message;
 
