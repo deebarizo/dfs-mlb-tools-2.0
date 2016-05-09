@@ -1,15 +1,15 @@
 <?php namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ScrapeDkSalariesRequest;
+use App\Http\Requests\ParseDkSalariesRequest;
 
 use Illuminate\Support\Facades\Input;
 
 use App\UseCases\StoreDkSalaries;
 
-class ScrapersController extends Controller {
+class ParsersController extends Controller {
 
-	public function scrapeDkSalaries(ScrapeDkSalariesRequest $request) {
+	public function parseDkSalaries(ParseDkSalariesRequest $request) {
 
         if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
@@ -31,7 +31,7 @@ class ScrapersController extends Controller {
             $message = 'Success!'; // I need this to pass the test
         }
 
-        return redirect()->route('scrapers.dk_salaries')->with('message', $message);
+        return redirect()->route('admin.parsers.dk_salaries')->with('message', $message);
 	}
 
 }

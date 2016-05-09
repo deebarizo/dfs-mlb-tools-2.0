@@ -10,7 +10,7 @@ class MasterViewTest extends TestCase {
     public function shows_navigation_links() {
 
        	$this->visit('/');
-       	$this->see('Scrapers');
+       	$this->see('Admin');
     }
 
 	/** @test */
@@ -23,8 +23,8 @@ class MasterViewTest extends TestCase {
   	/** @test */
     public function shows_active_navigation_link_for_active_page() {
 
-       	$this->visit('/scrapers');
-       	$this->see('<li class="active"><a href="/scrapers">Scrapers</a></li>');
+       	$this->visit('/admin');
+       	$this->see('<li class="active"><a href="/admin">Admin</a></li>');
     }  
 
 }

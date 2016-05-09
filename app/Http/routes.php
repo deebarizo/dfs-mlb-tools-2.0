@@ -11,25 +11,25 @@ Route::get('/', function() {
 	return View::make('pages/home', compact('titleTag'));
 });
 
-Route::get('/scrapers', function() {
+Route::get('/admin', function() {
 
-	$titleTag = 'Scrapers | ';
+	$titleTag = 'Admin | ';
 	
-	return View::make('pages/scrapers', compact('titleTag'));
+	return View::make('pages/admin', compact('titleTag'));
 });
 
 /****************************************************************************************
 SCRAPERS
 ****************************************************************************************/
 
-Route::get('/scrapers/dk_salaries', ['as' => 'scrapers.dk_salaries', function() {
+Route::get('/admin/parsers/dk_salaries', ['as' => 'admin.parsers.dk_salaries', function() {
 
-	$titleTag = 'DK Salaries - Scrapers | ';
+	$titleTag = 'DK Salaries - Parsers | ';
 
-	return View::make('scrapers/dk_salaries', compact('titleTag'));
+	return View::make('/admin/parsers/dk_salaries', compact('titleTag'));
 }]);
 
-Route::post('/scrapers/dk_salaries', 'ScrapersController@scrapeDkSalaries');
+Route::post('/admin/parsers/dk_salaries', 'ParsersController@parseDkSalaries');
 
 
 /****************************************************************************************

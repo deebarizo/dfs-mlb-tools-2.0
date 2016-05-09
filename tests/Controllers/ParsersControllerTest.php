@@ -8,7 +8,7 @@ use App\Team;
 use App\Player;
 use App\DkSalary;
 
-class ScrapersControllerTest extends TestCase {
+class ParsersControllerTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -46,7 +46,7 @@ class ScrapersControllerTest extends TestCase {
 	/** @test */
     public function submits_dk_salaries_csv() {
 
-       	$this->visit('/scrapers/dk_salaries');
+       	$this->visit('/admin/parsers/dk_salaries');
        	$this->type('2016-03-31', 'date');
         $this->type('DKSalaries.csv', 'csv')
              ->attach('/files/dk_salaries/', 'csv');
@@ -56,7 +56,7 @@ class ScrapersControllerTest extends TestCase {
     /** @test */
     public function validates_required_inputs() {
 
-        $this->call('POST', '/scrapers/dk_salaries', [
+        $this->call('POST', '/admin/parsers/dk_salaries', [
 
             'date' => '',
             'csv' => ''
@@ -72,7 +72,7 @@ class ScrapersControllerTest extends TestCase {
 
         $this->setUpDkSalary();
 
-        $this->call('POST', '/scrapers/dk_salaries', [
+        $this->call('POST', '/admin/parsers/dk_salaries', [
 
             'date' => '2016-04-04',
             'csv' => 'Test.csv'
@@ -84,13 +84,13 @@ class ScrapersControllerTest extends TestCase {
     /** @test */
     public function validates_successful_input() {
 
-        $this->call('POST', '/scrapers/dk_salaries', [
+        $this->call('POST', '/admin/parsers/dk_salaries', [
 
             'date' => '2016-04-02',
             'csv' => 'Test.csv'
         ]);
 
-        $this->assertRedirectedTo('/scrapers/dk_salaries');
+        $this->assertRedirectedTo('/admin/parsers/dk_salaries');
 
         $this->followRedirects();
 

@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Scrapers - DK Salaries</h2>
+			<h2>Parsers - DK Salaries</h2>
 
 			@if (count($errors) > 0)
 			    <div class="alert alert-danger fade in" role="alert">
@@ -30,7 +30,7 @@
 	</div>
 	<div class="row">
 
-		{!! Form::open(array('url' => 'scrapers/dk_salaries', 'files' => true)) !!}
+		{!! Form::open(array('url' => 'admin/parsers/dk_salaries', 'files' => true)) !!}
 
 			<div class="col-lg-2"> 
 				<div class="form-group">
