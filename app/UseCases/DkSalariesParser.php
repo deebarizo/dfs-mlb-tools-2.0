@@ -23,7 +23,6 @@ trait DkSalariesParser {
 				    $this->players[$i] = array( 
 
 				    	'position' => $row[15],
-				    	'namePlusDkId' => $row[16],
 				       	'nameDk' => convertAccentLettersToEnglish($row[17]),
 				       	'idDk' => $row[18],
 				       	'salary' => $row[19],
@@ -40,6 +39,13 @@ trait DkSalariesParser {
 				    if (is_numeric($this->players[$i]['nameDk'])) {
 
 						$this->message = 'The CSV format has changed. The name field has numbers.'; 
+
+						return $this;				    	
+				    }
+
+				    if (!is_numeric($this->players[$i]['idDk'])) {
+
+						$this->message = 'The CSV format has changed. The DK id field has non-numbers.'; 
 
 						return $this;				    	
 				    }
@@ -79,15 +85,6 @@ trait DkSalariesParser {
 
 							return $this;
 					    }	
-				    }
-
-				    preg_match("/.+\(\d+\)/", $this->players[$i]['namePlusDkId'], $pregMatchArray);
-
-				    if (empty($pregMatchArray)) {
-
-						$this->message = 'The name plus DK id field, <strong>'.$this->players[$i]['namePlusDkId'].'</strong>, is in an invalid format. It should be something like "Clayton Kershaw (6690258)".'; 
-
-						return $this;				    	
 				    }
 				}
 
