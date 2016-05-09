@@ -32,8 +32,4 @@ Route::get('/admin/parsers/dk_salaries', ['as' => 'admin.parsers.dk_salaries', f
 Route::post('/admin/parsers/dk_salaries', 'ParsersController@parseDkSalaries');
 
 
-/****************************************************************************************
-TEAMS
-****************************************************************************************/
 
-Route::resource('teams', 'TeamsController');
