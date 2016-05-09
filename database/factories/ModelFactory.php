@@ -40,6 +40,7 @@ $factory->define(App\DkSalary::class, function ($faker) {
         
         'date' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'player_id' => 1,
+        'dk_id' => 528369,
         'team_id' => 2,
         'opp_team_id' => 3,
         'position' => 'SP',
