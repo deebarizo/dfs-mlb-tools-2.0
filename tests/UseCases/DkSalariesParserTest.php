@@ -83,12 +83,12 @@ class DkSalariesParserTest extends TestCase {
 
             'oppTeamNotFound' => [
 
-                'test.csv' => "Entry ID,Contest Name,Contest ID,Entry Fee,P,P,C,1B,2B,3B,SS,OF,OF,OF,,Instructions\n401303040,MLB $300K Swing for the Fences [$50000 to 1st],24093060,$3,Corey Kluber (6690186),Jon Lester (6690113),Welington Castillo (6690620),Anthony Rizzo (6690648),Ben Zobrist (6690708),Hernan Perez (6690743),Luis Sardinas (6690761),Mike Aviles (6690819),Darin Mastroianni (6690953),Hunter Renfroe (6690932),,1. Column A lists all of your contest entries for this draftgroup\n401308302,MLB $300K Swing for the Fences [$50000 to 1st],24093060,$3,Corey Kluber (6690186),Jon Lester (6690113),Welington Castillo (6690620),Anthony Rizzo (6690648),Ben Zobrist (6690708),Hernan Perez (6690743),Luis Sardinas (6690761),Mike Aviles (6690819),Darin Mastroianni (6690953),Hunter Renfroe (6690932),,2. Your current lineup is listed next to each entry (blank for reservations)\n,,,,,,,,,,,,,,,3. You can change the lineup for an entry by entering the IDs of the players in the row next to that entry\n,,,,,,,,,,,,,,,4. Use data from the Name+ID column or the ID column; you cannot use just the player's name\n,,,,,,,,,,,,,,,5. For faster processing only include entries you are changing in the file you upload\n,,,,,,,,,,,,,,,\n,,,,,,,,,,,,,,,Position,Name + ID,Name,ID,Salary,Game Info,TeamAbbrev\n,,,,,,,,,,,,,,,SP,Clayton Kershaw (6690258),Clayton Kershaw,6690258,14200,XYZ@LAD 10:10PM ET,LAD,"
+                'test.csv' => "Entry ID,Contest Name,Contest ID,Entry Fee,P,P,C,1B,2B,3B,SS,OF,OF,OF,,Instructions\n401303040,MLB $300K Swing for the Fences [$50000 to 1st],24093060,$3,Corey Kluber (6690186),Jon Lester (6690113),Welington Castillo (6690620),Anthony Rizzo (6690648),Ben Zobrist (6690708),Hernan Perez (6690743),Luis Sardinas (6690761),Mike Aviles (6690819),Darin Mastroianni (6690953),Hunter Renfroe (6690932),,1. Column A lists all of your contest entries for this draftgroup\n401308302,MLB $300K Swing for the Fences [$50000 to 1st],24093060,$3,Corey Kluber (6690186),Jon Lester (6690113),Welington Castillo (6690620),Anthony Rizzo (6690648),Ben Zobrist (6690708),Hernan Perez (6690743),Luis Sardinas (6690761),Mike Aviles (6690819),Darin Mastroianni (6690953),Hunter Renfroe (6690932),,2. Your current lineup is listed next to each entry (blank for reservations)\n,,,,,,,,,,,,,,,3. You can change the lineup for an entry by entering the IDs of the players in the row next to that entry\n,,,,,,,,,,,,,,,4. Use data from the Name+ID column or the ID column; you cannot use just the player's name\n,,,,,,,,,,,,,,,5. For faster processing only include entries you are changing in the file you upload\n,,,,,,,,,,,,,,,\n,,,,,,,,,,,,,,,Position,Name + ID,Name,ID,Salary,Game Info,TeamAbbrev\n,,,,,,,,,,,,,,,SP,Clayton Kershaw (6690258),Clayton Kershaw,6690258,14200,NYM@XYZ 10:10PM ET,LAD,"
             ],    
 
-            'invalidFormatNamePlusId' => [
+            'invalidFormatForNamePlusDkId' => [
 
-                'test.csv' => "Entry ID,Contest Name,Contest ID,Entry Fee,P,P,C,1B,2B,3B,SS,OF,OF,OF,,Instructions\n401303040,MLB $300K Swing for the Fences [$50000 to 1st],24093060,$3,Corey Kluber (6690186),Jon Lester (6690113),Welington Castillo (6690620),Anthony Rizzo (6690648),Ben Zobrist (6690708),Hernan Perez (6690743),Luis Sardinas (6690761),Mike Aviles (6690819),Darin Mastroianni (6690953),Hunter Renfroe (6690932),,1. Column A lists all of your contest entries for this draftgroup\n401308302,MLB $300K Swing for the Fences [$50000 to 1st],24093060,$3,Corey Kluber (6690186),Jon Lester (6690113),Welington Castillo (6690620),Anthony Rizzo (6690648),Ben Zobrist (6690708),Hernan Perez (6690743),Luis Sardinas (6690761),Mike Aviles (6690819),Darin Mastroianni (6690953),Hunter Renfroe (6690932),,2. Your current lineup is listed next to each entry (blank for reservations)\n,,,,,,,,,,,,,,,3. You can change the lineup for an entry by entering the IDs of the players in the row next to that entry\n,,,,,,,,,,,,,,,4. Use data from the Name+ID column or the ID column; you cannot use just the player's name\n,,,,,,,,,,,,,,,5. For faster processing only include entries you are changing in the file you upload\n,,,,,,,,,,,,,,,\n,,,,,,,,,,,,,,,Position,Name + ID,Name,ID,Salary,Game Info,TeamAbbrev\n,,,,,,,,,,,,,,,SP,(6690258) Clayton Kershaw,Clayton Kershaw,6690258,14200,XYZ@LAD 10:10PM ET,LAD,"
+                'test.csv' => "Entry ID,Contest Name,Contest ID,Entry Fee,P,P,C,1B,2B,3B,SS,OF,OF,OF,,Instructions\n401303040,MLB $300K Swing for the Fences [$50000 to 1st],24093060,$3,Corey Kluber (6690186),Jon Lester (6690113),Welington Castillo (6690620),Anthony Rizzo (6690648),Ben Zobrist (6690708),Hernan Perez (6690743),Luis Sardinas (6690761),Mike Aviles (6690819),Darin Mastroianni (6690953),Hunter Renfroe (6690932),,1. Column A lists all of your contest entries for this draftgroup\n401308302,MLB $300K Swing for the Fences [$50000 to 1st],24093060,$3,Corey Kluber (6690186),Jon Lester (6690113),Welington Castillo (6690620),Anthony Rizzo (6690648),Ben Zobrist (6690708),Hernan Perez (6690743),Luis Sardinas (6690761),Mike Aviles (6690819),Darin Mastroianni (6690953),Hunter Renfroe (6690932),,2. Your current lineup is listed next to each entry (blank for reservations)\n,,,,,,,,,,,,,,,3. You can change the lineup for an entry by entering the IDs of the players in the row next to that entry\n,,,,,,,,,,,,,,,4. Use data from the Name+ID column or the ID column; you cannot use just the player's name\n,,,,,,,,,,,,,,,5. For faster processing only include entries you are changing in the file you upload\n,,,,,,,,,,,,,,,\n,,,,,,,,,,,,,,,Position,Name + ID,Name,ID,Salary,Game Info,TeamAbbrev\n,,,,,,,,,,,,,,,SP,(6690258) Clayton Kershaw,Clayton Kershaw,6690258,14200,NYM@LAD 10:10PM ET,LAD,"
             ]
         ]
     ];
@@ -114,6 +114,77 @@ class DkSalariesParserTest extends TestCase {
         $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
 
         $this->assertContains($results->message, 'The CSV format has changed. The position field has numbers.');
+    }
+
+    /** @test */
+    public function validates_csv_with_number_in_name_field() { 
+
+        $this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['numericNameField']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+
+        $this->assertContains($results->message, 'The CSV format has changed. The name field has numbers.');
+    }
+
+
+    /** @test */
+    public function validates_csv_with_non_number_in_name_field() { 
+
+        $this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['notNumericSalaryField']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+
+        $this->assertContains($results->message, 'The CSV format has changed. The salary field has non-numbers.');
+    }
+
+	/** @test */
+    public function validates_csv_with_team_name_not_in_the_database() { 
+
+    	$this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['teamNotFound']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+
+    	$this->assertContains($results->message, 'The DraftKings team name, <strong>XYZ</strong>, does not exist in the database.');
+    }
+
+    /** @test */
+    public function validates_csv_with_opp_team_name_not_in_the_database() { 
+
+        $this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['oppTeamNotFound']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+
+        $this->assertContains($results->message, 'The DraftKings opposing team name, <strong>NYMXYZ</strong>, does not exist in the database.');
+    }
+
+    /** @test */
+    public function validates_csv_with_invalid_format_for_name_plus_dk_id() { 
+
+        $this->setUpTeams();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['invalidFormatForNamePlusDkId']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+
+        $this->assertContains($results->message, 'The name plus DK id field, <strong>(6690258) Clayton Kershaw</strong>, is in an invalid format. It should be something like "Clayton Kershaw (6690258)".');
     }
 
 }
