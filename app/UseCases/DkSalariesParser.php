@@ -91,6 +91,34 @@ trait DkSalariesParser {
 				$i++;
 			}
 		} 
+
+		$this->save($date);
+
+		return $this;	
+	}
+
+	private function save($date) {
+
+		foreach ($this->players as $player) {
+
+			$teamId = Team::where('name_dk', $player['teamNameDk'])->pluck('id')[0];
+			
+			$playerExists = Player::where('name_dk', $player['nameDk'])->where('team_id', $teamId)->count();
+
+			if (!$playerExists) {
+
+				$ePlayer = new Player;
+
+				$ePlayer->team_id = $teamId;
+				$ePlayer->name_dk = $player['nameDk'];
+
+				$ePlayer->save();
+
+				break;
+			}
+		}
+
+		$this->message = 'Success!';
 	}
 
 }

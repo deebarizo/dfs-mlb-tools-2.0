@@ -187,4 +187,22 @@ class DkSalariesParserTest extends TestCase {
         $this->assertContains($results->message, 'The CSV format has changed. The DK id field has non-numbers.');
     }
 
+    /** @test */
+    public function saves_new_player() { 
+
+        $this->setUpTeams();
+
+        $this->setUpPlayers();
+
+        $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+
+        $players = Player::where('name_dk', 'Clayton Kershaw')->get();
+
+        $this->assertCount(1, $players);
+    }
+
 }
