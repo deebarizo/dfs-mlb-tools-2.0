@@ -3,12 +3,13 @@
 use DkSalariesParser;
 
 use App\Team;
+use App\PlayerPool;
 use App\Player;
 use App\DkSalary;
 
 trait DkSalariesParser {
 
-	public function parseDkSalaries($csvFile, $date) {
+	public function parseDkSalaries($csvFile, $date, $site, $timePeriod) {
 
 		if (($handle = fopen($csvFile, 'r')) !== false) {
 			
@@ -92,12 +93,21 @@ trait DkSalariesParser {
 			}
 		} 
 
-		$this->save($date);
+		$this->save($date, $site, $timePeriod);
 
 		return $this;	
 	}
 
-	private function save($date) {
+	private function save($date, $site, $timePeriod) {
+
+		$playerPool = new PlayerPool;
+
+		$playerPool->date = $date;
+		$playerPool->time_period = $timePeriod;
+		$playerPool->site = $site;
+		$playerPool->buy_in = 0;
+
+		$playerPool->save();
 
 		foreach ($this->players as $player) {
 
@@ -117,6 +127,7 @@ trait DkSalariesParser {
 
 			$dkSalary = new dkSalary;
 
+			$dkSalary->player_pool_id = $playerPool->id;
 			$dkSalary->player_id = Player::where('name_dk', $player['nameDk'])->pluck('id')[0];
 			$dkSalary->dk_id = $player['dkId'];
 			$dkSalary->team_id = $teamId;

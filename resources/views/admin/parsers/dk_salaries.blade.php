@@ -34,12 +34,32 @@
 
 			<div class="col-lg-2"> 
 				<div class="form-group">
+					<label for="site">Site:</label>
+					<select name="site" class="form-control">
+					  	<option value="DK">DK</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-lg-2"> 
+				<div class="form-group">
+					<label for="time-period">Time Period:</label>
+					<select name="time-period" class="form-control">
+					  	<option value="All Day">All Day</option>
+					  	<option value="Early">Early</option>
+					  	<option value="Late">Late</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-lg-2"> 
+				<div class="form-group">
 					{!! Form::label('date', 'Date:') !!}
 					{!! Form::text('date', setTodayDate(), ['class' => 'form-control']) !!}
 				</div>
 			</div>
 
-			<div class="col-lg-3 col-lg-offset-1"> 
+			<div class="col-lg-2"> 
 				<div class="form-group">
 					{!! Form::label('csv', 'CSV:') !!}
 					{!! Form::file('csv', '', ['class' => 'form-control']) !!}

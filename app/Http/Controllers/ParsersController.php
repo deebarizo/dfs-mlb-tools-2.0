@@ -22,7 +22,7 @@ class ParsersController extends Controller {
 
             $useCase = new UseCase;
             
-            $results = $useCase->parseDkSalaries($csvFile, $request->input('date'));
+            $results = $useCase->parseDkSalaries($csvFile, $request->input('date'), $request->input('site'), $request->input('time-period'));
        
             $message = $results->message;
 

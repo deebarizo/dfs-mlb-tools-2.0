@@ -42,6 +42,8 @@ class ParsersControllerTest extends TestCase {
     public function submits_dk_salaries_csv() {
 
        	$this->visit('/admin/parsers/dk_salaries');
+        $this->select('DK', 'site');
+        $this->select('All Day', 'time-period');
        	$this->type('2016-03-31', 'date');
         $this->type('DKSalaries.csv', 'csv')
              ->attach('/files/dk_salaries/', 'csv');

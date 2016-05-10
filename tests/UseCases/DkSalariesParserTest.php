@@ -9,27 +9,13 @@ use org\bovigo\vfs\vfsStream; // http://blog.mauriziobonani.com/phpunit-test-fil
 use App\UseCases\UseCase;
 
 use App\Team;
+use App\PlayerPool;
 use App\Player;
 use App\DkSalary;
 
 class DkSalariesParserTest extends TestCase {
 
     use DatabaseTransactions;
-
-    private function setUpTeams() {
-
-        factory(Team::class)->create([
-
-            'id' => 4,
-            'name_dk' => 'NYM'
-        ]);
-
-        factory(Team::class)->create([
-        
-            'id' => 1,
-            'name_dk' => 'LAD'
-        ]);
-    }
 
     private function setUpPlayers() {
 
@@ -105,13 +91,11 @@ class DkSalariesParserTest extends TestCase {
     /** @test */
     public function validates_csv_with_number_in_position_field() { 
 
-        $this->setUpTeams();
-
         $root = $this->setUpCsvFile($this->csvFiles['invalid']['numericPositionField']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The CSV format has changed. The position field has numbers.');
     }
@@ -119,13 +103,11 @@ class DkSalariesParserTest extends TestCase {
     /** @test */
     public function validates_csv_with_number_in_name_field() { 
 
-        $this->setUpTeams();
-
         $root = $this->setUpCsvFile($this->csvFiles['invalid']['numericNameField']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The CSV format has changed. The name field has numbers.');
     }
@@ -134,13 +116,11 @@ class DkSalariesParserTest extends TestCase {
     /** @test */
     public function validates_csv_with_non_number_in_name_field() { 
 
-        $this->setUpTeams();
-
         $root = $this->setUpCsvFile($this->csvFiles['invalid']['notNumericSalaryField']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The CSV format has changed. The salary field has non-numbers.');
     }
@@ -148,13 +128,11 @@ class DkSalariesParserTest extends TestCase {
 	/** @test */
     public function validates_csv_with_team_name_not_in_the_database() { 
 
-    	$this->setUpTeams();
-
         $root = $this->setUpCsvFile($this->csvFiles['invalid']['teamNotFound']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
     	$this->assertContains($results->message, 'The DraftKings team name, <strong>XYZ</strong>, does not exist in the database.');
     }
@@ -162,13 +140,11 @@ class DkSalariesParserTest extends TestCase {
     /** @test */
     public function validates_csv_with_opp_team_name_not_in_the_database() { 
 
-        $this->setUpTeams();
-
         $root = $this->setUpCsvFile($this->csvFiles['invalid']['oppTeamNotFound']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The DraftKings opposing team name, <strong>XYZ</strong>, does not exist in the database.');
     }
@@ -176,13 +152,11 @@ class DkSalariesParserTest extends TestCase {
     /** @test */
     public function validates_csv_with_non_number_in_dk_id_field() { 
 
-        $this->setUpTeams();
-
         $root = $this->setUpCsvFile($this->csvFiles['invalid']['notNumericDkIdField']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The CSV format has changed. The DK id field has non-numbers.');
     }
@@ -190,15 +164,17 @@ class DkSalariesParserTest extends TestCase {
     /** @test */
     public function saves_new_player() { 
 
-        $this->setUpTeams();
-
         $this->setUpPlayers();
 
         $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $playerPools = PlayerPool::where('date', '2016-01-01')->get();
+
+        $this->assertCount(1, $playerPools);
 
         $players = Player::where('name_dk', 'Clayton Kershaw')->get();
 
@@ -208,15 +184,17 @@ class DkSalariesParserTest extends TestCase {
     /** @test */
     public function saves_new_player_with_same_name_as_existing_player() { 
 
-        $this->setUpTeams();
-
         $this->setUpPlayers();
 
         $root = $this->setUpCsvFile($this->csvFiles['valid']['existingPlayerName']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $playerPools = PlayerPool::where('date', '2016-01-01')->get();
+
+        $this->assertCount(1, $playerPools);
 
         $players = Player::where('name_dk', 'John Doe')->get();
 
@@ -226,15 +204,13 @@ class DkSalariesParserTest extends TestCase {
     /** @test */
     public function saves_salary() { 
 
-        $this->setUpTeams();
-
         $this->setUpPlayers();
 
         $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $dkSalary = DkSalary::all()[0];
 
