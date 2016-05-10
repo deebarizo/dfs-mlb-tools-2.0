@@ -18,8 +18,16 @@ Route::get('/admin', function() {
 	return View::make('pages/admin', compact('titleTag'));
 });
 
+
 /****************************************************************************************
-SCRAPERS
+DAILIES
+****************************************************************************************/
+
+Route::get('/dailies/{date}/{time_period_in_url}/{site_in_url}', 'DailiesController@daily');
+
+
+/****************************************************************************************
+ADMIN
 ****************************************************************************************/
 
 Route::get('/admin/parsers/dk_salaries', ['as' => 'admin.parsers.dk_salaries', function() {

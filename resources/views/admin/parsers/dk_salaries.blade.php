@@ -5,6 +5,8 @@
 		<div class="col-lg-12">
 			<h2>Parsers - DK Salaries</h2>
 
+			<hr>
+
 			@if (count($errors) > 0)
 			    <div class="alert alert-danger fade in" role="alert">
 					<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>

@@ -5,6 +5,8 @@
 		<div class="col-lg-12">
 			<h2>Dailies</h2>
 
+			<hr>
+
 			<table class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
@@ -22,7 +24,7 @@
 							<td>{{ $playerPool->time_period }}</td>
 							<td>{{ $playerPool->site }}</td>
 							<td>{{ $playerPool->buy_in }}</td>
-							<td><a href="/daily/{{ $playerPool->date }}/{{ $playerPool->time_period_in_url }}/{{ $playerPool->site_in_url }}">Daily</a> | <a href="/lineups/{{ $playerPool->date }}/{{ $playerPool->time_period_in_url }}/{{ $playerPool->site_in_url }}">Lineups</a></td>
+							<td><a href="/dailies/{{ $playerPool->date }}/{{ $playerPool->time_period_in_url }}/{{ $playerPool->site_in_url }}">Daily</a> | <a href="/lineups/{{ $playerPool->date }}/{{ $playerPool->time_period_in_url }}/{{ $playerPool->site_in_url }}">Lineups</a></td>
 						</tr>
 					@endforeach
 				</tbody>
