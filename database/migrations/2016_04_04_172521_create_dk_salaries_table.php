@@ -15,7 +15,8 @@ class CreateDkSalariesTable extends Migration
         Schema::create('dk_salaries', function($table)
         {
             $table->increments('id');
-            $table->date('date');
+            $table->integer('player_pool_id')->unsigned();
+            $table->foreign('player_pool_id')->references('id')->on('player_pools');
             $table->integer('player_id')->unsigned();
             $table->foreign('player_id')->references('id')->on('players');
             $table->integer('team_id')->unsigned();
