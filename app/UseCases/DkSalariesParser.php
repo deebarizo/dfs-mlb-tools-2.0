@@ -22,11 +22,11 @@ trait DkSalariesParser {
 				
 				    $this->players[$i] = array( 
 
-				    	'position' => $row[15],
-				       	'nameDk' => convertAccentLettersToEnglish($row[17]),
-				       	'dkId' => $row[18],
-				       	'salary' => $row[19],
-				       	'teamNameDk' => $row[21]
+				    	'position' => $row[11],
+				       	'nameDk' => convertAccentLettersToEnglish($row[13]),
+				       	'dkId' => $row[14],
+				       	'salary' => $row[15],
+				       	'teamNameDk' => $row[17]
 				    );
 
 				    if (is_numeric($this->players[$i]['position'])) {
@@ -57,7 +57,7 @@ trait DkSalariesParser {
 						return $this;				    	
 				    }
 
-				    $gameInfo = $row[20];
+				    $gameInfo = $row[16];
 				    $gameInfo = preg_replace("/(\w+@\w+)(\s)(.*)/", "$1", $gameInfo);
 				    $gameInfo = preg_replace("/@/", "", $gameInfo);
 				    $this->players[$i]['oppTeamNameDk'] = preg_replace("/".$this->players[$i]['teamNameDk']."/", "", $gameInfo);
