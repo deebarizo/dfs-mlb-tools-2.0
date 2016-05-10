@@ -24,7 +24,7 @@ trait DkSalariesParser {
 
 				    	'position' => $row[15],
 				       	'nameDk' => convertAccentLettersToEnglish($row[17]),
-				       	'idDk' => $row[18],
+				       	'dkId' => $row[18],
 				       	'salary' => $row[19],
 				       	'teamNameDk' => $row[21]
 				    );
@@ -43,7 +43,7 @@ trait DkSalariesParser {
 						return $this;				    	
 				    }
 
-				    if (!is_numeric($this->players[$i]['idDk'])) {
+				    if (!is_numeric($this->players[$i]['dkId'])) {
 
 						$this->message = 'The CSV format has changed. The DK id field has non-numbers.'; 
 
@@ -114,6 +114,18 @@ trait DkSalariesParser {
 
 				$ePlayer->save();
 			}
+
+			$dkSalary = new dkSalary;
+
+			$dkSalary->date = $date;
+			$dkSalary->player_id = Player::where('name_dk', $player['nameDk'])->pluck('id')[0];
+			$dkSalary->dk_id = $player['dkId'];
+			$dkSalary->team_id = $teamId;
+			$dkSalary->opp_team_id = Team::where('name_dk', $player['oppTeamNameDk'])->pluck('id')[0];
+			$dkSalary->position = $player['position'];
+			$dkSalary->salary = $player['salary'];
+
+			$dkSalary->save();
 		}
 
 		$this->message = 'Success!';

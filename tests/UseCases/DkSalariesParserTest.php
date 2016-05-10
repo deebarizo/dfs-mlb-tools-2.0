@@ -223,4 +223,27 @@ class DkSalariesParserTest extends TestCase {
         $this->assertCount(2, $players);
     }
 
+    /** @test */
+    public function saves_salary() { 
+
+        $this->setUpTeams();
+
+        $this->setUpPlayers();
+
+        $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+
+        $dkSalary = DkSalary::where('date', '2016-01-01')->first();
+
+        $this->assertContains((string)$dkSalary->dk_id, '6690258');
+        $this->assertContains($dkSalary->date, '2016-01-01');
+        $this->assertContains((string)$dkSalary->team_id, '1');
+        $this->assertContains((string)$dkSalary->opp_team_id, '4');
+        $this->assertContains($dkSalary->position, 'SP');
+        $this->assertContains((string)$dkSalary->salary, '14200');
+    }
+
 }
