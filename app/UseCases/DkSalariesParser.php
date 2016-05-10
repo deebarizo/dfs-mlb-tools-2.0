@@ -102,7 +102,7 @@ trait DkSalariesParser {
 		foreach ($this->players as $player) {
 
 			$teamId = Team::where('name_dk', $player['teamNameDk'])->pluck('id')[0];
-			
+
 			$playerExists = Player::where('name_dk', $player['nameDk'])->where('team_id', $teamId)->count();
 
 			if (!$playerExists) {
@@ -113,8 +113,6 @@ trait DkSalariesParser {
 				$ePlayer->name_dk = $player['nameDk'];
 
 				$ePlayer->save();
-
-				break;
 			}
 		}
 

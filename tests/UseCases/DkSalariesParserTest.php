@@ -35,7 +35,7 @@ class DkSalariesParserTest extends TestCase {
 
         factory(Player::class)->create([
         
-            'team_id' => 1,
+            'team_id' => 4,
             'name_dk' => 'John Doe'
         ]);   
     }
@@ -203,6 +203,24 @@ class DkSalariesParserTest extends TestCase {
         $players = Player::where('name_dk', 'Clayton Kershaw')->get();
 
         $this->assertCount(1, $players);
+    }
+
+    /** @test */
+    public function saves_new_player_with_same_name_as_existing_player() { 
+
+        $this->setUpTeams();
+
+        $this->setUpPlayers();
+
+        $root = $this->setUpCsvFile($this->csvFiles['valid']['existingPlayerName']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
+
+        $players = Player::where('name_dk', 'John Doe')->get();
+
+        $this->assertCount(2, $players);
     }
 
 }
