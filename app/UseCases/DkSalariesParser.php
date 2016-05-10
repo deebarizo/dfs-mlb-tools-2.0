@@ -117,7 +117,6 @@ trait DkSalariesParser {
 
 			$dkSalary = new dkSalary;
 
-			$dkSalary->date = $date;
 			$dkSalary->player_id = Player::where('name_dk', $player['nameDk'])->pluck('id')[0];
 			$dkSalary->dk_id = $player['dkId'];
 			$dkSalary->team_id = $teamId;

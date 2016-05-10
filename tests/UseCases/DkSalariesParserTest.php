@@ -236,10 +236,9 @@ class DkSalariesParserTest extends TestCase {
         
         $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01');
 
-        $dkSalary = DkSalary::where('date', '2016-01-01')->first();
+        $dkSalary = DkSalary::all()[0];
 
         $this->assertContains((string)$dkSalary->dk_id, '6694453');
-        $this->assertContains($dkSalary->date, '2016-01-01');
         $this->assertContains((string)$dkSalary->team_id, '1');
         $this->assertContains((string)$dkSalary->opp_team_id, '4');
         $this->assertContains($dkSalary->position, 'SP');

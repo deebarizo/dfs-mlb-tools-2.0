@@ -15,9 +15,22 @@ $factory->define(App\Team::class, function ($faker) {
     
     return [
         
-        'name_dk' => str_random(3),
-        'name_espn' => str_random(3),
-        'name_fg' => str_random(7),
+        'name_dk' => 'LAD',
+        'name_espn' => 'lad',
+        'name_fg' => 'Dodgers',
+        'created_at' => '2015-03-13',
+        'updated_at' => '2015-03-13'
+    ];
+});
+
+$factory->define(App\PlayerPool::class, function ($faker) {
+    
+    return [
+        
+        'date' => '2016-01-01',
+        'time_period' => 'All Day',
+        'site' => 'DK',
+        'buy_in' => 100,
         'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
         'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now')
     ];
@@ -38,11 +51,11 @@ $factory->define(App\DkSalary::class, function ($faker) {
     
     return [
         
-        'date' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'player_pool_id' => 1,
         'player_id' => 1,
         'dk_id' => 528369,
-        'team_id' => 2,
-        'opp_team_id' => 3,
+        'team_id' => 1,
+        'opp_team_id' => 2,
         'position' => 'SP',
         'salary' => '12000',
         'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),

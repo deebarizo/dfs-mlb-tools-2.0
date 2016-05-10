@@ -25,7 +25,7 @@ class ParseDkSalariesRequest extends Request
     {
         return [
             
-            'date' => 'required|unique:dk_salaries',
+            'date' => 'required|unique:player_pools',
             'csv' => 'required'
         ];
     }

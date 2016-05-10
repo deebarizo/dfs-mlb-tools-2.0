@@ -5,6 +5,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 use App\Team;
+use App\PlayerPool;
 use App\Player;
 use App\DkSalary;
 
@@ -14,16 +15,10 @@ class ParsersControllerTest extends TestCase {
 
     private function setUpDkSalary() {
 
-        factory(Team::class)->create([
-
-            'id' => 1,
-            'name_dk' => 'Atl'
-        ]);
-
-        factory(Team::class)->create([
+        factory(PlayerPool::class)->create([
         
-            'id' => 2,
-            'name_dk' => 'Was'
+            'id' => 1,
+            'date' => '2016-04-04'
         ]);
 
         factory(Player::class)->create([
@@ -36,10 +31,10 @@ class ParsersControllerTest extends TestCase {
         factory(DkSalary::class)->create([
         
             'id' => 1,
+            'player_pool_id' => 1, 
             'player_id' => 1,
             'team_id' => 1,
-            'opp_team_id' => 2,
-            'date' => '2016-04-04'
+            'opp_team_id' => 2
         ]);        
     }
 

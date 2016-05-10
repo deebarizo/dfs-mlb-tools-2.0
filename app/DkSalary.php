@@ -6,11 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class DkSalary extends Model {
 
-    public function player() {
-
-    	return $this->belongsTo(Player::class);
-    }
-
     public function team() {
 
     	return $this->belongsTo(Team::class);
@@ -19,6 +14,16 @@ class DkSalary extends Model {
     public function oppTeam() {
 
     	return $this->belongsTo(Team::class);
+    }
+
+    public function playerPool() {
+
+    	return $this->belongsTo(PlayerPool::class);
+    }
+
+    public function player() {
+
+    	return $this->belongsTo(Player::class);
     }
 
 }
