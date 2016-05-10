@@ -6,10 +6,10 @@ PAGES
 
 Route::get('/', function() {
 
-	$titleTag = '';
-	
-	return View::make('pages/home', compact('titleTag'));
+	return redirect('/dailies');
 });
+
+Route::get('/dailies', 'PagesController@home');
 
 Route::get('/admin', function() {
 

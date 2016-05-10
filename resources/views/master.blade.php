@@ -28,6 +28,7 @@
 				</div>
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav">
+						<li class="{!! setActive('dailies*') !!}"><a href="/dailies">Dailies</a></li>
 						<li class="{!! setActive('admin*') !!}"><a href="/admin">Admin</a></li>
 					</ul>
 				</div>
