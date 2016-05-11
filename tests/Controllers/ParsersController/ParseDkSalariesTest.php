@@ -9,7 +9,7 @@ use App\PlayerPool;
 use App\Player;
 use App\DkSalary;
 
-class ParsersControllerTest extends TestCase {
+class ParseDkSalariesTest extends TestCase {
 
     use DatabaseTransactions;
 
