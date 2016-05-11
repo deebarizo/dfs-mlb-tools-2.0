@@ -13,33 +13,6 @@ class ParseDkSalariesTest extends TestCase {
 
     use DatabaseTransactions;
 
-    private function setUpDkSalary() {
-
-        factory(PlayerPool::class)->create([
-        
-            'id' => 1,
-            'date' => '2016-04-04',
-            'time_period' => 'All Day',
-            'site' => 'DK'
-        ]);
-
-        factory(Player::class)->create([
-        
-            'id' => 1,
-            'team_id' => 1, 
-            'name_dk' => 'John Doe'
-        ]);
-
-        factory(DkSalary::class)->create([
-        
-            'id' => 1,
-            'player_pool_id' => 1, 
-            'player_id' => 1,
-            'team_id' => 1,
-            'opp_team_id' => 2
-        ]);        
-    }
-
 	/** @test */
     public function submits_dk_salaries_csv() {
 

@@ -26,4 +26,34 @@ class ParseDkLineupsTest extends TestCase {
         $this->press('Submit');
     }
 
+    /** @test */
+    public function validates_required_inputs() {
+
+        $this->call('POST', '/admin/parsers/dk_lineups', [
+
+            'date' => '',
+            'csv' => ''
+        ]);
+
+        $this->assertSessionHasErrors(['date', 'csv']);
+
+        // I don't need to test the redirect because Taylor Otwell has already tested the form request class. I'm using that class for validation and the class automatically redirects back to the page with an $errors object. Plus, when I try to test the redirect, it doesn't work.
+    }
+
+    /** @test */
+    public function validates_successful_input() {
+
+        $this->call('POST', '/admin/parsers/dk_lineups', [
+
+            'date' => '2016-01-01',
+            'csv' => 'Test.csv'
+        ]);
+
+        $this->assertRedirectedTo('/admin/parsers/dk_lineups');
+
+        $this->followRedirects();
+
+        $this->see('Success!');
+    }  
+
 }
