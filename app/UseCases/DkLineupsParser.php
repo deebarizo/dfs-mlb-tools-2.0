@@ -56,6 +56,13 @@ trait DkLineupsParser {
 
                         return $this;                       
                     }
+
+                    if (!is_numeric($this->lineups[$i]['fpts'])) {
+
+                        $this->message = 'The fpts field in the csv has a non-number.'; 
+
+                        return $this;                       
+                    }
                 }
 
                 $i++;

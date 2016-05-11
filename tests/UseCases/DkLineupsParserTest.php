@@ -39,9 +39,14 @@ class DkLineupsParserTest extends TestCase {
 
         'invalid' => [
 
-            'numericRankField' => [
+            'nonNumericRankField' => [
 
                 'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\nbob,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes"
+            ],
+
+            'nonNumericFptsField' => [
+
+                'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,bob,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes"
             ]
         ]
     ];
@@ -96,7 +101,7 @@ class DkLineupsParserTest extends TestCase {
 
     	$this->setUpPlayerPool();
 
-        $root = $this->setUpCsvFile($this->csvFiles['invalid']['numericRankField']);
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['nonNumericRankField']);
 
         $useCase = new UseCase; 
         
@@ -105,6 +110,18 @@ class DkLineupsParserTest extends TestCase {
         $this->assertContains($results->message, 'The rank field in the csv has a non-number.');
     }
 
+    /** @test */
+    public function validates_csv_with_non_number_in_fpts_field() { 
 
+    	$this->setUpPlayerPool();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['nonNumericFptsField']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $this->assertContains($results->message, 'The fpts field in the csv has a non-number.');
+    }
 
 }
