@@ -1,7 +1,5 @@
 <?php namespace App\UseCases;
 
-use DkSalariesParser;
-
 use App\Team;
 use App\PlayerPool;
 use App\Player;
@@ -18,7 +16,7 @@ trait DkSalariesParser {
 
         if ($duplicatePlayerPoolExists) {
 
-            $this->message = 'This slate has already been parsed.';
+            $this->message = 'This player pool has already been parsed.';
 
             return $this;
         } 

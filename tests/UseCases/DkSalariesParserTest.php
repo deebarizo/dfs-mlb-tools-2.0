@@ -105,7 +105,7 @@ class DkSalariesParserTest extends TestCase {
         
         $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-04-04', 'DK', 'All Day');
 
-        $this->assertContains($results->message, 'This slate has already been parsed.');
+        $this->assertContains($results->message, 'This player pool has already been parsed.');
     }
 
     /** @test */
