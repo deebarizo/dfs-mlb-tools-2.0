@@ -11,6 +11,7 @@
 
 			<ul>
 				<li><a href="/admin/parsers/dk_salaries">DK Salaries</a></li>
+				<li><a href="/admin/parsers/dk_lineups">DK Lineups</a></li>
 			</ul>
 		</div>
 	</div>

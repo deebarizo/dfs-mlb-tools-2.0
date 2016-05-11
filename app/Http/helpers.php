@@ -31,7 +31,7 @@ function setActive($path, $active = 'active') {
 
 
 /****************************************************************************************
-SET TODAY DATE
+SET DATES
 ****************************************************************************************/
 
 function setTodayDate() {
@@ -39,6 +39,13 @@ function setTodayDate() {
 	date_default_timezone_set('America/Chicago'); 
 	
 	return date('Y-m-d');	
+}
+
+function setYesterdayDate() {
+
+	date_default_timezone_set('America/Chicago'); 
+	
+	return date('Y-m-d', strtotime("-1 days"));;	
 }
 
 

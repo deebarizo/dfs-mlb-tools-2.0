@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Parsers - DK Salaries</h2>
+			<h2>Parsers - DK Lineups</h2>
 
 			<hr>
 
@@ -32,7 +32,7 @@
 	</div>
 	<div class="row">
 
-		{!! Form::open(array('url' => 'admin/parsers/dk_salaries', 'files' => true)) !!}
+		{!! Form::open(array('url' => 'admin/parsers/dk_lineups', 'files' => true)) !!}
 
 			<div class="col-lg-2"> 
 				<div class="form-group">
@@ -56,8 +56,8 @@
 
 			<div class="col-lg-2"> 
 				<div class="form-group">
-					{!! Form::label('date', 'Date (Today):') !!}
-					{!! Form::text('date', setTodayDate(), ['class' => 'form-control']) !!}
+					{!! Form::label('date', 'Date (Yesterday):') !!}
+					{!! Form::text('date', setYesterdayDate(), ['class' => 'form-control']) !!}
 				</div>
 			</div>
 
