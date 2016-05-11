@@ -26,4 +26,9 @@ class DkSalary extends Model {
     	return $this->belongsTo(Player::class);
     }
 
+    public function actual_lineup_players() {
+
+        return $this->hasMany(ActualLineupPlayer::class);
+    }
+
 }

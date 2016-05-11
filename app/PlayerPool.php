@@ -11,4 +11,9 @@ class PlayerPool extends Model {
     	return $this->hasMany(DkSalary::class);
     }
 
+    public function actual_lineups() {
+
+    	return $this->hasMany(ActualLineup::class);
+    }
+
 }
