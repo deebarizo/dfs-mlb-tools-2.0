@@ -64,4 +64,15 @@ function convertAccentLettersToEnglish($string) {
 
 	return iconv("utf-8", "ascii//TRANSLIT", utf8_encode($string)); 
 }
+
+
+/****************************************************************************************
+NUMBER FORMAT
+****************************************************************************************/
+
+function numFormat($number, $decimalPlaces = 2) {
+	$number = number_format(round($number, $decimalPlaces), $decimalPlaces);
+
+	return $number;
+}
 	

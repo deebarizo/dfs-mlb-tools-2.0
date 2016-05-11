@@ -89,7 +89,7 @@ class DkLineupsParserTest extends TestCase {
         	'id' => 4, 
         	'player_pool_id' => 1,
             'player_id' => 4,
-            'position' => '1B/SS'
+            'position' => '1B'
         ]); 
 
         factory(Player::class)->create([
@@ -134,7 +134,7 @@ class DkLineupsParserTest extends TestCase {
         	'id' => 7, 
         	'player_pool_id' => 1,
             'player_id' => 7,
-            'position' => 'SS'
+            'position' => '3B/SS'
         ]); 
 
         factory(Player::class)->create([
@@ -181,6 +181,51 @@ class DkLineupsParserTest extends TestCase {
             'player_id' => 10,
             'position' => 'OF'
         ]); 
+
+        factory(Player::class)->create([
+        
+            'id' => 11, 
+            'team_id' => 11,
+            'name_dk' => 'Jon Lester'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+            'id' => 11, 
+            'player_pool_id' => 1,
+            'player_id' => 11,
+            'position' => 'SP'
+        ]); 
+
+        factory(Player::class)->create([
+        
+            'id' => 12, 
+            'team_id' => 12,
+            'name_dk' => 'Jonathan Villar'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+            'id' => 12, 
+            'player_pool_id' => 1,
+            'player_id' => 12,
+            'position' => 'SS'
+        ]); 
+
+        factory(Player::class)->create([
+        
+            'id' => 13, 
+            'team_id' => 13,
+            'name_dk' => 'Bryce Harper'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+            'id' => 13, 
+            'player_pool_id' => 1,
+            'player_id' => 13,
+            'position' => 'OF'
+        ]); 
     }
 
     private $csvFiles = [
@@ -211,6 +256,11 @@ class DkLineupsParserTest extends TestCase {
 
  	           'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Dee Barizo OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes"
             ]
+        ],
+
+        'multipleLineups' => [
+
+            'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes\n2,402244112,fu69,0,196,P Jon Lester P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Manny Machado SS Jonathan Villar OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes\n25,402235946,jammer1333,18,179.4,P Jon Lester P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Manny Machado SS Jonathan Villar OF Matt Holliday OF Bryce Harper OF Yoenis Céspedes"
         ]
     ];
 
@@ -339,6 +389,58 @@ class DkLineupsParserTest extends TestCase {
         $actualLineupPlayers = ActualLineupPlayer::all();
 
         $this->assertCount(10, $actualLineupPlayers);
+    }
+
+    /** @test */
+    public function saves_ownership() { 
+
+        $this->setUpPlayerPool();
+
+        $this->setUpPlayers();
+
+        $root = $this->setUpCsvFile($this->csvFiles['multipleLineups']);        
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $this->assertContains($results->message, 'Success!');
+
+        $dkSalaries = DkSalary::where('player_pool_id', 1)
+                            ->where('player_id', 1)
+                            ->where('ownership', 33.3)
+                            ->where('ownership_of_first_position', 33.3)
+                            ->where('ownership_of_second_position', 0.0)
+                            ->get();
+
+        $this->assertCount(1, $dkSalaries);
+
+        $dkSalaries = DkSalary::where('player_pool_id', 1)
+                            ->where('player_id', 3)
+                            ->where('ownership', 100.0)
+                            ->where('ownership_of_first_position', 100.0)
+                            ->where('ownership_of_second_position', 0.0)
+                            ->get();
+
+        $this->assertCount(1, $dkSalaries);
+
+        $dkSalaries = DkSalary::where('player_pool_id', 1)
+                            ->where('player_id', 9)
+                            ->where('ownership', 66.7)
+                            ->where('ownership_of_first_position', 66.7)
+                            ->where('ownership_of_second_position', 0.0)
+                            ->get();
+
+        $this->assertCount(1, $dkSalaries);
+
+        $dkSalaries = DkSalary::where('player_pool_id', 1)
+                            ->where('player_id', 7)
+                            ->where('ownership', 100.0)
+                            ->where('ownership_of_first_position', 66.7)
+                            ->where('ownership_of_second_position', 33.3)
+                            ->get();
+
+        $this->assertCount(1, $dkSalaries);
     }
 
 }

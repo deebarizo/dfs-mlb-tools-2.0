@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class DkSalary extends Model {
 
+    protected $fillable = ['ownership', 'ownership_of_first_position', 'ownership_of_second_position'];
+
     public function team() {
 
     	return $this->belongsTo(Team::class);
