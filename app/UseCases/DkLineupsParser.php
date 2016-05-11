@@ -45,6 +45,7 @@ trait DkLineupsParser {
                     $this->lineups[$i] = array( 
 
                         'rank' => $row[0],
+                        'entryId' => $row[1],
                         'user' => $row[2],
                         'fpts' => $row[4],
                         'lineupRawText' => $row[5]
@@ -63,6 +64,16 @@ trait DkLineupsParser {
 
                         return $this;                       
                     }
+
+                    if ($this->lineups[$i]['lineupRawText'] != '') {
+
+                        $this->lineups[$i]['lineup'] = $this->parseLineupRawText($this->lineups[$i]['lineupRawText'], $this->lineups[$i]['entryId']);
+                    }
+
+                    if ($this->message === 'The lineup with entry ID of '.$this->lineups[$i]['entryId'].' does not have 10 players') {
+
+                        return $this;
+                    }
                 }
 
                 $i++;
@@ -72,6 +83,26 @@ trait DkLineupsParser {
         # $this->save($date, $site, $timePeriod);
 
         return $this;   
+    }
+
+    private function parseLineupRawText($rawText, $entryId) {
+
+        $rawText = preg_replace("/\sP\s/", ",P ", $rawText);
+        $rawText = preg_replace("/\sC\s/", ",C ", $rawText);
+        $rawText = preg_replace("/\s1B\s/", ",1B ", $rawText);
+        $rawText = preg_replace("/\s2B\s/", ",2B ", $rawText);
+        $rawText = preg_replace("/\s3B\s/", ",3B ", $rawText);
+        $rawText = preg_replace("/\sSS\s/", ",SS ", $rawText);
+        $rawText = preg_replace("/\sOF\s/", ",OF ", $rawText);
+
+        $lineupPlayers = explode('|', $rawText);
+
+        if (count($lineupPlayers) !== 10) {
+
+            $this->message = 'The lineup with entry ID of '.$entryId.' does not have 10 players';
+
+            return $this;
+        } 
     }
 
 }

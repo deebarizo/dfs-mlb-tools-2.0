@@ -47,6 +47,11 @@ class DkLineupsParserTest extends TestCase {
             'nonNumericFptsField' => [
 
                 'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,bob,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes"
+            ],
+
+            'lineupNotTenPlayers' => [
+
+ 	           'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Yoenis Céspedes"
             ]
         ]
     ];
@@ -122,6 +127,20 @@ class DkLineupsParserTest extends TestCase {
         $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The fpts field in the csv has a non-number.');
+    }
+
+    /** @test */
+    public function validates_csv_with_lineup_that_does_not_match_ten_players() { 
+
+    	$this->setUpPlayerPool();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['lineupNotTenPlayers']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $this->assertContains($results->message, 'The lineup with entry ID of 402195599 does not have 10 players');
     }
 
 }
