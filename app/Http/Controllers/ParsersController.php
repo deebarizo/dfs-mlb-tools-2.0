@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Input;
 
 use App\UseCases\UseCase;
 
+use App\PlayerPool;
+
 class ParsersController extends Controller {
 
 	public function parseDkSalaries(ParseDkSalariesRequest $request) {

@@ -11,6 +11,18 @@ trait DkSalariesParser {
 
 	public function parseDkSalaries($csvFile, $date, $site, $timePeriod) {
 
+        $duplicatePlayerPoolExists = PlayerPool::where('date', $date)
+                                               ->where('site', $site)
+                                               ->where('time_period', $timePeriod)
+                                               ->count();
+
+        if ($duplicatePlayerPoolExists) {
+
+            $this->message = 'This slate has already been parsed.';
+
+            return $this;
+        } 
+
 		if (($handle = fopen($csvFile, 'r')) !== false) {
 			
 			$i = 0; // index

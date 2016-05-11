@@ -18,7 +18,9 @@ class ParsersControllerTest extends TestCase {
         factory(PlayerPool::class)->create([
         
             'id' => 1,
-            'date' => '2016-04-04'
+            'date' => '2016-04-04',
+            'time_period' => 'All Day',
+            'site' => 'DK'
         ]);
 
         factory(Player::class)->create([
@@ -62,20 +64,6 @@ class ParsersControllerTest extends TestCase {
         $this->assertSessionHasErrors(['date', 'csv']);
 
         // I don't need to test the redirect because Taylor Otwell has already tested the form request class. I'm using that class for validation and the class automatically redirects back to the page with an $errors object. Plus, when I try to test the redirect, it doesn't work.
-    }
-
-    /** @test */
-    public function validates_duplicate_date() {
-
-        $this->setUpDkSalary();
-
-        $this->call('POST', '/admin/parsers/dk_salaries', [
-
-            'date' => '2016-04-04',
-            'csv' => 'Test.csv'
-        ]);
-
-        $this->assertSessionHasErrors(['date']);
     }
 
     /** @test */

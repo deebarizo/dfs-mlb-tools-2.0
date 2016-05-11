@@ -89,6 +89,26 @@ class DkSalariesParserTest extends TestCase {
     }
 
     /** @test */
+    public function validates_duplicate_slate() {
+
+        factory(PlayerPool::class)->create([
+        
+            'id' => 1,
+            'date' => '2016-04-04',
+            'time_period' => 'All Day',
+            'site' => 'DK'
+        ]);
+
+        $root = $root = $this->setUpCsvFile($this->csvFiles['valid']['newPlayerName']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-04-04', 'DK', 'All Day');
+
+        $this->assertContains($results->message, 'This slate has already been parsed.');
+    }
+
+    /** @test */
     public function validates_csv_with_number_in_position_field() { 
 
         $root = $this->setUpCsvFile($this->csvFiles['invalid']['numericPositionField']);
