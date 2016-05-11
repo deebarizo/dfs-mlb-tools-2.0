@@ -7,6 +7,8 @@ use App\DkSalary;
 use App\ActualLineup;
 use App\ActualLineupPlayer;
 
+use DB;
+
 trait DkLineupsParser {
 
     public function parseDkLineups($csvFile, $date, $site, $timePeriod) {
@@ -44,6 +46,7 @@ trait DkLineupsParser {
                 
                     $this->lineups[$i] = array( 
 
+                        'player_pool_id' => $playerPool[0]->id,
                         'rank' => $row[0],
                         'entryId' => $row[1],
                         'user' => $row[2],
@@ -67,10 +70,10 @@ trait DkLineupsParser {
 
                     if ($this->lineups[$i]['lineupRawText'] != '') {
 
-                        $this->lineups[$i]['lineup'] = $this->parseLineupRawText($this->lineups[$i]['lineupRawText'], $this->lineups[$i]['entryId']);
+                        $this->parseLineupRawText($i, $playerPool[0]->id, $this->lineups[$i]['lineupRawText'], $this->lineups[$i]['entryId']);
                     }
 
-                    if ($this->message === 'The lineup with entry ID of '.$this->lineups[$i]['entryId'].' does not have 10 players') {
+                    if ($this->message !== 'Success!') {
 
                         return $this;
                     }
@@ -85,24 +88,60 @@ trait DkLineupsParser {
         return $this;   
     }
 
-    private function parseLineupRawText($rawText, $entryId) {
+    private function parseLineupRawText($i, $playerPoolId, $rawText, $entryId) {
 
-        $rawText = preg_replace("/\sP\s/", ",P ", $rawText);
-        $rawText = preg_replace("/\sC\s/", ",C ", $rawText);
-        $rawText = preg_replace("/\s1B\s/", ",1B ", $rawText);
-        $rawText = preg_replace("/\s2B\s/", ",2B ", $rawText);
-        $rawText = preg_replace("/\s3B\s/", ",3B ", $rawText);
-        $rawText = preg_replace("/\sSS\s/", ",SS ", $rawText);
-        $rawText = preg_replace("/\sOF\s/", ",OF ", $rawText);
+        $rawText = preg_replace("/\sP\s/", "|P ", $rawText);
+        $rawText = preg_replace("/\sC\s/", "|C ", $rawText);
+        $rawText = preg_replace("/\s1B\s/", "|1B ", $rawText);
+        $rawText = preg_replace("/\s2B\s/", "|2B ", $rawText);
+        $rawText = preg_replace("/\s3B\s/", "|3B ", $rawText);
+        $rawText = preg_replace("/\sSS\s/", "|SS ", $rawText);
+        $rawText = preg_replace("/\sOF\s/", "|OF ", $rawText);
 
-        $lineupPlayers = explode('|', $rawText);
+        $rawTextPlayers = explode('|', $rawText);
 
-        if (count($lineupPlayers) !== 10) {
+        if (count($rawTextPlayers) !== 10) {
 
             $this->message = 'The lineup with entry ID of '.$entryId.' does not have 10 players';
 
             return $this;
         } 
+
+        $players = [];
+
+        foreach ($rawTextPlayers as $rawTextPlayer) {
+
+            $position = preg_replace("/^(\w+)(\s)(.+)/", "$1", $rawTextPlayer);
+
+            $name = preg_replace("/^(\w+)(\s)(.+)/", "$3", $rawTextPlayer);
+
+            $dkSalary = DB::table('players')
+                            ->join('dk_salaries', 'dk_salaries.player_id', '=', 'players.id')
+                            ->select('*')
+                            ->where('players.name_dk', $name)
+                            ->where('dk_salaries.position', 'like', '%'.$position.'%')
+                            ->where('dk_salaries.player_pool_id', $playerPoolId)
+                            ->get();
+
+            if (count($dkSalary) === 0) {
+
+                $this->message = 'The lineup with entry ID of '.$this->lineups[$i]['entryId'].' has a missing player in database: '.$rawTextPlayer;
+
+                return $this;
+            }
+
+            $players[] = [
+
+                'position' => $position
+#                'dkSalaryId' => $dkSalaryId
+            ];
+        }
+
+        $this->lineups[$i]['players'] = $players;
+
+        $this->message = 'Success!';
+
+        return $this;
     }
 
 }

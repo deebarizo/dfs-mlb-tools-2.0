@@ -30,6 +30,159 @@ class DkLineupsParserTest extends TestCase {
         ]);
     }
 
+    private function setUpPlayers() {
+
+        factory(Player::class)->create([
+        
+        	'id' => 1, 
+            'team_id' => 1,
+            'name_dk' => 'Mike Leake'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 1, 
+        	'player_pool_id' => 1,
+            'player_id' => 1,
+            'position' => 'SP'
+        ]);  
+
+        factory(Player::class)->create([
+        
+        	'id' => 2, 
+            'team_id' => 2,
+            'name_dk' => 'Jacob deGrom'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 2, 
+        	'player_pool_id' => 1,
+            'player_id' => 2,
+            'position' => 'SP'
+        ]); 
+
+        factory(Player::class)->create([
+        
+        	'id' => 3, 
+            'team_id' => 3,
+            'name_dk' => 'Brian McCann'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 3, 
+        	'player_pool_id' => 1,
+            'player_id' => 3,
+            'position' => 'C'
+        ]); 
+
+        factory(Player::class)->create([
+        
+        	'id' => 4, 
+            'team_id' => 4,
+            'name_dk' => 'Hanley Ramirez'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 4, 
+        	'player_pool_id' => 1,
+            'player_id' => 4,
+            'position' => '1B/SS'
+        ]); 
+
+        factory(Player::class)->create([
+        
+        	'id' => 5, 
+            'team_id' => 5,
+            'name_dk' => 'Robinson Cano'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 5, 
+        	'player_pool_id' => 1,
+            'player_id' => 5,
+            'position' => '2B'
+        ]); 
+
+        factory(Player::class)->create([
+        
+        	'id' => 6, 
+            'team_id' => 6,
+            'name_dk' => 'Matt Carpenter'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 6, 
+        	'player_pool_id' => 1,
+            'player_id' => 6,
+            'position' => '3B'
+        ]); 
+
+        factory(Player::class)->create([
+        
+        	'id' => 7, 
+            'team_id' => 7,
+            'name_dk' => 'Manny Machado'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 7, 
+        	'player_pool_id' => 1,
+            'player_id' => 7,
+            'position' => 'SS'
+        ]); 
+
+        factory(Player::class)->create([
+        
+        	'id' => 8, 
+            'team_id' => 8,
+            'name_dk' => 'Matt Holliday'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 8, 
+        	'player_pool_id' => 1,
+            'player_id' => 8,
+            'position' => 'OF'
+        ]); 
+
+        factory(Player::class)->create([
+        
+        	'id' => 9, 
+            'team_id' => 9,
+            'name_dk' => 'Mookie Betts'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 9, 
+        	'player_pool_id' => 1,
+            'player_id' => 9,
+            'position' => 'OF'
+        ]); 
+
+        factory(Player::class)->create([
+        
+        	'id' => 10, 
+            'team_id' => 10,
+            'name_dk' => 'Yoenis Cespedes'
+        ]);  
+
+        factory(DkSalary::class)->create([
+        
+        	'id' => 10, 
+        	'player_pool_id' => 1,
+            'player_id' => 10,
+            'position' => 'OF'
+        ]); 
+    }
+
     private $csvFiles = [
 
         'valid' => [
@@ -52,6 +205,11 @@ class DkLineupsParserTest extends TestCase {
             'lineupNotTenPlayers' => [
 
  	           'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Yoenis Céspedes"
+            ],
+
+            'missingPlayerInDatabase' => [
+
+ 	           'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Dee Barizo OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes"
             ]
         ]
     ];
@@ -142,5 +300,21 @@ class DkLineupsParserTest extends TestCase {
 
         $this->assertContains($results->message, 'The lineup with entry ID of 402195599 does not have 10 players');
     }
+
+    /** @test */
+    public function validates_csv_with_lineup_with_missing_player_in_database() { 
+
+    	$this->setUpPlayerPool();
+
+    	$this->setUpPlayers();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['missingPlayerInDatabase']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $this->assertContains($results->message, 'The lineup with entry ID of 402195599 has a missing player in database: SS Dee Barizo');
+    } 
 
 }
