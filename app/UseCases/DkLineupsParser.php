@@ -49,7 +49,7 @@ trait DkLineupsParser {
                         'player_pool_id' => $playerPool[0]->id,
                         'rank' => $row[0],
                         'entryId' => $row[1],
-                        'user' => $row[2],
+                        'user' => preg_replace("/\s\(.+\)/", "", $row[2]),
                         'fpts' => $row[4],
                         'lineupRawText' => $row[5]
                     );
@@ -83,7 +83,7 @@ trait DkLineupsParser {
             }
         } 
 
-        # $this->save($date, $site, $timePeriod);
+        $this->saveDkLineups($this->lineups);
 
         return $this;   
     }
@@ -132,8 +132,8 @@ trait DkLineupsParser {
 
             $players[] = [
 
-                'position' => $position
-#                'dkSalaryId' => $dkSalaryId
+                'position' => $position,
+                'dkSalaryId' => $dkSalary[0]->id
             ];
         }
 
@@ -142,6 +142,34 @@ trait DkLineupsParser {
         $this->message = 'Success!';
 
         return $this;
+    }
+
+    private function saveDkLineups($lineups) {
+
+        foreach ($lineups as $lineup) {
+
+            # ddAll($lineup);
+            
+            $actualLineup = new ActualLineup;
+
+            $actualLineup->player_pool_id = $lineup['player_pool_id'];
+            $actualLineup->rank = $lineup['rank'];
+            $actualLineup->user = $lineup['user'];
+            $actualLineup->fpts = $lineup['fpts'];
+
+            $actualLineup->save();
+
+            foreach ($lineup['players'] as $player) {
+                
+                $actualLineupPlayer = new ActualLineupPlayer;
+
+                $actualLineupPlayer->actual_lineup_id = $actualLineup->id;
+                $actualLineupPlayer->position = $player['position'];
+                $actualLineupPlayer->dk_salary_id = $player['dkSalaryId'];
+
+                $actualLineupPlayer->save();
+            }
+        }
     }
 
 }

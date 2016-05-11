@@ -103,12 +103,12 @@ trait DkSalariesParser {
 			}
 		} 
 
-		$this->save($date, $site, $timePeriod);
+		$this->saveDkSalaries($date, $site, $timePeriod);
 
 		return $this;	
 	}
 
-	private function save($date, $site, $timePeriod) {
+	private function saveDkSalaries($date, $site, $timePeriod) {
 
 		$playerPool = new PlayerPool;
 

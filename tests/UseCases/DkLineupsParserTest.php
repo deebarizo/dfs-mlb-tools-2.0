@@ -317,4 +317,28 @@ class DkLineupsParserTest extends TestCase {
         $this->assertContains($results->message, 'The lineup with entry ID of 402195599 has a missing player in database: SS Dee Barizo');
     } 
 
+    /** @test */
+    public function saves_lineup() { 
+
+    	$this->setUpPlayerPool();
+
+    	$this->setUpPlayers();
+
+        $root = $this->setUpCsvFile($this->csvFiles['valid']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $this->assertContains($results->message, 'Success!');
+
+        $actualLineups = ActualLineup::where('player_pool_id', 1)->where('rank', 1)->where('user', 'chrishrabe')->where('fpts', 201.75)->get();
+
+        $this->assertCount(1, $actualLineups);
+
+        $actualLineupPlayers = ActualLineupPlayer::all();
+
+        $this->assertCount(10, $actualLineupPlayers);
+    }
+
 }
