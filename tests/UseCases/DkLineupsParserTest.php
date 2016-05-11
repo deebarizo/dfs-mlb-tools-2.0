@@ -56,12 +56,34 @@ class DkLineupsParserTest extends TestCase {
         $this->assertContains($results->message, 'This player pool does not exist.');
     }
 
-/*        factory(ActualLineup::class)->create([
+    /** @test */
+    public function validates_player_pool_that_has_already_been_parsed() {
+
+        factory(PlayerPool::class)->create([
+        
+            'id' => 1,
+            'date' => '2016-01-01',
+            'time_period' => 'All Day',
+            'site' => 'DK'
+        ]);
+
+        factory(ActualLineup::class)->create([
         
             'id' => 1,
             'player_pool_id' => 1,
             'user' => 'Bob', 
             'fpts' => '200.00'
-        ]); */
+        ]); 
+
+        $root = $root = $this->setUpCsvFile($this->csvFiles['valid']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $this->assertContains($results->message, 'This player pool has already been parsed.');
+    }
+
+
 
 }

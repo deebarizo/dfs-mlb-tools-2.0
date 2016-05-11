@@ -11,19 +11,26 @@ trait DkLineupsParser {
 
 	public function parseDkLineups($csvFile, $date, $site, $timePeriod) {
 
-        $playerPoolExists = PlayerPool::where('date', $date)
+        $playerPool = PlayerPool::where('date', $date)
                          			  ->where('site', $site)
                                       ->where('time_period', $timePeriod)
-                                      ->count();
+                                      ->get();
 
-        if (!$playerPoolExists) {
+        if (count($playerPool) === 0) {
 
             $this->message = 'This player pool does not exist.';
 
             return $this;
         } 
 
+        $actualLineups = ActualLineup::where('player_pool_id', $playerPool[0]->id)->get();
 
+        if (count($actualLineups) > 0) {
+
+            $this->message = 'This player pool has already been parsed.';
+
+            return $this;        	
+        }
     }
 
 }
