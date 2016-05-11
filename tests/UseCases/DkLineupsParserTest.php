@@ -19,11 +19,30 @@ class DkLineupsParserTest extends TestCase {
 
     use DatabaseTransactions;
 
+    private function setUpPlayerPool() {
+
+        factory(PlayerPool::class)->create([
+        
+            'id' => 1,
+            'date' => '2016-01-01',
+            'time_period' => 'All Day',
+            'site' => 'DK'
+        ]);
+    }
+
     private $csvFiles = [
 
         'valid' => [
 
             'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes"
+        ],
+
+        'invalid' => [
+
+            'numericRankField' => [
+
+                'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\nbob,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes"
+            ]
         ]
     ];
 
@@ -39,13 +58,7 @@ class DkLineupsParserTest extends TestCase {
     /** @test */
     public function validates_player_pool_that_does_not_exist() {
 
-        factory(PlayerPool::class)->create([
-        
-            'id' => 1,
-            'date' => '2016-01-01',
-            'time_period' => 'All Day',
-            'site' => 'DK'
-        ]);
+    	$this->setUpPlayerPool();
 
         $root = $root = $this->setUpCsvFile($this->csvFiles['valid']);
 
@@ -59,13 +72,7 @@ class DkLineupsParserTest extends TestCase {
     /** @test */
     public function validates_player_pool_that_has_already_been_parsed() {
 
-        factory(PlayerPool::class)->create([
-        
-            'id' => 1,
-            'date' => '2016-01-01',
-            'time_period' => 'All Day',
-            'site' => 'DK'
-        ]);
+        $this->setUpPlayerPool();
 
         factory(ActualLineup::class)->create([
         
@@ -82,6 +89,20 @@ class DkLineupsParserTest extends TestCase {
         $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'This player pool has already been parsed.');
+    }
+
+    /** @test */
+    public function validates_csv_with_non_number_in_rank_field() { 
+
+    	$this->setUpPlayerPool();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['numericRankField']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+
+        $this->assertContains($results->message, 'The rank field in the csv has a non-number.');
     }
 
 
