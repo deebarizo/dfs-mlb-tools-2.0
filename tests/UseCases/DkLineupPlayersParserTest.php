@@ -241,6 +241,19 @@ class DkLineupPlayersParserTest extends TestCase {
         ]);    	
     }
 
+    private function setUpActualLineupWithMissingPlayerInDatabase() {
+
+        factory(ActualLineup::class)->create([
+        
+            'id' => 1,
+            'player_pool_id' => 1,
+            'rank' => 1,
+            'user' => 'chrishrabe', 
+            'fpts' => 201.75,
+            'raw_text_players' => 'P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Dee Barizo OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes'
+        ]); 
+    }
+
 
     /** @test */
     public function validates_lineup_that_does_not_have_ten_players() { 
@@ -255,5 +268,19 @@ class DkLineupPlayersParserTest extends TestCase {
 
         $this->assertContains($results->message, 'The actual lineup with the ID of 1 does not have 10 players.');
     }
+
+    /** @test */
+    public function validates_lineup_with_missing_player_in_database() { 
+
+        $this->setUpPlayerPool(); $this->setUpPlayers();
+
+        $this->setUpActualLineupWithMissingPlayerInDatabase();
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineupPlayers();
+
+        $this->assertContains($results->message, 'The actual lineup with the ID of 1 has a missing player in database: SS Dee Barizo.');
+    } 
 
 }

@@ -41,6 +41,28 @@ trait DkLineupPlayersParser {
 
 		            return $this;
 		        } 
+
+		        foreach ($rawTextPlayers as $rawTextPlayer) {
+
+		            $position = preg_replace("/^(\w+)(\s)(.+)/", "$1", $rawTextPlayer);
+
+		            $name = preg_replace("/^(\w+)(\s)(.+)/", "$3", $rawTextPlayer);
+
+		            $dkSalary = DB::table('players')
+		                            ->join('dk_salaries', 'dk_salaries.player_id', '=', 'players.id')
+		                            ->select('*')
+		                            ->where('players.name_dk', $name)
+		                            ->where('dk_salaries.position', 'like', '%'.$position.'%')
+		                            ->where('dk_salaries.player_pool_id', $actualLineup->player_pool_id)
+		                            ->get();
+
+		            if (count($dkSalary) === 0) {
+
+		                $this->message = 'The actual lineup with the ID of '.$actualLineup->id.' has a missing player in database: '.$rawTextPlayer.'.';
+
+		                return $this;
+		            }
+		        }
 		  	}
 		});
 
