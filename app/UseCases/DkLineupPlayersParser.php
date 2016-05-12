@@ -42,6 +42,8 @@ trait DkLineupPlayersParser {
 		            return $this;
 		        } 
 
+		        $lineupPlayers = [];
+
 		        foreach ($rawTextPlayers as $rawTextPlayer) {
 
 		            $position = preg_replace("/^(\w+)(\s)(.+)/", "$1", $rawTextPlayer);
@@ -62,7 +64,24 @@ trait DkLineupPlayersParser {
 
 		                return $this;
 		            }
+
+		            $lineupPlayers[] = [
+
+		                'position' => $position,
+		                'dkSalaryId' => $dkSalary[0]->id
+		            ];
 		        }
+
+	            foreach ($lineupPlayers as $lineupPlayer) {
+	                
+	                $actualLineupPlayer = new ActualLineupPlayer;
+
+	                $actualLineupPlayer->actual_lineup_id = $actualLineup->id;
+	                $actualLineupPlayer->position = $lineupPlayer['position'];
+	                $actualLineupPlayer->dk_salary_id = $lineupPlayer['dkSalaryId'];
+
+	                $actualLineupPlayer->save();
+	            }
 		  	}
 		});
 

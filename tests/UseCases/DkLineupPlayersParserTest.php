@@ -254,6 +254,18 @@ class DkLineupPlayersParserTest extends TestCase {
         ]); 
     }
 
+    private function setUpValidActualLineup() {
+
+        factory(ActualLineup::class)->create([
+        
+            'id' => 1,
+            'player_pool_id' => 1,
+            'rank' => 1,
+            'user' => 'chrishrabe', 
+            'fpts' => 201.75,
+            'raw_text_players' => 'P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes'
+        ]); 
+    }
 
     /** @test */
     public function validates_lineup_that_does_not_have_ten_players() { 
@@ -282,5 +294,30 @@ class DkLineupPlayersParserTest extends TestCase {
 
         $this->assertContains($results->message, 'The actual lineup with the ID of 1 has a missing player in database: SS Dee Barizo.');
     } 
+
+    /** @test */
+    public function saves_lineup_players() { 
+
+        $this->setUpPlayerPool(); $this->setUpPlayers();
+
+        $this->setUpValidActualLineup();
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseDkLineupPlayers();
+
+        $this->assertContains($results->message, 'Success!');
+
+        $actualLineupPlayers = ActualLineupPlayer::all();
+
+        $this->assertCount(10, $actualLineupPlayers);
+
+        $actualLineupPlayers = ActualLineupPlayer::where('actual_lineup_id', 1)
+                                                    ->where('position', 'SS')
+                                                    ->where('dk_salary_id', 7)
+                                                    ->get();
+
+        $this->assertCount(1, $actualLineupPlayers);
+    }
 
 }
