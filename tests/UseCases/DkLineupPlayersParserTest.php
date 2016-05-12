@@ -253,7 +253,7 @@ class DkLineupPlayersParserTest extends TestCase {
         
         $results = $useCase->parseDkLineupPlayers();
 
-        $this->assertContains($results->message, 'The actual lineup with the ID of 1 does not have 10 players');
+        $this->assertContains($results->message, 'The actual lineup with the ID of 1 does not have 10 players.');
     }
 
 }
