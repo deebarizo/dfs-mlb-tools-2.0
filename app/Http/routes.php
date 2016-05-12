@@ -25,7 +25,7 @@ Route::get('/admin', function() {
 DAILIES
 ****************************************************************************************/
 
-Route::get('/dailies/{date}/{time_period_in_url}/{site_in_url}', 'DailiesController@daily');
+Route::get('/dailies/{date}/{timePeriodInUrl}/{siteInUrl}', 'DailiesController@daily');
 
 
 /****************************************************************************************

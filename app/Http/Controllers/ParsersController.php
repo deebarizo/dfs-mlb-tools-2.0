@@ -27,11 +27,8 @@ class ParsersController extends Controller {
         if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
             $fileDirectory = 'files/dk_lineups/'; // '/files/dk_salaries/' doesn't work
-            $fileName = $request->input('date').'.csv';
-         
-            Input::file('csv')->move($fileDirectory, $fileName);    
 
-            $csvFile = $fileDirectory . $fileName;   
+            $csvFile = $this->getCsvFile($request, $fileDirectory);
 
             $useCase = new UseCase;
             
@@ -52,11 +49,10 @@ class ParsersController extends Controller {
         if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
             $fileDirectory = 'files/dk_salaries/'; // '/files/dk_salaries/' doesn't work
-            $fileName = $request->input('date').'.csv';
-         
-            Input::file('csv')->move($fileDirectory, $fileName);    
+            
+            $csvFile = $this->getCsvFile($request, $fileDirectory);
 
-            $csvFile = $fileDirectory . $fileName;   
+            ddAll($csvFile);
 
             $useCase = new UseCase;
             
@@ -71,5 +67,17 @@ class ParsersController extends Controller {
 
         return redirect()->route('admin.parsers.dk_salaries')->with('message', $message);
 	}
+
+    private function getCsvFile($request, $fileDirectory) {
+
+        $timePeriodInUrl = preg_replace('/ /', '-', strtolower($request->input('time-period')));
+        $siteInUrl = strtolower($request->input('site'));
+
+        $fileName = $request->input('date').'-'.$timePeriodInUrl.'-'.$siteInUrl.'.csv';
+         
+        Input::file('csv')->move($fileDirectory, $fileName);    
+
+        return $fileDirectory . $fileName;   
+    }
 
 }

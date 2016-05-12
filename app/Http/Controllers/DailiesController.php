@@ -5,12 +5,12 @@ use App\DkSalary;
 
 class DailiesController extends Controller {
 
-	public function daily($date, $time_period_in_url, $site_in_url) {
+	public function daily($date, $timePeriodInUrl, $siteInUrl) {
 
 		$titleTag = 'Daily | ';
 
-		$timePeriod = preg_replace('/_/', ' ', ucwords($time_period_in_url));
-		$site = strtoupper($site_in_url);
+		$timePeriod = preg_replace('/_/', ' ', ucwords($timePeriodInUrl));
+		$site = strtoupper($siteInUrl);
 
 		$playerPool = PlayerPool::where('date', $date)->where('time_period', $timePeriod)->where('site', $site)->get()[0];
 
