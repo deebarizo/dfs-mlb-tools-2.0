@@ -50,4 +50,11 @@ Route::get('/admin/parsers/dk_lineups', ['as' => 'admin.parsers.dk_lineups', fun
 Route::post('/admin/parsers/dk_lineups', 'ParsersController@parseDkLineups');
 
 
+Route::get('/admin/parsers/dk_lineup_players', ['as' => 'admin.parsers.dk_lineup_players', function() {
 
+	$titleTag = 'DK Lineup Players - Parsers | ';
+
+	return View::make('/admin/parsers/dk_lineup_players', compact('titleTag'));
+}]);
+
+Route::post('/admin/parsers/dk_lineup_players', 'ParsersController@parseDkLineupPlayers');

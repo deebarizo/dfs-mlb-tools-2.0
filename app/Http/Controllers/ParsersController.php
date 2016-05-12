@@ -11,6 +11,12 @@ use App\PlayerPool;
 
 class ParsersController extends Controller {
 
+    public function parseDkLineupPlayers() {
+
+
+        
+    }
+
     public function parseDkLineups(ParseDkSalariesRequest $request) {
 
         if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
