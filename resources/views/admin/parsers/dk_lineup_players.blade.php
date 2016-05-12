@@ -32,6 +32,10 @@
 	</div>
 	<div class="row">
 
+		<div class="col-lg-12"> 
+			<p><strong>Number of Unparsed Lineups: </strong>{{ $numOfUnparsedLineups }}</p>
+		</div>
+
 		{!! Form::open(array('url' => 'admin/parsers/dk_lineup_players')) !!}
 
 			<div class="col-lg-12"> 

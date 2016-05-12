@@ -1,5 +1,7 @@
 <?php
 
+use App\ActualLineup;
+
 /****************************************************************************************
 PAGES
 ****************************************************************************************/
@@ -54,7 +56,9 @@ Route::get('/admin/parsers/dk_lineup_players', ['as' => 'admin.parsers.dk_lineup
 
 	$titleTag = 'DK Lineup Players - Parsers | ';
 
-	return View::make('/admin/parsers/dk_lineup_players', compact('titleTag'));
+	$numOfUnparsedLineups = ActualLineup::where('raw_text_players_parsed', 0)->count();
+
+	return View::make('/admin/parsers/dk_lineup_players', compact('titleTag', 'numOfUnparsedLineups'));
 }]);
 
 Route::post('/admin/parsers/dk_lineup_players', 'ParsersController@parseDkLineupPlayers');

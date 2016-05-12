@@ -1,6 +1,6 @@
 <?php namespace App\UseCases;
 
-ini_set('max_execution_time', 600); // 600 seconds = 10 minutes
+ini_set('max_execution_time', 1200); // 1200 seconds = 20 minutes
 
 use App\Team;
 use App\PlayerPool;
@@ -17,13 +17,15 @@ trait DkLineupPlayersParser {
 
     	$this->message = 'No errors.';
 
-		ActualLineup::where('raw_text_players_parsed', 0)->chunk(100, function($actualLineups) {
+    	$actualLineups = ActualLineup::take(3000)->where('raw_text_players_parsed', 0)->get();
 
-			set_time_limit(120);
-		  	
-		  	foreach ($actualLineups as $actualLineup) {
+	  	foreach ($actualLineups as $actualLineup) {
 
-		  		$rawText = $actualLineup->raw_text_players;
+	  		set_time_limit(120);
+
+	  		$rawText = $actualLineup->raw_text_players;
+
+	  		if ($rawText != '') {
 
 		        $rawText = preg_replace("/\sP\s/", "|P ", $rawText);
 		        $rawText = preg_replace("/\sC\s/", "|C ", $rawText);
@@ -82,10 +84,10 @@ trait DkLineupPlayersParser {
 
 	                $actualLineupPlayer->save();
 	            }
+	  		}
 
-	            $actualLineup->update(['raw_text_players_parsed' => 1]);
-		  	}
-		});
+            $actualLineup->update(['raw_text_players_parsed' => 1]);
+	  	}
 
 		if ($this->message !== 'No errors.') {
 
