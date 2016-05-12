@@ -1,5 +1,7 @@
 <?php namespace App\UseCases;
 
+ini_set('max_execution_time', 600); // 600 seconds = 10 minutes
+
 use App\Team;
 use App\PlayerPool;
 use App\Player;
@@ -40,9 +42,9 @@ trait DkLineupsParser {
 
             $this->players = [];
 
-            while (($row = fgetcsv($handle, 1000000, ',')) !== false) {
+            while (($row = fgetcsv($handle, 5500, ',')) !== false) {
                 
-                if ($i > 0) { 
+                if ($i > 0 && $i <= 5000) { 
                 
                     $this->lineups[$i] = array( 
 
