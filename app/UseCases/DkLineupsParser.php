@@ -42,52 +42,46 @@ trait DkLineupsParser {
 
             $this->players = [];
 
-            while (($row = fgetcsv($handle, 5500, ',')) !== false) {
+            while (($row = fgetcsv($handle, 1000000, ',')) !== false) {
                 
-                if ($i > 0 && $i <= 5000) { 
-                
-                    $this->lineups[$i] = array( 
+                if ($i > 0) { 
 
-                        'player_pool_id' => $playerPool[0]->id,
-                        'rank' => $row[0],
-                        'entryId' => $row[1],
-                        'user' => preg_replace("/\s\(.+\)/", "", $row[2]),
-                        'fpts' => $row[4],
-                        'lineupRawText' => $row[5]
-                    );
+                    set_time_limit(60);
 
-                    if (!is_numeric($this->lineups[$i]['rank'])) {
+                    if (!is_numeric($row[0])) {
 
-                        $this->message = 'The rank field in the csv has a non-number.'; 
+                        $this->message = 'The rank field of EntryId '.$row[1].' in the csv has a non-number.'; 
 
                         return $this;                       
                     }
 
-                    if (!is_numeric($this->lineups[$i]['fpts'])) {
+                    if (!is_numeric($row[4])) {
 
-                        $this->message = 'The fpts field in the csv has a non-number.'; 
+                        $this->message = 'The fpts field of EntryId '.$row[1].' in the csv has a non-number.'; 
 
                         return $this;                       
                     }
+                
+                    $actualLineup = new ActualLineup;
 
-                    if ($this->lineups[$i]['lineupRawText'] != '') {
+                    $actualLineup->player_pool_id = $playerPool[0]->id;
+                    $actualLineup->rank = $row[0];
+                    $actualLineup->user = preg_replace("/\s\(.+\)/", "", $row[2]);
+                    $actualLineup->fpts = $row[4];
+                    $actualLineup->raw_text_players = $row[5];
 
-                        $this->parseLineupRawText($i, $playerPool[0]->id, $this->lineups[$i]['lineupRawText'], $this->lineups[$i]['entryId']);
-                    }
-
-                    if ($this->message !== 'Success!') {
-
-                        return $this;
-                    }
+                    $actualLineup->save();
                 }
 
                 $i++;
             }
         } 
 
-        $this->saveDkLineups($this->lineups);
+        # $this->saveDkLineups($this->lineups);
 
-        $this->addOwnerships($playerPool[0]->id);
+        # $this->addOwnerships($playerPool[0]->id);
+
+        $this->message = 'Success!';
 
         return $this;   
     }

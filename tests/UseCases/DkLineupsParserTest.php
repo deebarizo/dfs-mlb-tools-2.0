@@ -320,13 +320,14 @@ class DkLineupsParserTest extends TestCase {
         
         $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
-        $this->assertContains($results->message, 'The rank field in the csv has a non-number.');
+        $this->assertContains($results->message, 'The rank field of EntryId 402195599 in the csv has a non-number.');
     }
+
 
     /** @test */
     public function validates_csv_with_non_number_in_fpts_field() { 
 
-    	$this->setUpPlayerPool();
+        $this->setUpPlayerPool();
 
         $root = $this->setUpCsvFile($this->csvFiles['invalid']['nonNumericFptsField']);
 
@@ -334,113 +335,7 @@ class DkLineupsParserTest extends TestCase {
         
         $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
-        $this->assertContains($results->message, 'The fpts field in the csv has a non-number.');
-    }
-
-    /** @test */
-    public function validates_csv_with_lineup_that_does_not_match_ten_players() { 
-
-    	$this->setUpPlayerPool();
-
-        $root = $this->setUpCsvFile($this->csvFiles['invalid']['lineupNotTenPlayers']);
-
-        $useCase = new UseCase; 
-        
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
-
-        $this->assertContains($results->message, 'The lineup with entry ID of 402195599 does not have 10 players');
-    }
-
-    /** @test */
-    public function validates_csv_with_lineup_with_missing_player_in_database() { 
-
-    	$this->setUpPlayerPool();
-
-    	$this->setUpPlayers();
-
-        $root = $this->setUpCsvFile($this->csvFiles['invalid']['missingPlayerInDatabase']);
-
-        $useCase = new UseCase; 
-        
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
-
-        $this->assertContains($results->message, 'The lineup with entry ID of 402195599 has a missing player in database: SS Dee Barizo');
-    } 
-
-    /** @test */
-    public function saves_lineup() { 
-
-    	$this->setUpPlayerPool();
-
-    	$this->setUpPlayers();
-
-        $root = $this->setUpCsvFile($this->csvFiles['valid']);
-
-        $useCase = new UseCase; 
-        
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
-
-        $this->assertContains($results->message, 'Success!');
-
-        $actualLineups = ActualLineup::where('player_pool_id', 1)->where('rank', 1)->where('user', 'chrishrabe')->where('fpts', 201.75)->get();
-
-        $this->assertCount(1, $actualLineups);
-
-        $actualLineupPlayers = ActualLineupPlayer::all();
-
-        $this->assertCount(10, $actualLineupPlayers);
-    }
-
-    /** @test */
-    public function saves_ownership() { 
-
-        $this->setUpPlayerPool();
-
-        $this->setUpPlayers();
-
-        $root = $this->setUpCsvFile($this->csvFiles['multipleLineups']);        
-
-        $useCase = new UseCase; 
-        
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
-
-        $this->assertContains($results->message, 'Success!');
-
-        $dkSalaries = DkSalary::where('player_pool_id', 1)
-                            ->where('player_id', 1)
-                            ->where('ownership', 33.3)
-                            ->where('ownership_of_first_position', 33.3)
-                            ->where('ownership_of_second_position', 0.0)
-                            ->get();
-
-        $this->assertCount(1, $dkSalaries);
-
-        $dkSalaries = DkSalary::where('player_pool_id', 1)
-                            ->where('player_id', 3)
-                            ->where('ownership', 100.0)
-                            ->where('ownership_of_first_position', 100.0)
-                            ->where('ownership_of_second_position', 0.0)
-                            ->get();
-
-        $this->assertCount(1, $dkSalaries);
-
-        $dkSalaries = DkSalary::where('player_pool_id', 1)
-                            ->where('player_id', 9)
-                            ->where('ownership', 66.7)
-                            ->where('ownership_of_first_position', 66.7)
-                            ->where('ownership_of_second_position', 0.0)
-                            ->get();
-
-        $this->assertCount(1, $dkSalaries);
-
-        $dkSalaries = DkSalary::where('player_pool_id', 1)
-                            ->where('player_id', 7)
-                            ->where('ownership', 100.0)
-                            ->where('ownership_of_first_position', 66.7)
-                            ->where('ownership_of_second_position', 33.3)
-                            ->get();
-
-        $this->assertCount(1, $dkSalaries);
+        $this->assertContains($results->message, 'The fpts field of EntryId 402195599 in the csv has a non-number.');
     }
 
 }
