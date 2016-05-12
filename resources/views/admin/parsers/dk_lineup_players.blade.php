@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Parsers - DK Lineups</h2>
+			<h2>Parsers - DK Lineup Players</h2>
 
 			<hr>
 
@@ -32,7 +32,7 @@
 	</div>
 	<div class="row">
 
-		{!! Form::open(array('url' => 'admin/parsers/dk_lineup_players', 'files' => true)) !!}
+		{!! Form::open(array('url' => 'admin/parsers/dk_lineup_players')) !!}
 
 			<div class="col-lg-12"> 
 				{!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}

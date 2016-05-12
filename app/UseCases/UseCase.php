@@ -4,4 +4,5 @@ class UseCase {
 
 	use DkSalariesParser;
 	use DkLineupsParser;
+	use DkLineupPlayersParser;
 }

@@ -11,10 +11,15 @@ use App\PlayerPool;
 
 class ParsersController extends Controller {
 
-    public function parseDkLineupPlayers() {
+    public function parseDkLineupPlayers(Request $request) {
 
+        $useCase = new UseCase;
 
-        
+        $results = $useCase->parseDkLineupPlayers();
+
+        $message = $results->message;
+
+        return redirect()->route('admin.parsers.dk_lineup_players')->with('message', $message);
     }
 
     public function parseDkLineups(ParseDkSalariesRequest $request) {
