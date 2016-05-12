@@ -318,6 +318,12 @@ class DkLineupPlayersParserTest extends TestCase {
                                                     ->get();
 
         $this->assertCount(1, $actualLineupPlayers);
+
+        $actualLineup = ActualLineup::where('id', 1)
+                                        ->where('raw_text_players_parsed', 1)
+                                        ->get();
+
+        $this->assertCount(1, $actualLineup);
     }
 
 }

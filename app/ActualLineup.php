@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ActualLineup extends Model {
 
+	protected $fillable = ['raw_text_players_parsed'];
+
     public function playerPool() {
 
     	return $this->belongsTo(PlayerPool::class);

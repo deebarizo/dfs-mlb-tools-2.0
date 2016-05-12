@@ -82,6 +82,8 @@ trait DkLineupPlayersParser {
 
 	                $actualLineupPlayer->save();
 	            }
+
+	            $actualLineup->update(['raw_text_players_parsed' => 1]);
 		  	}
 		});
 
