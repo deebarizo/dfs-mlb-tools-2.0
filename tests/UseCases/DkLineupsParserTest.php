@@ -246,11 +246,6 @@ class DkLineupsParserTest extends TestCase {
 
                 'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,bob,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes"
             ]
-        ],
-
-        'multipleLineups' => [
-
-            'test.csv' => "Rank,EntryId,EntryName,TimeRemaining,Points,Lineup\n1,402195599,chrishrabe (1/2),0,201.75,P Mike Leake P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Matt Carpenter SS Manny Machado OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes\n2,402244112,fu69,0,196,P Jon Lester P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Manny Machado SS Jonathan Villar OF Matt Holliday OF Mookie Betts OF Yoenis Céspedes\n25,402235946,jammer1333,18,179.4,P Jon Lester P Jacob deGrom C Brian McCann 1B Hanley Ramírez 2B Robinson Canó 3B Manny Machado SS Jonathan Villar OF Matt Holliday OF Bryce Harper OF Yoenis Céspedes"
         ]
     ];
 

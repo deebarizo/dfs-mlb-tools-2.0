@@ -71,3 +71,12 @@ $factory->define(App\ActualLineup::class, function ($faker) {
         'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now')
     ];
 });
+
+$factory->define(App\ActualLineupPlayer::class, function ($faker) {
+    
+    return [
+        
+        'created_at' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'updated_at' => $faker->date($format = 'Y-m-d', $max = 'now')
+    ];
+});
