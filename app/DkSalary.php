@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DkSalary extends Model {
 
-    protected $fillable = ['ownership', 'ownership_of_first_position', 'ownership_of_second_position'];
+    protected $fillable = ['ownership', 'ownership_of_first_position', 'ownership_of_second_position', 'ownerships_parsed'];
 
     public function team() {
 

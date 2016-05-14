@@ -16,7 +16,13 @@ class ParsersController extends Controller {
 
     public function parseDkOwnerships(Request $request) {
 
-        
+        $useCase = new UseCase;
+
+        $results = $useCase->parseDkOwnerships();
+
+        $message = $results->message;
+
+        return redirect()->route('admin.parsers.dk_ownerships')->with('message', $message);
     }
 
 

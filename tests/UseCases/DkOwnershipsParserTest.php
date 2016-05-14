@@ -524,6 +524,7 @@ class DkOwnershipsParserTest extends TestCase {
                             ->get();
 
         $this->assertCount(1, $dkSalaries);
+        $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
 
         $dkSalaries = DkSalary::where('player_pool_id', 1)
                             ->where('player_id', 3)
@@ -533,6 +534,7 @@ class DkOwnershipsParserTest extends TestCase {
                             ->get();
 
         $this->assertCount(1, $dkSalaries);
+        $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
 
         $dkSalaries = DkSalary::where('player_pool_id', 1)
                             ->where('player_id', 9)
@@ -542,6 +544,7 @@ class DkOwnershipsParserTest extends TestCase {
                             ->get();
 
         $this->assertCount(1, $dkSalaries);
+        $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
 
         $dkSalaries = DkSalary::where('player_pool_id', 1)
                             ->where('player_id', 7)
@@ -551,6 +554,7 @@ class DkOwnershipsParserTest extends TestCase {
                             ->get();
 
         $this->assertCount(1, $dkSalaries);
+        $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
 	} 
 
 }
