@@ -114,7 +114,7 @@ class ParseDkLineupsTest extends TestCase {
        	$this->visit('/admin/parsers/dk_lineups');
         $this->dontSee('<option value="1">DK, All Day, 2016-01-01</option>');
         $this->see('<option value="2">DK, All Day, 2016-01-02</option>');
-        $this->select('3', 'player-pool-id');
+        $this->select('2', 'player-pool-id');
         $this->type('DKLineups.csv', 'csv')
              ->attach('/files/dk_lineups/', 'csv');
         $this->press('Submit');
