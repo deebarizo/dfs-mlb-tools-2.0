@@ -1,8 +1,14 @@
 <?php namespace App\UseCases;
 
+use Illuminate\Http\Request;
+use App\Http\Requests\ParseDkSalariesRequest;
+use App\Http\Requests\ParseDkLineupsRequest;
+
+use Illuminate\Support\Facades\Input;
+
 trait FileUploader {
 
-    private function uploadCsvFile($timePeriod, $site, $date, $fileDirectory) {
+    public function uploadCsvFile($timePeriod, $site, $date, $fileDirectory, $request) {
 
         $timePeriodInUrl = preg_replace('/ /', '-', strtolower($timePeriod));
         $siteInUrl = strtolower($site);

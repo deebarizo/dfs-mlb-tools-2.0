@@ -55,13 +55,13 @@ class ParsersController extends Controller {
 
             $fileDirectory = 'files/dk_lineups/'; // '/files/dk_salaries/' doesn't work
 
-            $playerPool = PlayerPool::find($response->input('player-pool-id'));
+            $playerPool = PlayerPool::find($request->input('player-pool-id'));
 
             $useCase = new UseCase;
 
-            $csvFile = $useCase->uploadCsvFile($playerPool->time_period, $playerPool->site, $playerPool->date, $fileDirectory);
+            $csvFile = $useCase->uploadCsvFile($playerPool->time_period, $playerPool->site, $playerPool->date, $fileDirectory, $request);
             
-            $results = $useCase->parseDkLineups($csvFile, $request->input('date'), $request->input('site'), $request->input('time-period'));
+            $results = $useCase->parseDkLineups($csvFile, $playerPool->date, $playerPool->site, $playerPool->time_period);
        
             $message = $results->message;
 
@@ -82,7 +82,7 @@ class ParsersController extends Controller {
 
             $useCase = new UseCase;
                 
-            $csvFile = $useCase->uploadCsvFile($request->input('time-period'), $request->input('site'), $request->input('date'), $fileDirectory);
+            $csvFile = $useCase->uploadCsvFile($request->input('time-period'), $request->input('site'), $request->input('date'), $fileDirectory, $request);
             
             $results = $useCase->parseDkSalaries($csvFile, $request->input('date'), $request->input('site'), $request->input('time-period'));
        
