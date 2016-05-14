@@ -31,7 +31,7 @@ class ParsersController extends Controller {
 
         $useCase = new UseCase;
 
-        $playerPools = $useCase->fetchValidPlayerPools();
+        $playerPools = $useCase->fetchPlayerPoolsForDkLineupsParser();
 
         return view('/admin/parsers/dk_lineups', compact('titleTag', 'playerPools'));
     }

@@ -78,7 +78,7 @@ class ParseDkLineupsTest extends TestCase {
 
         $useCase = new UseCase;
 
-        $playerPools = $useCase->fetchValidPlayerPools();
+        $playerPools = $useCase->fetchPlayerPoolsForDkLineupsParser();
 
         $this->assertContains((string)$playerPools[0]->id, '2');
         $this->assertContains((string)$playerPools[1]->id, '4');

@@ -17,7 +17,7 @@ trait DkLineupsParser {
     GET
     ****************************************************************************************/
 
-    public function fetchValidPlayerPools() {
+    public function fetchPlayerPoolsForDkLineupsParser() {
 
         return DB::table('player_pools')
                     ->leftJoin('actual_lineups', 'actual_lineups.player_pool_id', '=', 'player_pools.id')
