@@ -76,6 +76,8 @@ trait DkOwnershipsParser {
 			}
 		}
 
+		DB::table('actual_lineup_players')->delete();
+
 		$this->message = 'Success!';
 
 		return $this;

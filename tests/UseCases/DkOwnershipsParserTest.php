@@ -555,6 +555,10 @@ class DkOwnershipsParserTest extends TestCase {
 
         $this->assertCount(1, $dkSalaries);
         $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
+
+        $numOfActualLineupPlayers = ActualLineupPlayer::count();
+
+        $this->assertContains((string)$numOfActualLineupPlayers, '0');
 	} 
 
 }
