@@ -34,41 +34,25 @@
 
 		{!! Form::open(array('url' => 'admin/parsers/dk_lineups', 'files' => true)) !!}
 
-			<div class="col-lg-2"> 
+			<div class="col-lg-4"> 
 				<div class="form-group">
-					<label for="site">Site:</label>
-					<select name="site" class="form-control">
-					  	<option value="DK">DK</option>
+					<label for="player-pool">Player Pool:</label>
+					<select name="player-pool" class="form-control">
+						@foreach ($playerPools as $playerPool)
+							<option value="{{ $playerPool->id }}">{{ $playerPool->site}}, {{ $playerPool->time_period }}, {{ $playerPool->date }}</option>
+						@endforeach
 					</select>
 				</div>
 			</div>
 
-			<div class="col-lg-2"> 
-				<div class="form-group">
-					<label for="time-period">Time Period:</label>
-					<select name="time-period" class="form-control">
-					  	<option value="All Day">All Day</option>
-					  	<option value="Early">Early</option>
-					  	<option value="Late">Late</option>
-					</select>
-				</div>
-			</div>
-
-			<div class="col-lg-2"> 
-				<div class="form-group">
-					{!! Form::label('date', 'Date (Yesterday):') !!}
-					{!! Form::text('date', setYesterdayDate(), ['class' => 'form-control']) !!}
-				</div>
-			</div>
-
-			<div class="col-lg-2"> 
+			<div class="col-lg-12"> 
 				<div class="form-group">
 					{!! Form::label('csv', 'CSV:') !!}
 					{!! Form::file('csv', '', ['class' => 'form-control']) !!}
 				</div>
 			</div>
 
-			<div class="col-lg-12"> 
+			<div class="col-lg-12" style="margin-top: 15px"> 
 				{!! Form::submit('Submit', ['class' => 'btn btn-primary']) !!}
 			</div>
 

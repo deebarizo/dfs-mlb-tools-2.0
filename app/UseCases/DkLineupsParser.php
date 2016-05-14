@@ -13,6 +13,26 @@ use DB;
 
 trait DkLineupsParser {
 
+    /****************************************************************************************
+    GET
+    ****************************************************************************************/
+
+    public function fetchValidPlayerPools() {
+
+        return DB::table('player_pools')
+                    ->leftJoin('actual_lineups', 'actual_lineups.player_pool_id', '=', 'player_pools.id')
+                    ->select('player_pools.id', 'player_pools.date', 'player_pools.time_period', 'player_pools.site')
+                    ->groupBy('player_pools.id')
+                    ->whereNull('actual_lineups.player_pool_id')
+                    ->orderBy(DB::raw('`date` asc, FIELD(player_pools.time_period, "Early", "Late", "All Day")'))
+                    ->get();
+    }
+
+
+    /****************************************************************************************
+    POST
+    ****************************************************************************************/
+
     public function parseDkLineups($csvFile, $date, $site, $timePeriod) {
 
         $playerPool = PlayerPool::where('date', $date)
