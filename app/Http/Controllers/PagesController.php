@@ -8,7 +8,7 @@ class PagesController extends Controller {
 
 		$titleTag = '';
 
-		$playerPools = PlayerPool::take(50)->get();
+		$playerPools = PlayerPool::take(50)->orderBy('date', 'desc')->get();
 
 		foreach ($playerPools as $playerPool) {
 			

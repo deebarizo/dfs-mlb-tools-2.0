@@ -52,8 +52,6 @@ class ParsersController extends Controller {
             
             $csvFile = $this->getCsvFile($request, $fileDirectory);
 
-            ddAll($csvFile);
-
             $useCase = new UseCase;
             
             $results = $useCase->parseDkSalaries($csvFile, $request->input('date'), $request->input('site'), $request->input('time-period'));
