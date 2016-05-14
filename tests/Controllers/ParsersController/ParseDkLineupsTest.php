@@ -86,6 +86,26 @@ class ParseDkLineupsTest extends TestCase {
         $this->assertContains((string)$playerPools[3]->id, '5');
     }
 
+    public function gets_csv_file() {
+
+        $this->setUpDatabase();
+
+        $response = $this->call('POST', '/admin/parsers/dk_lineups', [
+
+            'player-pool-id' => 5
+        ]);
+
+        $fileDirectory = 'test_folder/';
+
+        $playerPool = PlayerPool::find($response->input('player-pool-id'));
+
+        $useCase = new UseCase;
+
+        $csvFile = $useCase->uploadCsvFile($playerPool->time_period, $playerPool->site, $playerPool->date, $fileDirectory);
+
+        $this->assertContains($csvFile, 'test_folder/2016-01-04-all-day-dk.csv');
+    }
+
 	/** @test */
     public function submits_dk_lineups_csv() {
 
@@ -94,7 +114,7 @@ class ParseDkLineupsTest extends TestCase {
        	$this->visit('/admin/parsers/dk_lineups');
         $this->dontSee('<option value="1">DK, All Day, 2016-01-01</option>');
         $this->see('<option value="2">DK, All Day, 2016-01-02</option>');
-        $this->select('3', 'player-pool');
+        $this->select('3', 'player-pool-id');
         $this->type('DKLineups.csv', 'csv')
              ->attach('/files/dk_lineups/', 'csv');
         $this->press('Submit');

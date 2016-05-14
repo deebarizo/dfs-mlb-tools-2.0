@@ -2,6 +2,8 @@
 
 class UseCase {
 
+	use FileUploader;
+
 	use DkSalariesParser;
 	use DkLineupsParser;
 	use DkLineupPlayersParser;

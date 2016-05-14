@@ -4,6 +4,8 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
+use App\UseCases\UseCase;
+
 use App\Team;
 use App\PlayerPool;
 use App\Player;
@@ -23,6 +25,25 @@ class ParseDkSalariesTest extends TestCase {
         $this->type('DKSalaries.csv', 'csv')
              ->attach('/files/dk_salaries/', 'csv');
         $this->press('Submit');
+    }
+
+    public function gets_csv_file() {
+
+        $response = $this->call('POST', '/admin/parsers/dk_salaries', [
+
+            'site' => 'DK',
+            'time-period' => 'All Day',
+            'date' => '2016-01-01',
+            'csv' => 'Test.csv'
+        ]);
+
+        $fileDirectory = 'test_folder/';
+
+        $useCase = new UseCase;
+
+        $csvFile = $useCase->uploadCsvFile($request->input('time-period'), $request->input('site'), $request->input('date'), $fileDirectory);
+
+        $this->assertContains($csvFile, 'test_folder/2016-01-01-all-day-dk.csv');
     }
 
     /** @test */

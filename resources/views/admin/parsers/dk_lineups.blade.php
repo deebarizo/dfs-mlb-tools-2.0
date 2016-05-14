@@ -36,8 +36,8 @@
 
 			<div class="col-lg-4"> 
 				<div class="form-group">
-					<label for="player-pool">Player Pool:</label>
-					<select name="player-pool" class="form-control">
+					<label for="player-pool-id">Player Pool:</label>
+					<select name="player-pool-id" class="form-control">
 						@foreach ($playerPools as $playerPool)
 							<option value="{{ $playerPool->id }}">{{ $playerPool->site}}, {{ $playerPool->time_period }}, {{ $playerPool->date }}</option>
 						@endforeach

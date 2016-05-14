@@ -40,15 +40,17 @@ class ParsersController extends Controller {
 
         if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
-            # $fileDirectory = 'files/dk_lineups/'; // '/files/dk_salaries/' doesn't work
+            $fileDirectory = 'files/dk_lineups/'; // '/files/dk_salaries/' doesn't work
 
-            # $csvFile = $this->getCsvFile($request, $fileDirectory);
+            $playerPool = PlayerPool::find($response->input('player-pool-id'));
 
-            # $useCase = new UseCase;
+            $useCase = new UseCase;
+
+            $csvFile = $useCase->uploadCsvFile($playerPool->time_period, $playerPool->site, $playerPool->date, $fileDirectory);
             
-            # $results = $useCase->parseDkLineups($csvFile, $request->input('date'), $request->input('site'), $request->input('time-period'));
+            $results = $useCase->parseDkLineups($csvFile, $request->input('date'), $request->input('site'), $request->input('time-period'));
        
-            # $message = $results->message;
+            $message = $results->message;
 
         } else {
 
@@ -63,10 +65,10 @@ class ParsersController extends Controller {
         if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
             $fileDirectory = 'files/dk_salaries/'; // '/files/dk_salaries/' doesn't work
-            
-            $csvFile = $this->getCsvFile($request, $fileDirectory);
 
             $useCase = new UseCase;
+                
+            $csvFile = $useCase->uploadCsvFile($request->input('time-period'), $request->input('site'), $request->input('date'), $fileDirectory);
             
             $results = $useCase->parseDkSalaries($csvFile, $request->input('date'), $request->input('site'), $request->input('time-period'));
        
@@ -79,17 +81,5 @@ class ParsersController extends Controller {
 
         return redirect()->route('admin.parsers.dk_salaries')->with('message', $message);
 	}
-
-    private function getCsvFile($request, $fileDirectory) {
-
-        $timePeriodInUrl = preg_replace('/ /', '-', strtolower($request->input('time-period')));
-        $siteInUrl = strtolower($request->input('site'));
-
-        $fileName = $request->input('date').'-'.$timePeriodInUrl.'-'.$siteInUrl.'.csv';
-         
-        Input::file('csv')->move($fileDirectory, $fileName);    
-
-        return $fileDirectory . $fileName;   
-    }
 
 }
