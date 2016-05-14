@@ -14,6 +14,12 @@ use DB;
 
 class ParsersController extends Controller {
 
+    public function parseDkOwnerships(Request $request) {
+
+        
+    }
+
+
     public function parseDkLineupPlayers(Request $request) {
 
         $useCase = new UseCase;
@@ -24,6 +30,7 @@ class ParsersController extends Controller {
 
         return redirect()->route('admin.parsers.dk_lineup_players')->with('message', $message);
     }
+
 
     public function getParseDkLineups() {
 
@@ -59,6 +66,7 @@ class ParsersController extends Controller {
 
         return redirect()->route('admin.parsers.dk_lineups')->with('message', $message);
     }
+
 
 	public function parseDkSalaries(ParseDkSalariesRequest $request) {
 

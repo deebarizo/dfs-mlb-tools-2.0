@@ -1,6 +1,7 @@
 <?php
 
 use App\ActualLineup;
+use App\DkSalary;
 
 /****************************************************************************************
 PAGES
@@ -57,3 +58,15 @@ Route::get('/admin/parsers/dk_lineup_players', ['as' => 'admin.parsers.dk_lineup
 }]);
 
 Route::post('/admin/parsers/dk_lineup_players', 'ParsersController@parseDkLineupPlayers');
+
+
+Route::get('/admin/parsers/dk_ownerships', ['as' => 'admin.parsers.dk_ownerships', function() {
+
+	$titleTag = 'DK Ownerships - Parsers | ';
+
+	$numOfUnparsedDkSalaries = DkSalary::where('ownerships_parsed', 0)->count();
+
+	return View::make('/admin/parsers/dk_ownerships', compact('titleTag', 'numOfUnparsedDkSalaries'));
+}]);
+
+Route::post('/admin/parsers/dk_ownerships', 'ParsersController@parseDkOwnerships');
