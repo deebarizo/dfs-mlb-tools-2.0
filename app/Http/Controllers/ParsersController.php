@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Requests\ParseDkPlayersRequest;
 use App\Http\Requests\ParseDkActualLineupsRequest;
+use App\Http\Requests\ParseRazzballProjectionsRequest;
 
 use Illuminate\Support\Facades\Input;
 
@@ -13,6 +14,23 @@ use App\PlayerPool;
 use DB;
 
 class ParsersController extends Controller {
+
+    public function showParseRazzballProjections() {
+
+        $titleTag = 'Razzball Projections - Parsers | ';
+
+        $useCase = new UseCase;
+
+        $playerPools = $useCase->fetchPlayerPoolsForProjectionsParsers(setTodayDate());
+
+        return view('/admin/parsers/razzball_projections', compact('titleTag', 'playerPools'));
+    }
+
+    public function parseRazzballProjections(ParseRazzballProjectionsRequest $request) {
+
+
+    }
+
 
     public function parseDkOwnerships(Request $request) {
 

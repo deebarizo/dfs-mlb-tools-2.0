@@ -14,6 +14,7 @@
 				<li><a href="/admin/parsers/dk_actual_lineups">DK Actual Lineups</a></li>
 				<li><a href="/admin/parsers/dk_actual_lineup_players">DK Actual Lineup Players</a></li>
 				<li><a href="/admin/parsers/dk_ownerships">DK Ownerships</a></li>
+				<li><a href="/admin/parsers/razzball_projections">Razzball Projections</a></li>
 			</ul>
 		</div>
 	</div>

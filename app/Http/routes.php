@@ -63,3 +63,8 @@ Route::get('/admin/parsers/dk_ownerships', ['as' => 'admin.parsers.dk_ownerships
 }]);
 
 Route::post('/admin/parsers/dk_ownerships', 'ParsersController@parseDkOwnerships');
+
+
+Route::get('/admin/parsers/razzball_projections', ['as' => 'admin.parsers.razzball_projections', 'uses' => 'ParsersController@showParseRazzballProjections']);
+
+Route::post('/admin/parsers/razzball_projections', 'ParsersController@parseRazzballProjections');
