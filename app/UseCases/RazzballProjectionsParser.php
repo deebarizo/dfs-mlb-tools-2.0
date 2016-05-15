@@ -21,4 +21,15 @@ trait RazzballProjectionsParser {
                     ->get();
     }
 
+
+    /****************************************************************************************
+    POST
+    ****************************************************************************************/
+
+    public function parseRazzballPitcherProjections($csvFile, $playerPoolId) {
+
+
+        
+    }
+
 }
