@@ -1,8 +1,8 @@
 <?php namespace App\UseCases;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\ParseDkSalariesRequest;
-use App\Http\Requests\ParseDkLineupsRequest;
+use App\Http\Requests\ParseDkPlayersRequest;
+use App\Http\Requests\ParseDkActualLineupsRequest;
 
 use Illuminate\Support\Facades\Input;
 

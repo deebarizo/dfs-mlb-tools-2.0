@@ -18,7 +18,7 @@ class PlayerPoolsController extends Controller {
 			$playerPool->site_in_url = strtolower($playerPool->site);
 		}
 
-		return view('pages/home', compact('titleTag', 'playerPools'));
+		return view('pages/player_pools', compact('titleTag', 'playerPools'));
 	}
 
 }

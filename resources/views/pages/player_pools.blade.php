@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Dailies</h2>
+			<h2>Player Pools</h2>
 
 			<hr>
 
@@ -24,7 +24,7 @@
 							<td>{{ $playerPool->time_period }}</td>
 							<td>{{ $playerPool->site }}</td>
 							<td>{{ $playerPool->buy_in }}</td>
-							<td><a href="/dailies/{{ $playerPool->date }}/{{ $playerPool->time_period_in_url }}/{{ $playerPool->site_in_url }}">Daily</a> | <a href="/lineups/{{ $playerPool->date }}/{{ $playerPool->time_period_in_url }}/{{ $playerPool->site_in_url }}">Lineups</a></td>
+							<td><a href="">Player Pool</a> | <a href="">Lineups</a></td>
 						</tr>
 					@endforeach
 				</tbody>

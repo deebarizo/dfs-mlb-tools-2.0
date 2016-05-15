@@ -10,9 +10,9 @@
 			<h4>Parsers</h4>
 
 			<ul>
-				<li><a href="/admin/parsers/dk_salaries">DK Salaries</a></li>
-				<li><a href="/admin/parsers/dk_lineups">DK Lineups</a></li>
-				<li><a href="/admin/parsers/dk_lineup_players">DK Lineup Players</a></li>
+				<li><a href="/admin/parsers/dk_players">DK Players</a></li>
+				<li><a href="/admin/parsers/dk_actual_lineups">DK Actual Lineups</a></li>
+				<li><a href="/admin/parsers/dk_actual_lineup_players">DK Actual Lineup Players</a></li>
 				<li><a href="/admin/parsers/dk_ownerships">DK Ownerships</a></li>
 			</ul>
 		</div>

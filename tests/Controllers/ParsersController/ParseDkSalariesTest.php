@@ -9,7 +9,7 @@ use App\UseCases\UseCase;
 use App\Team;
 use App\PlayerPool;
 use App\Player;
-use App\DkSalary;
+use App\DkPlayer;
 
 class ParseDkSalariesTest extends TestCase {
 

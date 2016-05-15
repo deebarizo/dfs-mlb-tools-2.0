@@ -11,9 +11,9 @@ use App\UseCases\UseCase;
 use App\Team;
 use App\PlayerPool;
 use App\Player;
-use App\DkSalary;
-use App\ActualLineup;
-use App\ActualLineupPlayer;
+use App\DkPlayer;
+use App\DkActualLineup;
+use App\DkActualLineupPlayer;
 
 class DkLineupsParserTest extends TestCase {
 

@@ -33,7 +33,7 @@
 	<div class="row">
 
 		<div class="col-lg-12"> 
-			<p><strong>Number of Unparsed DK Salaries: </strong>{{ $numOfUnparsedDkSalaries }}</p>
+			<p><strong>Number of Unparsed DK Players: </strong>{{ $numOfUnparsedDkPlayers }}</p>
 		</div>
 
 		{!! Form::open(array('url' => 'admin/parsers/dk_ownerships')) !!}

@@ -3,11 +3,11 @@
 use App\Team;
 use App\PlayerPool;
 use App\Player;
-use App\DkSalary;
+use App\DkPlayer;
 
-trait DkSalariesParser {
+trait DkPlayersParser {
 
-	public function parseDkSalaries($csvFile, $date, $site, $timePeriod) {
+	public function parseDkPlayers($csvFile, $date, $site, $timePeriod) {
 
         $duplicatePlayerPoolExists = PlayerPool::where('date', $date)
                                                ->where('site', $site)
@@ -25,13 +25,13 @@ trait DkSalariesParser {
 			
 			$i = 0; // index
 
-			$this->players = [];
+			$this->dkPlayers = [];
 
 			while (($row = fgetcsv($handle, 5000, ',')) !== false) {
 				
 				if ($i > 7) { 
 				
-				    $this->players[$i] = array( 
+				    $this->dkPlayers[$i] = array( 
 
 				    	'position' => $row[11],
 				       	'nameDk' => convertAccentLettersToEnglish($row[13]),
@@ -40,28 +40,28 @@ trait DkSalariesParser {
 				       	'teamNameDk' => $row[17]
 				    );
 
-				    if (is_numeric($this->players[$i]['position'])) {
+				    if (is_numeric($this->dkPlayers[$i]['position'])) {
 
 						$this->message = 'The CSV format has changed. The position field has numbers.'; 
 
 						return $this;				    	
 				    }
 
-				    if (is_numeric($this->players[$i]['nameDk'])) {
+				    if (is_numeric($this->dkPlayers[$i]['nameDk'])) {
 
 						$this->message = 'The CSV format has changed. The name field has numbers.'; 
 
 						return $this;				    	
 				    }
 
-				    if (!is_numeric($this->players[$i]['dkId'])) {
+				    if (!is_numeric($this->dkPlayers[$i]['dkId'])) {
 
 						$this->message = 'The CSV format has changed. The DK id field has non-numbers.'; 
 
 						return $this;				    	
 				    }
 
-				    if (!is_numeric($this->players[$i]['salary'])) {
+				    if (!is_numeric($this->dkPlayers[$i]['salary'])) {
 
 						$this->message = 'The CSV format has changed. The salary field has non-numbers.'; 
 
@@ -71,7 +71,7 @@ trait DkSalariesParser {
 				    $gameInfo = $row[16];
 				    $gameInfo = preg_replace("/(\w+@\w+)(\s)(.*)/", "$1", $gameInfo);
 				    $gameInfo = preg_replace("/@/", "", $gameInfo);
-				    $this->players[$i]['oppTeamNameDk'] = preg_replace("/".$this->players[$i]['teamNameDk']."/", "", $gameInfo);
+				    $this->dkPlayers[$i]['oppTeamNameDk'] = preg_replace("/".$this->dkPlayers[$i]['teamNameDk']."/", "", $gameInfo);
 
 				    $teams = [
 
@@ -88,11 +88,11 @@ trait DkSalariesParser {
 
 				    foreach ($teams as $team) {
 
-					    $teamExists = Team::where('name_dk', $this->players[$i][$team['key']])->count();
+					    $teamExists = Team::where('name_dk', $this->dkPlayers[$i][$team['key']])->count();
 
 					    if (!$teamExists) {
 
-							$this->message = 'The DraftKings'.$team['phrase'].'team name, <strong>'.$this->players[$i][$team['key']].'</strong>, does not exist in the database.'; 
+							$this->message = 'The DraftKings'.$team['phrase'].'team name, <strong>'.$this->dkPlayers[$i][$team['key']].'</strong>, does not exist in the database.'; 
 
 							return $this;
 					    }	
@@ -103,12 +103,12 @@ trait DkSalariesParser {
 			}
 		} 
 
-		$this->saveDkSalaries($date, $site, $timePeriod);
+		$this->saveDkPlayers($date, $site, $timePeriod);
 
 		return $this;	
 	}
 
-	private function saveDkSalaries($date, $site, $timePeriod) {
+	private function saveDkPlayers($date, $site, $timePeriod) {
 
 		$playerPool = new PlayerPool;
 
@@ -119,33 +119,33 @@ trait DkSalariesParser {
 
 		$playerPool->save();
 
-		foreach ($this->players as $player) {
+		foreach ($this->dkPlayers as $dkPlayer) {
 
-			$teamId = Team::where('name_dk', $player['teamNameDk'])->pluck('id')[0];
+			$teamId = Team::where('name_dk', $dkPlayer['teamNameDk'])->pluck('id')[0];
 
-			$playerExists = Player::where('name_dk', $player['nameDk'])->where('team_id', $teamId)->count();
+			$playerExists = Player::where('name_dk', $dkPlayer['nameDk'])->where('team_id', $teamId)->count();
 
 			if (!$playerExists) {
 
-				$ePlayer = new Player;
+				$player = new Player;
 
-				$ePlayer->team_id = $teamId;
-				$ePlayer->name_dk = $player['nameDk'];
+				$player->team_id = $teamId;
+				$player->name_dk = $dkPlayer['nameDk'];
 
-				$ePlayer->save();
+				$player->save();
 			}
 
-			$dkSalary = new dkSalary;
+			$eDkPlayer = new DkPlayer;
 
-			$dkSalary->player_pool_id = $playerPool->id;
-			$dkSalary->player_id = Player::where('name_dk', $player['nameDk'])->pluck('id')[0];
-			$dkSalary->dk_id = $player['dkId'];
-			$dkSalary->team_id = $teamId;
-			$dkSalary->opp_team_id = Team::where('name_dk', $player['oppTeamNameDk'])->pluck('id')[0];
-			$dkSalary->position = $player['position'];
-			$dkSalary->salary = $player['salary'];
+			$eDkPlayer->player_pool_id = $playerPool->id;
+			$eDkPlayer->player_id = Player::where('name_dk', $dkPlayer['nameDk'])->pluck('id')[0];
+			$eDkPlayer->dk_id = $dkPlayer['dkId'];
+			$eDkPlayer->team_id = $teamId;
+			$eDkPlayer->opp_team_id = Team::where('name_dk', $dkPlayer['oppTeamNameDk'])->pluck('id')[0];
+			$eDkPlayer->position = $dkPlayer['position'];
+			$eDkPlayer->salary = $dkPlayer['salary'];
 
-			$dkSalary->save();
+			$eDkPlayer->save();
 		}
 
 		$this->message = 'Success!';

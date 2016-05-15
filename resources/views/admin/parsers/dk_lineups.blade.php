@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Parsers - DK Lineups</h2>
+			<h2>Parsers - DK Actual Lineups</h2>
 
 			<hr>
 
@@ -32,9 +32,9 @@
 	</div>
 	<div class="row">
 
-		{!! Form::open(array('url' => 'admin/parsers/dk_lineups', 'files' => true)) !!}
+		{!! Form::open(array('url' => 'admin/parsers/dk_actual_lineups', 'files' => true)) !!}
 
-			<div class="col-lg-4"> 
+			<div class="col-lg-5"> 
 				<div class="form-group">
 					<label for="player-pool-id">Player Pool:</label>
 					<select name="player-pool-id" class="form-control">
@@ -43,7 +43,7 @@
 								<option value="{{ $playerPool->id }}">{{ $playerPool->site}}, {{ $playerPool->time_period }}, {{ $playerPool->date }}</option>
 							@endforeach
 						@else
-							<option value="">All the player pools have been parsed for DK lineups.</option>
+							<option value="">All player pools have been parsed.</option>
 						@endif
 					</select>
 				</div>

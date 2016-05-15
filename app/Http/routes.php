@@ -45,7 +45,7 @@ Route::get('/admin/parsers/dk_actual_lineup_players', ['as' => 'admin.parsers.dk
 
 	$titleTag = 'DK Actual Lineup Players - Parsers | ';
 
-	$numOfUnparsedLineups = DkActualLineup::where('raw_text_players_parsed', 0)->count();
+	$numOfUnparsedDkActualLineups = DkActualLineup::where('raw_text_players_parsed', 0)->count();
 
 	return View::make('/admin/parsers/dk_actual_lineup_players', compact('titleTag', 'numOfUnparsedLineups'));
 }]);
