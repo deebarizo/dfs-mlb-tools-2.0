@@ -99,7 +99,17 @@ class RazzballPitcherProjectionsParserTest extends TestCase {
             'nonPitcher' => [
 
                 'test.csv' => "#,Name,Team,Date,GT,DH,Opp,LU,W,L,IP,H,ER,K,BB+ HBP,ERA,WHIP,PTS,Salary,$/Pt\n1,Bob Jones,NYA,5/15,1,0,CHA,Live,0.49,0.23,6.3,5.8,2.1,6.3,1.4,3.04,1.10,20.2,9200,455.4"
-            ]            
+            ],
+
+            'invalidLineupField' => [
+
+                'test.csv' => "#,Name,Team,Date,GT,DH,Opp,LU,W,L,IP,H,ER,K,BB+ HBP,ERA,WHIP,PTS,Salary,$/Pt\n1,Masahiro Tanaka,NYA,5/15,1,0,CHA,bob,0.49,0.23,6.3,5.8,2.1,6.3,1.4,3.04,1.10,20.2,9200,455.4"
+            ],
+
+            'nonNumericFptsField' => [
+
+                'test.csv' => "#,Name,Team,Date,GT,DH,Opp,LU,W,L,IP,H,ER,K,BB+ HBP,ERA,WHIP,PTS,Salary,$/Pt\n1,Masahiro Tanaka,NYA,5/15,1,0,CHA,Live,0.49,0.23,6.3,5.8,2.1,6.3,1.4,3.04,1.10,bob,9200,455.4"
+            ]
         ]
     ];
 
@@ -152,6 +162,53 @@ class RazzballPitcherProjectionsParserTest extends TestCase {
         $results = $useCase->parseRazzballPitcherProjections($root->url().'/test.csv', 1);
 
         $this->assertContains($results->message, 'Success!');
+    }
+
+    /** @test */
+    public function validates_lineup_field_in_csv() {
+
+        $this->setUpDatabase();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['invalidLineupField']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseRazzballPitcherProjections($root->url().'/test.csv', 1);
+
+        $this->assertContains($results->message, 'The lineup field is "bob". It should be "Live" or "Lst7".');
+    }
+
+    /** @test */
+    public function validates_that_fpts_field_is_numeric() {
+
+        $this->setUpDatabase();
+
+        $root = $this->setUpCsvFile($this->csvFiles['invalid']['nonNumericFptsField']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseRazzballPitcherProjections($root->url().'/test.csv', 1);
+
+        $this->assertContains($results->message, 'The fpts field is "bob". It should be a number.');                
+    }
+
+    /** @test */
+    public function updates_razzball_fields_of_dk_player() {
+
+        $this->setUpDatabase();
+
+        $root = $this->setUpCsvFile($this->csvFiles['valid']['razzballNameMatchesWithNameRazzballColumn']);
+
+        $useCase = new UseCase; 
+        
+        $results = $useCase->parseRazzballPitcherProjections($root->url().'/test.csv', 1);
+
+        $this->assertContains($results->message, 'Success!');
+
+        $dkPlayer = DkPlayer::find(2);
+
+        $this->assertContains((string)$dkPlayer->lineup_razzball, 'Live');
+        $this->assertContains((string)$dkPlayer->fpts_razzball, '20.20');
     }
 
 }

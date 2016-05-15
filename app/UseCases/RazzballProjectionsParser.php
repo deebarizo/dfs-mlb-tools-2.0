@@ -39,6 +39,22 @@ trait RazzballProjectionsParser {
                     set_time_limit(60);
                 
                     $razzballName = $row[1];
+                    $lineup = $row[7];
+                    $fpts = $row[17];
+
+                    if ($lineup !== 'Live' && $lineup !== 'Lst7') {
+
+                        $this->message = 'The lineup field is "'.$lineup.'". It should be "Live" or "Lst7".'; 
+
+                        return $this;  
+                    }
+
+                    if (!is_numeric($fpts)) {
+
+                        $this->message = 'The fpts field is "'.$fpts.'". It should be a number.'; 
+
+                        return $this;                          
+                    }
 
                     $dkPlayer = DB::table('player_pools')
                                     ->join('dk_players', 'dk_players.player_pool_id', '=', 'player_pools.id')
@@ -63,6 +79,10 @@ trait RazzballProjectionsParser {
 
                         return $this;  
                     }
+
+                    DB::table('dk_players')
+                        ->where('id', $dkPlayer->id)
+                        ->update(['lineup_razzball' => $lineup, 'fpts_razzball' => $fpts]);
                 }
 
                 $i++;
