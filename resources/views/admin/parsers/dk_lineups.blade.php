@@ -38,9 +38,13 @@
 				<div class="form-group">
 					<label for="player-pool-id">Player Pool:</label>
 					<select name="player-pool-id" class="form-control">
-						@foreach ($playerPools as $playerPool)
-							<option value="{{ $playerPool->id }}">{{ $playerPool->site}}, {{ $playerPool->time_period }}, {{ $playerPool->date }}</option>
-						@endforeach
+						@if (count($playerPools) > 0)
+							@foreach ($playerPools as $playerPool)
+								<option value="{{ $playerPool->id }}">{{ $playerPool->site}}, {{ $playerPool->time_period }}, {{ $playerPool->date }}</option>
+							@endforeach
+						@else
+							<option value="">All the player pools have been parsed for DK lineups.</option>
+						@endif
 					</select>
 				</div>
 			</div>
