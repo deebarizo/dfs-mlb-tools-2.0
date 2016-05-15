@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Input;
 
 trait FileUploader {
 
-    public function uploadCsvFile($timePeriod, $site, $date, $fileDirectory, $request) {
+    public function uploadCsvFileForDkParsers($timePeriod, $site, $date, $fileDirectory, $request) {
 
         $timePeriodInUrl = preg_replace('/ /', '-', strtolower($timePeriod));
         $siteInUrl = strtolower($site);

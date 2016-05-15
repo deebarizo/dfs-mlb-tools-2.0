@@ -1,13 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\PlayerPool;
-use App\ActualLineup;
 
 use DB;
 
-class PagesController extends Controller {
+class PlayerPoolsController extends Controller {
 
-	public function home() {
+	public function showPlayerPools() {
 
 		$titleTag = '';
 

@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ActualLineup extends Model {
+class DkActualLineup extends Model {
 
 	protected $fillable = ['raw_text_players_parsed'];
 
-    public function playerPool() {
+    public function player_pool() {
 
     	return $this->belongsTo(PlayerPool::class);
     }
 
-    public function actual_lineup_players() {
+    public function dk_actual_lineup_players() {
 
-        return $this->hasMany(ActualLineupPlayer::class);
+        return $this->hasMany(DkActualLineupPlayer::class);
     }
 
 }

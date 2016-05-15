@@ -1,7 +1,7 @@
 <?php
 
-use App\ActualLineup;
-use App\DkSalary;
+use App\DkActualLineup;
+use App\DkPlayer;
 
 /****************************************************************************************
 PAGES
@@ -9,10 +9,10 @@ PAGES
 
 Route::get('/', function() {
 
-	return redirect('/dailies');
+	return redirect('/player_pools');
 });
 
-Route::get('/dailies', 'PagesController@home');
+Route::get('/player_pools', 'PlayerPoolsController@showPlayerPools');
 
 Route::get('/admin', function() {
 
@@ -23,50 +23,43 @@ Route::get('/admin', function() {
 
 
 /****************************************************************************************
-DAILIES
-****************************************************************************************/
-
-Route::get('/dailies/{date}/{timePeriodInUrl}/{siteInUrl}', 'DailiesController@daily');
-
-
-/****************************************************************************************
 ADMIN
 ****************************************************************************************/
 
-Route::get('/admin/parsers/dk_salaries', ['as' => 'admin.parsers.dk_salaries', function() {
+Route::get('/admin/parsers/dk_players', ['as' => 'admin.parsers.dk_players', function() {
 
 	$titleTag = 'DK Salaries - Parsers | ';
 
-	return View::make('/admin/parsers/dk_salaries', compact('titleTag'));
+	return View::make('/admin/parsers/dk_players', compact('titleTag'));
 }]);
 
-Route::post('/admin/parsers/dk_salaries', 'ParsersController@parseDkSalaries');
+Route::post('/admin/parsers/dk_players', 'ParsersController@parseDkPlayers');
 
 
-Route::get('/admin/parsers/dk_lineups', ['as' => 'admin.parsers.dk_lineups', 'uses' => 'ParsersController@getParseDkLineups']);
+Route::get('/admin/parsers/dk_actual_lineups', ['as' => 'admin.parsers.dk_actual_lineups', 'uses' => 'ParsersController@showParseDkActualLineups']);
 
-Route::post('/admin/parsers/dk_lineups', 'ParsersController@parseDkLineups');
+Route::post('/admin/parsers/dk_actual_lineups', 'ParsersController@parseDkActualLineups');
 
 
-Route::get('/admin/parsers/dk_lineup_players', ['as' => 'admin.parsers.dk_lineup_players', function() {
+Route::get('/admin/parsers/dk_actual_lineup_players', ['as' => 'admin.parsers.dk_actual_lineup_players', function() {
 
-	$titleTag = 'DK Lineup Players - Parsers | ';
+	$titleTag = 'DK Actual Lineup Players - Parsers | ';
 
-	$numOfUnparsedLineups = ActualLineup::where('raw_text_players_parsed', 0)->count();
+	$numOfUnparsedLineups = DkActualLineup::where('raw_text_players_parsed', 0)->count();
 
-	return View::make('/admin/parsers/dk_lineup_players', compact('titleTag', 'numOfUnparsedLineups'));
+	return View::make('/admin/parsers/dk_actual_lineup_players', compact('titleTag', 'numOfUnparsedLineups'));
 }]);
 
-Route::post('/admin/parsers/dk_lineup_players', 'ParsersController@parseDkLineupPlayers');
+Route::post('/admin/parsers/dk_actual_lineup_players', 'ParsersController@parseDkActualLineupPlayers');
 
 
 Route::get('/admin/parsers/dk_ownerships', ['as' => 'admin.parsers.dk_ownerships', function() {
 
 	$titleTag = 'DK Ownerships - Parsers | ';
 
-	$numOfUnparsedDkSalaries = DkSalary::where('ownerships_parsed', 0)->count();
+	$numOfUnparsedDkPlayers = DkPlayers::where('ownerships_parsed', 0)->count();
 
-	return View::make('/admin/parsers/dk_ownerships', compact('titleTag', 'numOfUnparsedDkSalaries'));
+	return View::make('/admin/parsers/dk_ownerships', compact('titleTag', 'numOfUnparsedDkPlayers'));
 }]);
 
 Route::post('/admin/parsers/dk_ownerships', 'ParsersController@parseDkOwnerships');

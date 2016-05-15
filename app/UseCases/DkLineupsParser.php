@@ -17,7 +17,7 @@ trait DkLineupsParser {
     GET
     ****************************************************************************************/
 
-    public function fetchPlayerPoolsForDkLineupsParser() {
+    public function fetchPlayerPoolsForDkActualLineupsParser() {
 
         return DB::table('player_pools')
                     ->leftJoin('actual_lineups', 'actual_lineups.player_pool_id', '=', 'player_pools.id')
@@ -33,7 +33,7 @@ trait DkLineupsParser {
     POST
     ****************************************************************************************/
 
-    public function parseDkLineups($csvFile, $date, $site, $timePeriod) {
+    public function parseDkActualLineups($csvFile, $date, $site, $timePeriod) {
 
         $playerPool = PlayerPool::where('date', $date)
                                       ->where('site', $site)

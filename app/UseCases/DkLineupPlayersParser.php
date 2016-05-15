@@ -13,7 +13,7 @@ use DB;
 
 trait DkLineupPlayersParser {
 
-    public function parseDkLineupPlayers() {
+    public function parseDkActualLineupPlayers() {
 
     	$this->message = 'No errors.';
 

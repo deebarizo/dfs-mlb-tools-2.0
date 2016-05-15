@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActualLineupPlayersTable extends Migration
+class CreateDkActualLineupPlayersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,14 @@ class CreateActualLineupPlayersTable extends Migration
      */
     public function up()
     {
-        Schema::create('actual_lineup_players', function($table)
+        Schema::create('dk_actual_lineup_players', function($table)
         {
             $table->increments('id');
-            $table->integer('actual_lineup_id')->unsigned();
-            $table->foreign('actual_lineup_id')->references('id')->on('actual_lineups');
+            $table->integer('dk_actual_lineup_id')->unsigned();
+            $table->foreign('dk_actual_lineup_id')->references('id')->on('dk_actual_lineups');
             $table->string('position');
-            $table->integer('dk_salary_id')->unsigned();
-            $table->foreign('dk_salary_id')->references('id')->on('dk_salaries');
+            $table->integer('dk_player_id')->unsigned();
+            $table->foreign('dk_player_id')->references('id')->on('dk_players');
             $table->date('created_at');
             $table->date('updated_at');
         });
@@ -32,6 +32,6 @@ class CreateActualLineupPlayersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('actual_lineup_players');
+        Schema::dropIfExists('dk_actual_lineup_players');
     }
 }

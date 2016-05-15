@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DkSalary extends Model {
+class DkPlayer extends Model {
 
     protected $fillable = ['ownership', 'ownership_of_first_position', 'ownership_of_second_position', 'ownerships_parsed'];
 
@@ -13,12 +13,12 @@ class DkSalary extends Model {
     	return $this->belongsTo(Team::class);
     }
 
-    public function oppTeam() {
+    public function opp_team() {
 
     	return $this->belongsTo(Team::class);
     }
 
-    public function playerPool() {
+    public function player_pool() {
 
     	return $this->belongsTo(PlayerPool::class);
     }
@@ -28,9 +28,9 @@ class DkSalary extends Model {
     	return $this->belongsTo(Player::class);
     }
 
-    public function actual_lineup_players() {
+    public function dk_actual_lineup_players() {
 
-        return $this->hasMany(ActualLineupPlayer::class);
+        return $this->hasMany(DkActualLineupPlayer::class);
     }
 
 }
