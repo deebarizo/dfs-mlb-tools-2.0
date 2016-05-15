@@ -11,37 +11,30 @@ use App\PlayerPool;
 use App\Player;
 use App\DkPlayer;
 
-class ParseDkSalariesTest extends TestCase {
+class ParseDkPlayersTest extends TestCase {
 
     use DatabaseTransactions;
 
 	/** @test */
-    public function submits_dk_salaries_csv() {
+    public function submits_dk_players_csv() {
 
-       	$this->visit('/admin/parsers/dk_salaries');
+       	$this->visit('/admin/parsers/dk_players');
         $this->select('DK', 'site');
         $this->select('All Day', 'time-period');
        	$this->type('2016-03-31', 'date');
         $this->type('DKSalaries.csv', 'csv')
-             ->attach('/files/dk_salaries/', 'csv');
+             ->attach('/files/dk_players/', 'csv');
         $this->press('Submit');
     }
 
+    /** @test */
     public function gets_csv_file() {
-
-        $response = $this->call('POST', '/admin/parsers/dk_salaries', [
-
-            'site' => 'DK',
-            'time-period' => 'All Day',
-            'date' => '2016-01-01',
-            'csv' => 'Test.csv'
-        ]);
 
         $fileDirectory = 'test_folder/';
 
         $useCase = new UseCase;
 
-        $csvFile = $useCase->uploadCsvFile($request->input('time-period'), $request->input('site'), $request->input('date'), $fileDirectory);
+        $csvFile = $useCase->uploadCsvFileForDkParsers('All Day', 'DK', '2016-01-01', $fileDirectory, $request = '');
 
         $this->assertContains($csvFile, 'test_folder/2016-01-01-all-day-dk.csv');
     }
@@ -49,7 +42,7 @@ class ParseDkSalariesTest extends TestCase {
     /** @test */
     public function validates_required_inputs() {
 
-        $this->call('POST', '/admin/parsers/dk_salaries', [
+        $this->call('POST', '/admin/parsers/dk_players', [
 
             'date' => '',
             'csv' => ''
@@ -63,13 +56,13 @@ class ParseDkSalariesTest extends TestCase {
     /** @test */
     public function validates_successful_input() {
 
-        $this->call('POST', '/admin/parsers/dk_salaries', [
+        $this->call('POST', '/admin/parsers/dk_players', [
 
             'date' => '2016-04-02',
             'csv' => 'Test.csv'
         ]);
 
-        $this->assertRedirectedTo('/admin/parsers/dk_salaries');
+        $this->assertRedirectedTo('/admin/parsers/dk_players');
 
         $this->followRedirects();
 

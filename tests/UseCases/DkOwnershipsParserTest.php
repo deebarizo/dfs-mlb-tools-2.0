@@ -37,7 +37,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Mike Leake'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 1, 
             'player_pool_id' => 1,
@@ -52,7 +52,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Jacob deGrom'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 2, 
             'player_pool_id' => 1,
@@ -67,7 +67,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Brian McCann'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 3, 
             'player_pool_id' => 1,
@@ -82,7 +82,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Hanley Ramirez'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 4, 
             'player_pool_id' => 1,
@@ -97,7 +97,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Robinson Cano'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 5, 
             'player_pool_id' => 1,
@@ -112,7 +112,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Matt Carpenter'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 6, 
             'player_pool_id' => 1,
@@ -127,7 +127,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Manny Machado'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 7, 
             'player_pool_id' => 1,
@@ -142,7 +142,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Matt Holliday'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 8, 
             'player_pool_id' => 1,
@@ -157,7 +157,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Mookie Betts'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 9, 
             'player_pool_id' => 1,
@@ -172,7 +172,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Yoenis Cespedes'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 10, 
             'player_pool_id' => 1,
@@ -187,7 +187,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Jon Lester'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 11, 
             'player_pool_id' => 1,
@@ -202,7 +202,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Jonathan Villar'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 12, 
             'player_pool_id' => 1,
@@ -217,7 +217,7 @@ class DkOwnershipsParserTest extends TestCase {
             'name_dk' => 'Bryce Harper'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 13, 
             'player_pool_id' => 1,
@@ -228,7 +228,7 @@ class DkOwnershipsParserTest extends TestCase {
 
     private function setUpActualLineups() {
 
-        factory(ActualLineup::class)->create([
+        factory(DkActualLineup::class)->create([
         
             'id' => 1,
             'player_pool_id' => 1,
@@ -239,7 +239,7 @@ class DkOwnershipsParserTest extends TestCase {
             'raw_text_players_parsed' => 1
         ]);
 
-        factory(ActualLineup::class)->create([
+        factory(DkActualLineup::class)->create([
         
             'id' => 2,
             'player_pool_id' => 1,
@@ -250,7 +250,7 @@ class DkOwnershipsParserTest extends TestCase {
             'raw_text_players_parsed' => 1
         ]);
 
-        factory(ActualLineup::class)->create([
+        factory(DkActualLineup::class)->create([
         
             'id' => 3,
             'player_pool_id' => 1,
@@ -264,244 +264,244 @@ class DkOwnershipsParserTest extends TestCase {
 
     private function setUpActualLineupPlayers() {
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 1,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => 'P',
-            'dk_salary_id' => 1 
+            'dk_player_id' => 1 
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 2,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => 'P',
-            'dk_salary_id' => 2 
+            'dk_player_id' => 2 
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 3,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => 'C',
-            'dk_salary_id' => 3 
+            'dk_player_id' => 3 
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 4,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => '1B',
-            'dk_salary_id' => 4
+            'dk_player_id' => 4
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 5,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => '2B',
-            'dk_salary_id' => 5
+            'dk_player_id' => 5
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 6,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => '3B',
-            'dk_salary_id' => 6
+            'dk_player_id' => 6
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 7,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => 'SS',
-            'dk_salary_id' => 7
+            'dk_player_id' => 7
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 8,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => 'OF',
-            'dk_salary_id' => 8
+            'dk_player_id' => 8
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 9,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => 'OF',
-            'dk_salary_id' => 9
+            'dk_player_id' => 9
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 10,
-            'actual_lineup_id' => 1,
+            'dk_actual_lineup_id' => 1,
             'position' => 'OF',
-            'dk_salary_id' => 10
+            'dk_player_id' => 10
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 11,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => 'P',
-            'dk_salary_id' => 11
+            'dk_player_id' => 11
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 12,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => 'P',
-            'dk_salary_id' => 2 
+            'dk_player_id' => 2 
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 13,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => 'C',
-            'dk_salary_id' => 3
+            'dk_player_id' => 3
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 14,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => '1B',
-            'dk_salary_id' => 4
+            'dk_player_id' => 4
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 15,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => '2B',
-            'dk_salary_id' => 5
+            'dk_player_id' => 5
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 16,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => '3B',
-            'dk_salary_id' => 7
+            'dk_player_id' => 7
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 17,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => 'SS',
-            'dk_salary_id' => 12
+            'dk_player_id' => 12
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 18,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => 'OF',
-            'dk_salary_id' => 8
+            'dk_player_id' => 8
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 19,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => 'OF',
-            'dk_salary_id' => 9
+            'dk_player_id' => 9
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 20,
-            'actual_lineup_id' => 2,
+            'dk_actual_lineup_id' => 2,
             'position' => 'OF',
-            'dk_salary_id' => 10
+            'dk_player_id' => 10
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 21,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => 'P',
-            'dk_salary_id' => 11
+            'dk_player_id' => 11
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 22,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => 'P',
-            'dk_salary_id' => 2
+            'dk_player_id' => 2
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 23,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => 'C',
-            'dk_salary_id' => 3
+            'dk_player_id' => 3
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 24,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => '1B',
-            'dk_salary_id' => 4
+            'dk_player_id' => 4
         ]);    
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 25,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => '2B',
-            'dk_salary_id' => 5
+            'dk_player_id' => 5
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 26,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => '3B',
-            'dk_salary_id' => 7
+            'dk_player_id' => 7
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 27,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => 'SS',
-            'dk_salary_id' => 12
+            'dk_player_id' => 12
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 28,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => 'OF',
-            'dk_salary_id' => 8
+            'dk_player_id' => 8
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 29,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => 'OF',
-            'dk_salary_id' => 13
+            'dk_player_id' => 13
         ]);
 
-        factory(ActualLineupPlayer::class)->create([
+        factory(DkActualLineupPlayer::class)->create([
         
             'id' => 30,
-            'actual_lineup_id' => 3,
+            'dk_actual_lineup_id' => 3,
             'position' => 'OF',
-            'dk_salary_id' => 10
+            'dk_player_id' => 10
         ]);    
     }
 
@@ -516,49 +516,49 @@ class DkOwnershipsParserTest extends TestCase {
 
         $this->assertContains($results->message, 'Success!');
 
-        $dkSalaries = DkSalary::where('player_pool_id', 1)
+        $dkPlayers = DkPlayer::where('player_pool_id', 1)
                             ->where('player_id', 1)
                             ->where('ownership', 33.3)
                             ->where('ownership_of_first_position', 33.3)
                             ->where('ownership_of_second_position', 0.0)
                             ->get();
 
-        $this->assertCount(1, $dkSalaries);
-        $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
+        $this->assertCount(1, $dkPlayers);
+        $this->assertContains((string)$dkPlayers[0]->ownerships_parsed, '1');
 
-        $dkSalaries = DkSalary::where('player_pool_id', 1)
+        $dkPlayers = DkPlayer::where('player_pool_id', 1)
                             ->where('player_id', 3)
                             ->where('ownership', 100.0)
                             ->where('ownership_of_first_position', 100.0)
                             ->where('ownership_of_second_position', 0.0)
                             ->get();
 
-        $this->assertCount(1, $dkSalaries);
-        $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
+        $this->assertCount(1, $dkPlayers);
+        $this->assertContains((string)$dkPlayers[0]->ownerships_parsed, '1');
 
-        $dkSalaries = DkSalary::where('player_pool_id', 1)
+        $dkPlayers = DkPlayer::where('player_pool_id', 1)
                             ->where('player_id', 9)
                             ->where('ownership', 66.7)
                             ->where('ownership_of_first_position', 66.7)
                             ->where('ownership_of_second_position', 0.0)
                             ->get();
 
-        $this->assertCount(1, $dkSalaries);
-        $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
+        $this->assertCount(1, $dkPlayers);
+        $this->assertContains((string)$dkPlayers[0]->ownerships_parsed, '1');
 
-        $dkSalaries = DkSalary::where('player_pool_id', 1)
+        $dkPlayers = DkPlayer::where('player_pool_id', 1)
                             ->where('player_id', 7)
                             ->where('ownership', 100.0)
                             ->where('ownership_of_first_position', 66.7)
                             ->where('ownership_of_second_position', 33.3)
                             ->get();
 
-        $this->assertCount(1, $dkSalaries);
-        $this->assertContains((string)$dkSalaries[0]->ownerships_parsed, '1');
+        $this->assertCount(1, $dkPlayers);
+        $this->assertContains((string)$dkPlayers[0]->ownerships_parsed, '1');
 
-        $numOfActualLineupPlayers = ActualLineupPlayer::count();
+        $numOfDkActualLineupPlayers = DkActualLineupPlayer::count();
 
-        $this->assertContains((string)$numOfActualLineupPlayers, '0');
+        $this->assertContains((string)$numOfDkActualLineupPlayers, '0');
 	} 
 
 }

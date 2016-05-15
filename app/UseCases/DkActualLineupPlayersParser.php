@@ -62,7 +62,7 @@ trait DkActualLineupPlayersParser {
 
 		            if (count($dkPlayer) === 0) {
 
-		                $this->message = 'The Dk actual lineup with the ID of '.$dkActualLineup->id.' has a missing player in database: '.$rawTextPlayer.'.';
+		                $this->message = 'The DK actual lineup with the ID of '.$dkActualLineup->id.' has a missing player in database: '.$rawTextPlayer.'.';
 
 		                return $this;
 		            }
@@ -78,7 +78,7 @@ trait DkActualLineupPlayersParser {
 	                
 	                $dkActualLineupPlayer = new DkActualLineupPlayer;
 
-	                $dkActualLineupPlayer->actual_lineup_id = $dkActualLineup->id;
+	                $dkActualLineupPlayer->dk_actual_lineup_id = $dkActualLineup->id;
 	                $dkActualLineupPlayer->position = $actualLineupPlayer['position'];
 	                $dkActualLineupPlayer->dk_player_id = $actualLineupPlayer['dkPlayerId'];
 

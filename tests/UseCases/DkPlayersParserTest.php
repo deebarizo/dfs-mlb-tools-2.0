@@ -13,7 +13,7 @@ use App\PlayerPool;
 use App\Player;
 use App\DkPlayer;
 
-class DkSalariesParserTest extends TestCase {
+class DkPlayersParserTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -103,7 +103,7 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-04-04', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-04-04', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'This player pool has already been parsed.');
     }
@@ -115,7 +115,7 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The CSV format has changed. The position field has numbers.');
     }
@@ -127,7 +127,7 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The CSV format has changed. The name field has numbers.');
     }
@@ -140,7 +140,7 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The CSV format has changed. The salary field has non-numbers.');
     }
@@ -152,7 +152,7 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
     	$this->assertContains($results->message, 'The DraftKings team name, <strong>XYZ</strong>, does not exist in the database.');
     }
@@ -164,7 +164,7 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The DraftKings opposing team name, <strong>XYZ</strong>, does not exist in the database.');
     }
@@ -176,13 +176,13 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The CSV format has changed. The DK id field has non-numbers.');
     }
 
     /** @test */
-    public function saves_new_player() { 
+    public function saves_new_dk_player() { 
 
         $this->setUpPlayers();
 
@@ -190,7 +190,7 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $playerPools = PlayerPool::where('date', '2016-01-01')->get();
 
@@ -202,7 +202,7 @@ class DkSalariesParserTest extends TestCase {
     }
 
     /** @test */
-    public function saves_new_player_with_same_name_as_existing_player() { 
+    public function saves_new_dk_player_with_same_name_as_existing_player() { 
 
         $this->setUpPlayers();
 
@@ -210,7 +210,7 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $playerPools = PlayerPool::where('date', '2016-01-01')->get();
 
@@ -230,15 +230,15 @@ class DkSalariesParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkSalaries($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkPlayers($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
-        $dkSalary = DkSalary::all()[0];
+        $dkPlayer = DkPlayer::all()[0];
 
-        $this->assertContains((string)$dkSalary->dk_id, '6694453');
-        $this->assertContains((string)$dkSalary->team_id, '1');
-        $this->assertContains((string)$dkSalary->opp_team_id, '4');
-        $this->assertContains($dkSalary->position, 'SP');
-        $this->assertContains((string)$dkSalary->salary, '13500');
+        $this->assertContains((string)$dkPlayer->dk_id, '6694453');
+        $this->assertContains((string)$dkPlayer->team_id, '1');
+        $this->assertContains((string)$dkPlayer->opp_team_id, '4');
+        $this->assertContains($dkPlayer->position, 'SP');
+        $this->assertContains((string)$dkPlayer->salary, '13500');
     }
 
 }

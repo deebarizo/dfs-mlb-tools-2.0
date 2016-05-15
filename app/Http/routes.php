@@ -47,7 +47,7 @@ Route::get('/admin/parsers/dk_actual_lineup_players', ['as' => 'admin.parsers.dk
 
 	$numOfUnparsedDkActualLineups = DkActualLineup::where('raw_text_players_parsed', 0)->count();
 
-	return View::make('/admin/parsers/dk_actual_lineup_players', compact('titleTag', 'numOfUnparsedLineups'));
+	return View::make('/admin/parsers/dk_actual_lineup_players', compact('titleTag', 'numOfUnparsedDkActualLineups'));
 }]);
 
 Route::post('/admin/parsers/dk_actual_lineup_players', 'ParsersController@parseDkActualLineupPlayers');
@@ -57,7 +57,7 @@ Route::get('/admin/parsers/dk_ownerships', ['as' => 'admin.parsers.dk_ownerships
 
 	$titleTag = 'DK Ownerships - Parsers | ';
 
-	$numOfUnparsedDkPlayers = DkPlayers::where('ownerships_parsed', 0)->count();
+	$numOfUnparsedDkPlayers = DkPlayer::where('ownerships_parsed', 0)->count();
 
 	return View::make('/admin/parsers/dk_ownerships', compact('titleTag', 'numOfUnparsedDkPlayers'));
 }]);

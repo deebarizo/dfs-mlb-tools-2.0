@@ -47,7 +47,7 @@ $factory->define(App\Player::class, function ($faker) {
     ];
 });
 
-$factory->define(App\DkSalary::class, function ($faker) {
+$factory->define(App\DkPlayer::class, function ($faker) {
     
     return [
         
@@ -63,7 +63,7 @@ $factory->define(App\DkSalary::class, function ($faker) {
     ];
 });
 
-$factory->define(App\ActualLineup::class, function ($faker) {
+$factory->define(App\DkActualLineup::class, function ($faker) {
     
     return [
         
@@ -72,7 +72,7 @@ $factory->define(App\ActualLineup::class, function ($faker) {
     ];
 });
 
-$factory->define(App\ActualLineupPlayer::class, function ($faker) {
+$factory->define(App\DkActualLineupPlayer::class, function ($faker) {
     
     return [
         

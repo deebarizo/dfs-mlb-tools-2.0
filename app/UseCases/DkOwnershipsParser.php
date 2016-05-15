@@ -34,9 +34,9 @@ trait DkOwnershipsParser {
 
 	            $numOfLineupsWithDkPlayer = DB::table('player_pools')
 	                                        ->join('dk_actual_lineups', 'dk_actual_lineups.player_pool_id', '=', 'player_pools.id')
-	                                        ->join('dk_actual_lineup_players', 'dk_actual_lineup_players.actual_lineup_id', '=', 'dk_actual_lineups.id')
+	                                        ->join('dk_actual_lineup_players', 'dk_actual_lineup_players.dk_actual_lineup_id', '=', 'dk_actual_lineups.id')
 	                                        ->where('player_pools.id', $playerPoolId)
-	                                        ->where('dk_actual_lineup_players.dk_salary_id', $dkPlayer->id)
+	                                        ->where('dk_actual_lineup_players.dk_player_id', $dkPlayer->id)
 	                                        ->count();
 
 	            if ($numOfLineupsWithDkPlayer > 0) {
@@ -57,9 +57,9 @@ trait DkOwnershipsParser {
 
 	                    $numOfLineupsWithDkPlayer = DB::table('player_pools')
 	                                                ->join('dk_actual_lineups', 'dk_actual_lineups.player_pool_id', '=', 'player_pools.id')
-	                                                ->join('dk_actual_lineup_players', 'dk_actual_lineup_players.actual_lineup_id', '=', 'dk_actual_lineups.id')
+	                                                ->join('dk_actual_lineup_players', 'dk_actual_lineup_players.dk_actual_lineup_id', '=', 'dk_actual_lineups.id')
 	                                                ->where('player_pools.id', $playerPoolId)
-	                                                ->where('dk_actual_lineup_players.dk_salary_id', $dkPlayer->id)
+	                                                ->where('dk_actual_lineup_players.dk_player_id', $dkPlayer->id)
 	                                                ->where('dk_actual_lineup_players.position', $position)
 	                                                ->count();
 

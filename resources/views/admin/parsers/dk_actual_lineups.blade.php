@@ -34,7 +34,7 @@
 
 		{!! Form::open(array('url' => 'admin/parsers/dk_actual_lineups', 'files' => true)) !!}
 
-			<div class="col-lg-5"> 
+			<div class="col-lg-4"> 
 				<div class="form-group">
 					<label for="player-pool-id">Player Pool:</label>
 					<select name="player-pool-id" class="form-control">

@@ -13,7 +13,7 @@ use App\DkPlayer;
 use App\DkActualLineup;
 use App\DkActualLineupPlayer;
 
-class DkLineupPlayersParserTest extends TestCase {
+class DkActualLineupPlayersParserTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -37,7 +37,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Mike Leake'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 1, 
         	'player_pool_id' => 1,
@@ -52,7 +52,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Jacob deGrom'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 2, 
         	'player_pool_id' => 1,
@@ -67,7 +67,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Brian McCann'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 3, 
         	'player_pool_id' => 1,
@@ -82,7 +82,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Hanley Ramirez'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 4, 
         	'player_pool_id' => 1,
@@ -97,7 +97,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Robinson Cano'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 5, 
         	'player_pool_id' => 1,
@@ -112,7 +112,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Matt Carpenter'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 6, 
         	'player_pool_id' => 1,
@@ -127,7 +127,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Manny Machado'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 7, 
         	'player_pool_id' => 1,
@@ -142,7 +142,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Matt Holliday'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 8, 
         	'player_pool_id' => 1,
@@ -157,7 +157,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Mookie Betts'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 9, 
         	'player_pool_id' => 1,
@@ -172,7 +172,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Yoenis Cespedes'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
         	'id' => 10, 
         	'player_pool_id' => 1,
@@ -187,7 +187,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Jon Lester'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 11, 
             'player_pool_id' => 1,
@@ -202,7 +202,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Jonathan Villar'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 12, 
             'player_pool_id' => 1,
@@ -217,7 +217,7 @@ class DkLineupPlayersParserTest extends TestCase {
             'name_dk' => 'Bryce Harper'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 13, 
             'player_pool_id' => 1,
@@ -226,9 +226,9 @@ class DkLineupPlayersParserTest extends TestCase {
         ]); 
     }
 
-    private function setUpActualLineupWithoutTenPlayers() {
+    private function setUpDkActualLineupWithoutTenPlayers() {
 
-        factory(ActualLineup::class)->create([
+        factory(DkActualLineup::class)->create([
         
             'id' => 1,
             'player_pool_id' => 1,
@@ -239,9 +239,9 @@ class DkLineupPlayersParserTest extends TestCase {
         ]);    	
     }
 
-    private function setUpActualLineupWithMissingPlayerInDatabase() {
+    private function setUpDkActualLineupWithMissingPlayerInDatabase() {
 
-        factory(ActualLineup::class)->create([
+        factory(DkActualLineup::class)->create([
         
             'id' => 1,
             'player_pool_id' => 1,
@@ -252,9 +252,9 @@ class DkLineupPlayersParserTest extends TestCase {
         ]); 
     }
 
-    private function setUpValidActualLineup() {
+    private function setUpValidDkActualLineup() {
 
-        factory(ActualLineup::class)->create([
+        factory(DkActualLineup::class)->create([
         
             'id' => 1,
             'player_pool_id' => 1,
@@ -266,58 +266,58 @@ class DkLineupPlayersParserTest extends TestCase {
     }
 
     /** @test */
-    public function validates_lineup_that_does_not_have_ten_players() { 
+    public function validates_dk_actual_lineup_that_does_not_have_ten_players() { 
 
     	$this->setUpPlayerPool(); $this->setUpPlayers();
 
-    	$this->setUpActualLineupWithoutTenPlayers();
+    	$this->setUpDkActualLineupWithoutTenPlayers();
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkLineupPlayers();
+        $results = $useCase->parseDkActualLineupPlayers();
 
-        $this->assertContains($results->message, 'The actual lineup with the ID of 1 does not have 10 players.');
+        $this->assertContains($results->message, 'The DK actual lineup with the ID of 1 does not have 10 players.');
     }
 
     /** @test */
-    public function validates_lineup_with_missing_player_in_database() { 
+    public function validates_dk_actual_lineup_with_missing_player_in_database() { 
 
         $this->setUpPlayerPool(); $this->setUpPlayers();
 
-        $this->setUpActualLineupWithMissingPlayerInDatabase();
+        $this->setUpDkActualLineupWithMissingPlayerInDatabase();
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkLineupPlayers();
+        $results = $useCase->parseDkActualLineupPlayers();
 
-        $this->assertContains($results->message, 'The actual lineup with the ID of 1 has a missing player in database: SS Dee Barizo.');
+        $this->assertContains($results->message, 'The DK actual lineup with the ID of 1 has a missing player in database: SS Dee Barizo.');
     } 
 
     /** @test */
-    public function saves_lineup_players() { 
+    public function saves_dk_actual_lineup_players() { 
 
         $this->setUpPlayerPool(); $this->setUpPlayers();
 
-        $this->setUpValidActualLineup();
+        $this->setUpValidDkActualLineup();
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkLineupPlayers();
+        $results = $useCase->parseDkActualLineupPlayers();
 
         $this->assertContains($results->message, 'Success!');
 
-        $actualLineupPlayers = ActualLineupPlayer::all();
+        $actualLineupPlayers = DkActualLineupPlayer::all();
 
         $this->assertCount(10, $actualLineupPlayers);
 
-        $actualLineupPlayers = ActualLineupPlayer::where('actual_lineup_id', 1)
+        $actualLineupPlayers = DkActualLineupPlayer::where('dk_actual_lineup_id', 1)
                                                     ->where('position', 'SS')
-                                                    ->where('dk_salary_id', 7)
+                                                    ->where('dk_player_id', 7)
                                                     ->get();
 
         $this->assertCount(1, $actualLineupPlayers);
 
-        $actualLineup = ActualLineup::where('id', 1)
+        $actualLineup = DkActualLineup::where('id', 1)
                                         ->where('raw_text_players_parsed', 1)
                                         ->get();
 

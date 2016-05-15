@@ -15,7 +15,7 @@ use App\DkPlayer;
 use App\DkActualLineup;
 use App\DkActualLineupPlayer;
 
-class DkLineupsParserTest extends TestCase {
+class DkActualLineupsParserTest extends TestCase {
 
     use DatabaseTransactions;
 
@@ -39,7 +39,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Mike Leake'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 1, 
             'player_pool_id' => 1,
@@ -54,7 +54,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Jacob deGrom'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 2, 
             'player_pool_id' => 1,
@@ -69,7 +69,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Brian McCann'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 3, 
             'player_pool_id' => 1,
@@ -84,7 +84,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Hanley Ramirez'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 4, 
             'player_pool_id' => 1,
@@ -99,7 +99,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Robinson Cano'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 5, 
             'player_pool_id' => 1,
@@ -114,7 +114,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Matt Carpenter'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 6, 
             'player_pool_id' => 1,
@@ -129,7 +129,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Manny Machado'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 7, 
             'player_pool_id' => 1,
@@ -144,7 +144,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Matt Holliday'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 8, 
             'player_pool_id' => 1,
@@ -159,7 +159,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Mookie Betts'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 9, 
             'player_pool_id' => 1,
@@ -174,7 +174,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Yoenis Cespedes'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 10, 
             'player_pool_id' => 1,
@@ -189,7 +189,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Jon Lester'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 11, 
             'player_pool_id' => 1,
@@ -204,7 +204,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Jonathan Villar'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 12, 
             'player_pool_id' => 1,
@@ -219,7 +219,7 @@ class DkLineupsParserTest extends TestCase {
             'name_dk' => 'Bryce Harper'
         ]);  
 
-        factory(DkSalary::class)->create([
+        factory(DkPlayer::class)->create([
         
             'id' => 13, 
             'player_pool_id' => 1,
@@ -267,7 +267,7 @@ class DkLineupsParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-02', 'DK', 'All Day');
+        $results = $useCase->parseDkActualLineups($root->url().'/test.csv', '2016-01-02', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'This player pool does not exist.');
     }
@@ -277,7 +277,7 @@ class DkLineupsParserTest extends TestCase {
 
         $this->setUpPlayerPool();
 
-        factory(ActualLineup::class)->create([
+        factory(DkActualLineup::class)->create([
         
             'id' => 1,
             'player_pool_id' => 1,
@@ -289,7 +289,7 @@ class DkLineupsParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkActualLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'This player pool has already been parsed.');
     }
@@ -303,7 +303,7 @@ class DkLineupsParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkActualLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The rank field of EntryId 402195599 in the csv has a non-number.');
     }
@@ -318,7 +318,7 @@ class DkLineupsParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkActualLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'The fpts field of EntryId 402195599 in the csv has a non-number.');
     }
@@ -334,11 +334,11 @@ class DkLineupsParserTest extends TestCase {
 
         $useCase = new UseCase; 
         
-        $results = $useCase->parseDkLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
+        $results = $useCase->parseDkActualLineups($root->url().'/test.csv', '2016-01-01', 'DK', 'All Day');
 
         $this->assertContains($results->message, 'Success!');
 
-        $actualLineups = ActualLineup::where('player_pool_id', 1)
+        $actualLineups = DkActualLineup::where('player_pool_id', 1)
                                         ->where('rank', 1)
                                         ->where('user', 'chrishrabe')
                                         ->where('fpts', 201.75)
