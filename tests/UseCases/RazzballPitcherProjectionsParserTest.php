@@ -67,7 +67,7 @@ class RazzballPitcherProjectionsParserTest extends TestCase {
 
             'razzballNameDoesNotMatchDkName' => [
 
-                'test.csv' => "P,P,C,1B,2B,3B,SS,OF,OF,OF,,Instructions\n,,,,,,,,,,,1. Locate the player you want to select in the list below \n,,,,,,,,,,,2. Copy the ID of your player (you can use the Name + ID column or the ID column) \n,,,,,,,,,,,3. Paste the ID into the roster position desired \n,,,,,,,,,,,4. You must include an ID for each player; you cannot use just the player's name \n,,,,,,,,,,,5. You can create up to 500 lineups per file \n \n,,,,,,,,,,,Position,Name + ID, Name, ID, Salary,GameInfo,TeamAbbrev \n,,,,,,,,,,,9000,Clayton Kershaw (6694453),Clayton Kershaw,6694453,13500,NYM@LAD 10:10PM ET,LAD,"
+                'test.csv' => "#,Name,Team,Date,GT,DH,Opp,LU,W,L,IP,H,ER,K,BB+ HBP,ERA,WHIP,PTS,Salary,$/Pt\n1,Dee Barizo,NYA,5/15,1,0,CHA,Live,0.49,0.23,6.3,5.8,2.1,6.3,1.4,3.04,1.10,20.2,9200,455.4"
             ]
         ]
     ];
@@ -92,7 +92,7 @@ class RazzballPitcherProjectionsParserTest extends TestCase {
         
         $results = $useCase->parseRazzballPitcherProjections($root->url().'/test.csv', 1);
 
-        $this->assertContains($results->message, 'The Razzball name, John Doe, does not match a DK name.');
+        $this->assertContains($results->message, 'The Razzball name, Dee Barizo, does not match a DK name.');
     }
 
 }

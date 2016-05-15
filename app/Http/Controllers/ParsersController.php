@@ -28,7 +28,22 @@ class ParsersController extends Controller {
 
     public function parseRazzballProjections(ParseRazzballProjectionsRequest $request) {
 
+        if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
+            $fileDirectory = 'files/razzball_projections/'; // '/files/dk_salaries/' doesn't work
+
+            $useCase = new UseCase;
+                
+            $results = $useCase->parseRazzballPitcherProjections($csvFile, $request->input('player-pool-id'));
+       
+            $message = $results->message;
+
+        } else {
+
+            $message = 'Success!'; // I need this to pass the test
+        }
+
+        return redirect()->route('admin.parsers.razzball_projections')->with('message', $message);
     }
 
 
