@@ -35,6 +35,8 @@ trait RazzballProjectionsParser {
             while (($row = fgetcsv($handle, 5000, ',')) !== false) {
                 
                 if ($i > 0) { 
+
+                    set_time_limit(60);
                 
                     $razzballName = $row[1];
 
@@ -42,12 +44,22 @@ trait RazzballProjectionsParser {
                                     ->join('dk_players', 'dk_players.player_pool_id', '=', 'player_pools.id')
                                     ->join('players', 'players.id', '=', 'dk_players.player_id')
                                     ->where('player_pools.id', $playerPoolId)
-                                    ->where('name_dk', $razzballName)
-                                    ->get();
+                                    ->where(function ($query) use ($razzballName) {
+                                        $query->where('players.name_dk', $razzballName)
+                                              ->orWhere('players.name_razzball', $razzballName);
+                                    })
+                                    ->first();
 
-                    if (count($dkPlayer) === 0) {
+                    if (!$dkPlayer) {
 
-                        $this->message = 'The Razzball name, '.$razzballName.', does not match a DK name.'; 
+                        $this->message = 'The Razzball pitcher, '.$razzballName.', does not exist in the dk_players table.'; 
+
+                        return $this;  
+                    }
+
+                    if ($dkPlayer->position !== 'SP' && $dkPlayer->position !== 'RP') {
+
+                        $this->message = 'The Razzball pitcher, '.$razzballName.', is not a pitcher.'; 
 
                         return $this;  
                     }
@@ -55,7 +67,11 @@ trait RazzballProjectionsParser {
 
                 $i++;
             }
-        }                 
+        }
+
+        $this->message = 'Success!';
+
+        return $this;                 
     }
 
 }
