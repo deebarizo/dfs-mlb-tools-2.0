@@ -8,7 +8,7 @@ class PlayerPoolsController extends Controller {
 
 	public function showPlayerPools() {
 
-		$titleTag = '';
+		$titleTag = 'Player Pools | ';
 
 		$playerPools = PlayerPool::take(50)->orderBy('date', 'desc')->get();
 

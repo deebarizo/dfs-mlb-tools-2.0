@@ -3,8 +3,9 @@
 use App\DkActualLineup;
 use App\DkPlayer;
 
+
 /****************************************************************************************
-PAGES
+PLAYER POOLS
 ****************************************************************************************/
 
 Route::get('/', function() {
@@ -14,6 +15,20 @@ Route::get('/', function() {
 
 Route::get('/player_pools', 'PlayerPoolsController@showPlayerPools');
 
+
+/****************************************************************************************
+PLAYERS
+****************************************************************************************/
+
+Route::get('/players', 'PlayersController@showPlayers');
+
+Route::get('/players/{id}/edit', 'PlayersController@editPlayer');
+
+
+/****************************************************************************************
+ADMIN
+****************************************************************************************/
+
 Route::get('/admin', function() {
 
 	$titleTag = 'Admin | ';
@@ -21,10 +36,6 @@ Route::get('/admin', function() {
 	return View::make('pages/admin', compact('titleTag'));
 });
 
-
-/****************************************************************************************
-ADMIN
-****************************************************************************************/
 
 Route::get('/admin/parsers/dk_players', ['as' => 'admin.parsers.dk_players', function() {
 
