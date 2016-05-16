@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use App\Http\Requests\ParseDkPlayersRequest;
 use App\Http\Requests\ParseDkActualLineupsRequest;
-use App\Http\Requests\ParseRazzballProjectionsRequest;
+use App\Http\Requests\ParseProjectionsRequest;
 
 use Illuminate\Support\Facades\Input;
 
@@ -15,26 +15,43 @@ use DB;
 
 class ParsersController extends Controller {
 
-    public function showParseRazzballProjections() {
+    public function showParseProjections() {
 
-        $titleTag = 'Razzball Projections - Parsers | ';
+        $titleTag = 'Projections - Parsers | ';
 
         $useCase = new UseCase;
 
         $playerPools = $useCase->fetchPlayerPoolsForProjectionsParsers(setTodayDate());
 
-        return view('/admin/parsers/razzball_projections', compact('titleTag', 'playerPools'));
+        return view('/admin/parsers/projections', compact('titleTag', 'playerPools'));
     }
 
-    public function parseRazzballProjections(ParseRazzballProjectionsRequest $request) {
+    public function parseProjections(ParseProjectionsRequest $request) {
+
+        $playerPoolId = $request->input('player-pool-id');
 
         if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
-            $fileDirectory = 'files/razzball_projections/'; // '/files/dk_salaries/' doesn't work
+            $fileDirectory = 'files/projections/'; // '/files/dk_salaries/' doesn't work
 
             $useCase = new UseCase;
+
+            if ($request->input('razzball-pitchers-csv') !== '') {
+
+                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'pitchers', $fileDirectory, $request);                
+            }
+
+            if ($request->input('razzball-hitters-csv') !== '') {
+
+                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'hitters', $fileDirectory, $request);                
+            }    
+
+            if ($request->input('bat-csv') !== '') {
+
+                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'BAT', 'N/A', $fileDirectory, $request);                
+            }          
                 
-            $results = $useCase->parseRazzballPitcherProjections($csvFile, $request->input('player-pool-id'));
+            # $results = $useCase->parseRazzballPitcherProjections($csvFile, $playerPoolId);
        
             $message = $results->message;
 
@@ -43,7 +60,7 @@ class ParsersController extends Controller {
             $message = 'Success!'; // I need this to pass the test
         }
 
-        return redirect()->route('admin.parsers.razzball_projections')->with('message', $message);
+        return redirect()->route('admin.parsers.projections')->with('message', $message);
     }
 
 

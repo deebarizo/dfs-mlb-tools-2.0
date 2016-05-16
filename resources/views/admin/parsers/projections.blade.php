@@ -3,7 +3,7 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>Parsers - Razzball Projections</h2>
+			<h2>Parsers - Projections</h2>
 
 			<hr>
 
@@ -32,7 +32,7 @@
 	</div>
 	<div class="row">
 
-		{!! Form::open(array('url' => 'admin/parsers/razzball_projections', 'files' => true)) !!}
+		{!! Form::open(array('url' => 'admin/parsers/projections', 'files' => true)) !!}
 
 			<div class="col-lg-4"> 
 				<div class="form-group">
@@ -47,15 +47,22 @@
 
 			<div class="col-lg-12"> 
 				<div class="form-group">
-					{!! Form::label('pitchers-csv', 'Pitchers CSV:') !!}
-					{!! Form::file('pitchers-csv', '', ['class' => 'form-control']) !!}
+					{!! Form::label('razzball-pitchers-csv', 'Razzball Pitchers CSV:') !!}
+					{!! Form::file('razzball-pitchers-csv', '', ['class' => 'form-control']) !!}
 				</div>
 			</div>
 
 			<div class="col-lg-12"> 
 				<div class="form-group">
-					{!! Form::label('hitters-csv', 'Hitters CSV:') !!}
-					{!! Form::file('hitters-csv', '', ['class' => 'form-control']) !!}
+					{!! Form::label('razzball-hitters-csv', 'Razzball Hitters CSV:') !!}
+					{!! Form::file('razzball-hitters-csv', '', ['class' => 'form-control']) !!}
+				</div>
+			</div>
+
+			<div class="col-lg-12"> 
+				<div class="form-group">
+					{!! Form::label('bat-csv', 'BAT CSV:') !!}
+					{!! Form::file('bat-csv', '', ['class' => 'form-control']) !!}
 				</div>
 			</div>
 
