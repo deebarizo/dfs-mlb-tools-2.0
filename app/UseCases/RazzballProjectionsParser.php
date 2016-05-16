@@ -66,13 +66,6 @@ trait RazzballProjectionsParser {
                                     })
                                     ->first();
 
-                    if (!$dkPlayer) {
-
-                        $this->message = 'The Razzball pitcher, '.$razzballName.', does not exist in the dk_players table.'; 
-
-                        return $this;  
-                    }
-
                     if ($dkPlayer->position !== 'SP' && $dkPlayer->position !== 'RP') {
 
                         $this->message = 'The Razzball pitcher, '.$razzballName.', is not a pitcher.'; 
@@ -80,9 +73,12 @@ trait RazzballProjectionsParser {
                         return $this;  
                     }
 
-                    DB::table('dk_players')
-                        ->where('id', $dkPlayer->id)
-                        ->update(['lineup_razzball' => $lineup, 'fpts_razzball' => $fpts]);
+                    if ($dkPlayer) {
+
+                        DB::table('dk_players')
+                            ->where('id', $dkPlayer->id)
+                            ->update(['lineup_razzball' => $lineup, 'fpts_razzball' => $fpts]);
+                    }
                 }
 
                 $i++;

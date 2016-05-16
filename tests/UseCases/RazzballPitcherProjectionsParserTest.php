@@ -91,11 +91,6 @@ class RazzballPitcherProjectionsParserTest extends TestCase {
 
         'invalid' => [
 
-            'razzballNameDoesNotExist' => [
-
-                'test.csv' => "#,Name,Team,Date,GT,DH,Opp,LU,W,L,IP,H,ER,K,BB+ HBP,ERA,WHIP,PTS,Salary,$/Pt\n1,Dee Barizo,NYA,5/15,1,0,CHA,Live,0.49,0.23,6.3,5.8,2.1,6.3,1.4,3.04,1.10,20.2,9200,455.4"
-            ],
-
             'nonPitcher' => [
 
                 'test.csv' => "#,Name,Team,Date,GT,DH,Opp,LU,W,L,IP,H,ER,K,BB+ HBP,ERA,WHIP,PTS,Salary,$/Pt\n1,Bob Jones,NYA,5/15,1,0,CHA,Live,0.49,0.23,6.3,5.8,2.1,6.3,1.4,3.04,1.10,20.2,9200,455.4"
@@ -120,20 +115,6 @@ class RazzballPitcherProjectionsParserTest extends TestCase {
         $this->assertTrue($root->hasChild('test.csv'));
 
         return $root;
-    }
-
-    /** @test */
-    public function validates_csv_with_razzball_name_that_does_not_exist() { 
-
-    	$this->setUpDatabase();
-
-        $root = $this->setUpCsvFile($this->csvFiles['invalid']['razzballNameDoesNotExist']);
-
-        $useCase = new UseCase; 
-        
-        $results = $useCase->parseRazzballPitcherProjections($root->url().'/test.csv', 1);
-
-        $this->assertContains($results->message, 'The Razzball pitcher, Dee Barizo, does not exist in the dk_players table.');
     }
 
     /** @test */
