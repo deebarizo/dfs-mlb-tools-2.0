@@ -10,7 +10,7 @@
 			<table id="players" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
-						<th>Name</th>
+						<th>Name (DK)</th>
 						<th>Name (Razzball)</th>
 						<th>Name (BAT)</th>
 						<th>Team</th>

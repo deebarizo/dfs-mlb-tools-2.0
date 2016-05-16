@@ -2,7 +2,7 @@
 
 @section('content')
 	
-	@include('admin.parsers._heading')
+	@include('_form_heading')
 
 	<div class="row">
 

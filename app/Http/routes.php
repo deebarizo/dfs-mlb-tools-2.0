@@ -24,6 +24,8 @@ Route::get('/players', 'PlayersController@showPlayers');
 
 Route::get('/players/{id}/edit', 'PlayersController@editPlayer');
 
+Route::post('/players/{id}/update', 'PlayersController@updatePlayer');
+
 
 /****************************************************************************************
 ADMIN

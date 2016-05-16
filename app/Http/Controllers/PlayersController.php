@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use App\Player;
+use App\Team;
+
 use DB;
 
 class PlayersController extends Controller {
@@ -20,6 +23,24 @@ class PlayersController extends Controller {
 						->get();
 
 		return view('pages/players', compact('titleTag', 'players'));
+	}
+
+	public function editPlayer($id) {
+
+		$player = Player::find($id);
+		$teams = Team::orderBy('name_dk', 'asc')->get();
+
+		$titleTag = 'Edit Player ('.$player->name_dk.') | ';
+		$h2Tag = 'Edit Player ('.$player->name_dk.')';
+
+		return view('players/edit', compact('titleTag', 'h2Tag', 'player', 'teams'));
+	}
+
+	public function updatePlayer($id) {
+
+
+
+		
 	}
 
 }

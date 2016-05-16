@@ -13,8 +13,6 @@ use App\DkPlayer;
 
 class ParseDkPlayersTest extends TestCase {
 
-    use DatabaseTransactions;
-
 	/** @test */
     public function submits_dk_players_csv() {
 
