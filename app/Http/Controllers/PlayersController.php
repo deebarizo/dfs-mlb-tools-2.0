@@ -1,5 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\Input;
+
 use App\Player;
 use App\Team;
 
@@ -36,11 +40,20 @@ class PlayersController extends Controller {
 		return view('players/edit', compact('titleTag', 'h2Tag', 'player', 'teams'));
 	}
 
-	public function updatePlayer($id) {
+	public function updatePlayer($id, Request $request) {
 
+		$player = Player::find($id);
 
+		$player->name_dk = $request->input('name_dk');
+		$player->name_razzball = $request->input('name_razzball');
+		$player->name_bat = $request->input('name_bat');
+		$player->team_id = $request->input('team-id');
 
-		
+		$player->save();
+
+        $message = 'Success!'; // I need this to pass the test
+
+        return redirect('/players/'.$id.'/edit')->with('message', $message);	
 	}
 
 }

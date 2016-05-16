@@ -18,7 +18,7 @@
 			<div class="col-lg-3"> 
 				<div class="form-group">
 					{!! Form::label('name_razzball', 'Name (Razzball):') !!}
-					{!! Form::text('name_razzball', $player->name_dk, ['class' => 'form-control']) !!}
+					{!! Form::text('name_razzball', $player->name_razzball, ['class' => 'form-control']) !!}
 				</div>
 			</div>
 
