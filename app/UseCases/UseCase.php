@@ -4,7 +4,7 @@ class UseCase {
 
 	use FileUploader;
 
-	use RazzballProjectionsParser;
+	use ProjectionsParser;
 
 	use DkPlayersParser;
 	use DkActualLineupsParser;

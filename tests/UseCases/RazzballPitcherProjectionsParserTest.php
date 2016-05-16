@@ -128,7 +128,7 @@ class RazzballPitcherProjectionsParserTest extends TestCase {
         
         $results = $useCase->parseRazzballPitcherProjections($root->url().'/test.csv', 1);
 
-        $this->assertContains($results->message, 'The Razzball pitcher, Bob Jones, is not a pitcher.');
+        $this->assertContains($results->message, 'The Razzball pitcher, Bob Jones, is not a DK pitcher.');
     }
 
     /** @test */

@@ -52,16 +52,27 @@ class ParsersController extends Controller {
             }
 
             if ($request->hasFile('razzball-hitters-csv')) {
-                
+
                 $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'hitters', $fileDirectory, $request);  
+
+                $results = $useCase->parseRazzballHitterProjections($csvFile, $playerPoolId);
+           
+                $message = $results->message;
+            }
+
+            if ($message !== 'Success!') {
+
+                return redirect()->route('admin.parsers.projections')->with('message', $message);
             }
 
             if ($request->hasFile('bat-csv')) {
                 
                 $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'BAT', 'N/A', $fileDirectory, $request);  
+
+                $results = $useCase->parseBatProjections($csvFile, $playerPoolId);
+           
+                $message = $results->message;
             }
-
-
 
         } else {
 
