@@ -18,12 +18,13 @@ class ParsersController extends Controller {
     public function showParseProjections() {
 
         $titleTag = 'Projections - Parsers | ';
+        $h2Tag = 'Parsers - Projections';
 
         $useCase = new UseCase;
 
         $playerPools = $useCase->fetchPlayerPoolsForProjectionsParsers(setTodayDate());
 
-        return view('/admin/parsers/projections', compact('titleTag', 'playerPools'));
+        return view('/admin/parsers/projections', compact('titleTag', 'h2Tag', 'playerPools'));
     }
 
     public function parseProjections(ParseProjectionsRequest $request) {
@@ -91,12 +92,13 @@ class ParsersController extends Controller {
     public function showParseDkActualLineups() {
 
         $titleTag = 'DK Actual Lineups - Parsers | ';
+        $h2Tag = 'Parsers - DK Players';
 
         $useCase = new UseCase;
 
         $playerPools = $useCase->fetchPlayerPoolsForDkActualLineupsParser();
 
-        return view('/admin/parsers/dk_actual_lineups', compact('titleTag', 'playerPools'));
+        return view('/admin/parsers/dk_actual_lineups', compact('titleTag', 'h2Tag', 'playerPools'));
     }
 
     public function parseDkActualLineups(ParseDkActualLineupsRequest $request) {

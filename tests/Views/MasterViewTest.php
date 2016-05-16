@@ -16,7 +16,7 @@ class MasterViewTest extends TestCase {
 	/** @test */
     public function shows_title_tag() {
 
-       	$this->visit('/');
+       	$this->visit('/admin');
        	$this->assertViewHas('titleTag');
     }
 
