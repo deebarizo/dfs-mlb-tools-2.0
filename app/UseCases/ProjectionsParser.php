@@ -57,6 +57,7 @@ trait ProjectionsParser {
                     }
 
                     $dkPlayer = DB::table('player_pools')
+                                    ->select('dk_players.id')
                                     ->join('dk_players', 'dk_players.player_pool_id', '=', 'player_pools.id')
                                     ->join('players', 'players.id', '=', 'dk_players.player_id')
                                     ->where('player_pools.id', $playerPoolId)
@@ -64,14 +65,11 @@ trait ProjectionsParser {
                                         $query->where('players.name_dk', $razzballName)
                                               ->orWhere('players.name_razzball', $razzballName);
                                     })
+                                    ->where(function ($query) {
+                                        $query->where('dk_players.position', 'SP')
+                                              ->orWhere('dk_players.position', 'RP');
+                                    })
                                     ->first();
-
-                    if ($dkPlayer->position !== 'SP' && $dkPlayer->position !== 'RP') {
-
-                        $this->message = 'The Razzball pitcher, '.$razzballName.', is not a DK pitcher.'; 
-
-                        return $this;  
-                    }
 
                     if ($dkPlayer) {
 
@@ -137,6 +135,7 @@ trait ProjectionsParser {
                     }
 
                     $dkPlayer = DB::table('player_pools')
+                                    ->select('dk_players.id')
                                     ->join('dk_players', 'dk_players.player_pool_id', '=', 'player_pools.id')
                                     ->join('players', 'players.id', '=', 'dk_players.player_id')
                                     ->where('player_pools.id', $playerPoolId)
@@ -144,14 +143,9 @@ trait ProjectionsParser {
                                         $query->where('players.name_dk', $razzballName)
                                               ->orWhere('players.name_razzball', $razzballName);
                                     })
+                                    ->where('dk_players.position', '!=', 'SP')
+                                    ->where('dk_players.position', '!=', 'RP')
                                     ->first();
-
-                    if ($dkPlayer->position === 'SP' || $dkPlayer->position === 'RP') {
-
-                        $this->message = 'The Razzball hitter, '.$razzballName.', is not a DK hitter.'; 
-
-                        return $this;  
-                    }
 
                     if ($dkPlayer) {
 

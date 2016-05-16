@@ -91,11 +91,6 @@ class RazzballHitterProjectionsParserTest extends TestCase {
 
         'invalid' => [
 
-            'nonHitter' => [
-
-                'test.csv' => "#,Name,B,Team,Pos,Date,GT,DH,Opp,Pitcher,% St,LU,PA,R,1B,2B,3B,HR,RBI,SB,BB+ HBP,PTS,UP PTS,DK $,$/PT,$/UP PT\n1,Bob Jones,R,MIA,OF,5/16,7,0,@PHI,JEickhoff(R),88,Lst7,4.3,0.65,0.43,0.17,0.01,0.33,0.83,0.04,0.63,9.9,19.4,5100,515.2,263.3"
-            ],
-
             'invalidLineupField' => [
 
                 'test.csv' => "#,Name,B,Team,Pos,Date,GT,DH,Opp,Pitcher,% St,LU,PA,R,1B,2B,3B,HR,RBI,SB,BB+ HBP,PTS,UP PTS,DK $,$/PT,$/UP PT\n1,Bob Jones,R,MIA,OF,5/16,7,0,@PHI,JEickhoff(R),88,bob,4.3,0.65,0.43,0.17,0.01,0.33,0.83,0.04,0.63,9.9,19.4,5100,515.2,263.3"
@@ -125,20 +120,6 @@ class RazzballHitterProjectionsParserTest extends TestCase {
         $this->assertTrue($root->hasChild('test.csv'));
 
         return $root;
-    }
-
-    /** @test */
-    public function validates_csv_with_a_non_hitter() { 
-
-        $this->setUpDatabase();
-
-        $root = $this->setUpCsvFile($this->csvFiles['invalid']['nonHitter']);
-
-        $useCase = new UseCase; 
-        
-        $results = $useCase->parseRazzballHitterProjections($root->url().'/test.csv', 1);
-
-        $this->assertContains($results->message, 'The Razzball hitter, Bob Jones, is not a DK hitter.');
     }
 
     /** @test */

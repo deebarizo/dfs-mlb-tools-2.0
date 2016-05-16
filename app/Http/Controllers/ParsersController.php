@@ -42,7 +42,7 @@ class ParsersController extends Controller {
                 $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'pitchers', $fileDirectory, $request);  
 
                 $results = $useCase->parseRazzballPitcherProjections($csvFile, $playerPoolId);
-           
+
                 $message = $results->message;
             }
 
