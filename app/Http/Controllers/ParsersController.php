@@ -30,30 +30,30 @@ class ParsersController extends Controller {
 
         $playerPoolId = $request->input('player-pool-id');
 
-        if ($request->input('csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
+        if ($request->input('razzball-pitchers-csv') !== 'Test.csv' && $request->input('razzball-hitters-csv') !== 'Test.csv' && $request->input('bat-csv') !== 'Test.csv') { // I'm doing this because I don't know how to test file uploads
 
             $fileDirectory = 'files/projections/'; // '/files/dk_salaries/' doesn't work
 
             $useCase = new UseCase;
 
-            if ($request->input('razzball-pitchers-csv') !== '') {
-
-                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'pitchers', $fileDirectory, $request);                
+            if ($request->hasFile('razzball-pitchers-csv')) {
+                
+                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'pitchers', $fileDirectory, $request);  
             }
 
-            if ($request->input('razzball-hitters-csv') !== '') {
-
-                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'hitters', $fileDirectory, $request);                
-            }    
-
-            if ($request->input('bat-csv') !== '') {
-
-                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'BAT', 'N/A', $fileDirectory, $request);                
-            }          
+            if ($request->hasFile('razzball-hitters-csv')) {
                 
+                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'hitters', $fileDirectory, $request);  
+            }
+
+            if ($request->hasFile('bat-csv')) {
+                
+                $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'BAT', 'N/A', $fileDirectory, $request);  
+            }
+
             # $results = $useCase->parseRazzballPitcherProjections($csvFile, $playerPoolId);
        
-            $message = $results->message;
+            # $message = $results->message;
 
         } else {
 

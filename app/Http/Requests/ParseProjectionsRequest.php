@@ -25,8 +25,10 @@ class ParseProjectionsRequest extends Request
     {
         return [
             
-            'pitchers-csv' => 'required',
-            'hitters-csv' => 'required'
+            'player-pool-id' => 'required',
+            'razzball-pitchers-csv' => 'required_without_all:razzball-hitters-csv,bat-csv',
+            'razzball-hitters-csv' => 'required_without_all:razzball-pitchers-csv,bat-csv',
+            'bat-csv' => 'required_without_all:razzball-pitchers-csv,razzball-hitters-csv'
         ];
     }
 
@@ -34,8 +36,7 @@ class ParseProjectionsRequest extends Request
     {
         return [
 
-            'pitchers-csv.required' => 'The pitchers csv field is required.',
-            'hitters-csv.required' => 'The hitters csv field is required.'
+            'player-pool-id.required' => 'The player pool ID is required.'
         ];
     }
 }

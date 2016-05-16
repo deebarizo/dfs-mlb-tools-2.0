@@ -81,4 +81,64 @@ class ParseProjectionsTest extends TestCase {
         $this->assertContains($csvFile, 'test_folder/player-pool-id-1-bat.csv');
     }
 
+    /** @test */
+    public function validates_required_inputs() {
+
+        $this->call('POST', '/admin/parsers/projections', [
+
+            'player-pool-id' => '',
+            'razzball-pitchers-csv' => '',
+            'razzball-hitters-csv' => '',
+            'bat-csv' => ''
+        ]);
+
+        $this->assertSessionHasErrors(['player-pool-id', 'razzball-pitchers-csv', 'razzball-hitters-csv', 'bat-csv']);
+    }
+
+    /** @test */
+    public function validates_successful_input() {
+
+        $this->call('POST', '/admin/parsers/projections', [
+
+            'player-pool-id' => 1,
+            'razzball-pitchers-csv' => 'Test.csv',
+            'razzball-hitters-csv' => '',
+            'bat-csv' => ''
+        ]);
+
+        $this->assertRedirectedTo('/admin/parsers/projections');
+
+        $this->followRedirects();
+
+        $this->see('Success!');
+
+        $this->call('POST', '/admin/parsers/projections', [
+
+            'player-pool-id' => 1,
+            'razzball-pitchers-csv' => '',
+            'razzball-hitters-csv' => 'Test.csv',
+            'bat-csv' => ''
+        ]);
+
+        $this->assertRedirectedTo('/admin/parsers/projections');
+
+        $this->followRedirects();
+
+        $this->see('Success!');
+
+        $this->call('POST', '/admin/parsers/projections', [
+
+            'player-pool-id' => 1,
+            'razzball-pitchers-csv' => '',
+            'razzball-hitters-csv' => '',
+            'bat-csv' => 'Test.csv'
+        ]);
+
+        $this->assertRedirectedTo('/admin/parsers/projections');
+
+        $this->followRedirects();
+
+        $this->see('Success!');
+    }  
+
 }
