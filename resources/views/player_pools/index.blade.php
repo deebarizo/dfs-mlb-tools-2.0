@@ -15,7 +15,7 @@
 				<select class="form-control team-filter" style="width: 10%; margin-right: 20px">
 				  	<option value="All">All</option>
 				  	@foreach ($teams as $team)
-					  	<option value="{{ $team->name_dk }}">{{ $team->name_dk }}</option>
+					  	<option value="{{ $team }}">{{ $team }}</option>
 				  	@endforeach
 				</select>	
 
@@ -98,8 +98,8 @@
 
 	<script type="text/javascript">
 
-		$('#player-pool').dataTable({
-
+		var playerPoolTable = $('#player-pool').DataTable({
+			
 			"scrollY": "600px",
 			"paging": false,
 			"order": [[14, "desc"]]

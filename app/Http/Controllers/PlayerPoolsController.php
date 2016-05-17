@@ -14,13 +14,6 @@ class PlayerPoolsController extends Controller {
 		$titleTag = $playerPool->date.' - '.$playerPool->time_period.' - Player Pool | ';
 		$h2Tag = $playerPool->date.' - '.$playerPool->time_period.' - Player Pool';
 
-		$teams = DB::table('teams')
-					->select('teams.name_dk')
-					->join('dk_players', 'dk_players.team_id', '=', 'teams.id')
-					->where('dk_players.player_pool_id', $id)
-					->groupBy('teams.id')
-					->lists('teams.name_dk');
-
 		$dkPlayers = DB::table('dk_players')
 						->select('players.name_dk',
 								 'teams.name_dk as team_name_dk',
@@ -51,11 +44,20 @@ class PlayerPoolsController extends Controller {
 				if ($dkPlayer->opp_team_id === $team->id) {
 
 					$dkPlayer->opp_team_name_dk = $team->name_dk;
+
+					break;
 				}
 			}
 		}
 
-		# ddAll($dkPlayers);
+		$teams = DB::table('teams')
+					->select('teams.name_dk')
+					->join('dk_players', 'dk_players.team_id', '=', 'teams.id')
+					->where('dk_players.player_pool_id', $id)
+					->groupBy('teams.id')
+					->lists('teams.name_dk');
+
+		sort($teams);
 
 		return view('player_pools/index', compact('titleTag', 'h2Tag', 'teams', 'dkPlayers'));
 	}
