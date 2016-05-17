@@ -110,7 +110,7 @@ class ParsersController extends Controller {
     public function showParseDkActualLineups() {
 
         $titleTag = 'DK Actual Lineups - Parsers | ';
-        $h2Tag = 'Parsers - DK Players';
+        $h2Tag = 'Parsers - DK Actual Lineups';
 
         $useCase = new UseCase;
 

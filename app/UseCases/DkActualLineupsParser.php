@@ -54,7 +54,7 @@ trait DkActualLineupsParser {
             $this->message = 'This player pool has already been parsed.';
 
             return $this;           
-        }
+        } 
 
         if (($handle = fopen($csvFile, 'r')) !== false) {
             
