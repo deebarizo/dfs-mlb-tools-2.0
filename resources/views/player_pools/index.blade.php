@@ -3,19 +3,19 @@
 @section('content')
 	<div class="row">
 		<div class="col-lg-12">
-			<h2>$h2Tag</h2>
+			<h2>{{ $h2Tag }}</h2>
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-12" style="margin: 15px 0">
 			<form class="form-inline" style="margin: 0 0 10px 0">
 
 				<label>Teams</label>
 				<select class="form-control team-filter" style="width: 10%; margin-right: 20px">
 				  	<option value="All">All</option>
 				  	@foreach ($teams as $team)
-					  	<option value="{{ $team }}">{{ $team }}</option>
+					  	<option value="{{ $team->name_dk }}">{{ $team->name_dk }}</option>
 				  	@endforeach
 				</select>	
 
@@ -42,7 +42,7 @@
 		</div>
 
 		<div class="col-lg-12">
-			<table id="player-pool" class="table table-striped table-bordered table-hover table-condensed">
+			<table id="player-pool" style="font-size: 85%" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -59,6 +59,8 @@
 						<th>bVr</th>
 						<th>rVr</th>
 						<th>ruVr</th>
+						<th>mVr</th>
+						<th>muVr</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -83,9 +85,10 @@
 					    	<td>{{ $dkPlayer->upside_fpts_razzball }}</td>
 					    	<td>{{ $dkPlayer->salary }}</td>
 					    	<td>{{ numFormat($dkPlayer->fpts_bat / ($dkPlayer->salary / 1000), 2) }}</td>
-					    	<td>{{ numFormat($dkPlayer->fpts_bat / ($dkPlayer->salary / 1000), 2) }}</td>
-					    	<td>{{ numFormat($dkPlayer->fpts_bat / ($dkPlayer->salary / 1000), 2) }}</td>
-
+					    	<td>{{ numFormat($dkPlayer->fpts_razzball / ($dkPlayer->salary / 1000), 2) }}</td>
+					    	<td>{{ numFormat($dkPlayer->upside_fpts_razzball / ($dkPlayer->salary / 1000), 2) }}</td>
+					    	<td>{{ numFormat(($dkPlayer->fpts_bat + $dkPlayer->fpts_razzball) / ($dkPlayer->salary / 1000), 2) }}</td>
+					    	<td>{{ numFormat(($dkPlayer->fpts_bat + $dkPlayer->upside_fpts_razzball) / ($dkPlayer->salary / 1000), 2) }}</td>
 					    </tr>
 					@endforeach
 				</tbody>
@@ -93,5 +96,18 @@
 		</div>
 	</div>
 
-	<script src="/js/player_pool.js"></script>
+	<script type="text/javascript">
+
+		$('#player-pool').dataTable({
+
+			"scrollY": "600px",
+			"paging": false,
+			"order": [[14, "desc"]]
+		});
+
+		$('#player-pool_filter').hide();
+
+	</script>
+
+	<script src="/js/player_pools/index.js"></script>
 @stop
