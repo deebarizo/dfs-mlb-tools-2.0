@@ -15,6 +15,8 @@ Route::get('/', function() {
 
 Route::get('/player_pools', 'PlayerPoolsController@showPlayerPools');
 
+Route::get('/player_pools/{id}', 'PlayerPoolsController@showPlayerPool');
+
 
 /****************************************************************************************
 PLAYERS

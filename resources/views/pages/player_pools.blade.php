@@ -24,7 +24,7 @@
 							<td>{{ $playerPool->time_period }}</td>
 							<td>{{ $playerPool->site }}</td>
 							<td>{{ $playerPool->buy_in }}</td>
-							<td><a href="">Player Pool</a> | <a href="">Lineups</a></td>
+							<td><a href="/player_pools/{{ $playerPool->id }}">Player Pool</a> | <a href="">Lineups</a></td>
 						</tr>
 					@endforeach
 				</tbody>
