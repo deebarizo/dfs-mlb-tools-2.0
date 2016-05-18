@@ -28,7 +28,8 @@ class PlayerPoolsController extends Controller {
 								 'salary',
 								 'dk_players.id',
 								 'dk_players.player_pool_id',
-								 'dk_players.player_id')
+								 'dk_players.player_id',
+								 'dk_players.opp_pitcher')
 						->join('players', 'players.id', '=', 'dk_players.player_id')
 						->join('player_pools', 'player_pools.id', '=', 'dk_players.player_pool_id')
 						->join('teams', 'teams.id', '=', 'dk_players.team_id')

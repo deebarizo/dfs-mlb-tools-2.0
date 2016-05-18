@@ -48,6 +48,7 @@
 						<th>Name</th>
 						<th>Team</th>
 						<th>Opp</th>
+						<th>OppSp</th>
 						<th>Pos</th>
 						<th>bLu</th>
 						<th>%St</th>
@@ -78,6 +79,7 @@
 					    	<td>{{ $dkPlayer->name_dk }}</td>
 					    	<td>{{ $dkPlayer->team_name_dk }}</td>
 					    	<td>{{ $dkPlayer->opp_team_name_dk }}</td>
+					    	<td>{{ $dkPlayer->opp_pitcher }}</td>
 					    	<td>{{ $dkPlayer->position }}</td>
 					    	<td>{{ $dkPlayer->lineup_bat }}</td>
 					    	<td>{{ $dkPlayer->percent_start_razzball }}</td>
@@ -106,7 +108,7 @@
 			
 			"scrollY": "600px",
 			"paging": false,
-			"order": [[16, "desc"]]
+			"order": [[17, "desc"]]
 		});
 
 		$('#player-pool_filter').hide();
