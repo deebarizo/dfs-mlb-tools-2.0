@@ -37,6 +37,8 @@ class ParsersController extends Controller {
 
             $useCase = new UseCase;
 
+            $message = 'Success!';
+
             if ($request->hasFile('razzball-pitchers-csv')) {
                 
                 $csvFile = $useCase->uploadCsvFileForProjectionsParser($playerPoolId, 'Razzball', 'pitchers', $fileDirectory, $request);  

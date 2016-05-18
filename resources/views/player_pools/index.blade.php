@@ -2,14 +2,14 @@
 
 @section('content')
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-lg-12 wide">
 			<h2>{{ $h2Tag }}</h2>
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col-lg-12" style="margin: 15px 0">
-			<form class="form-inline" style="margin: 0 0 10px 0">
+		<div class="col-lg-12 wide" style="margin: 15px 0">
+			<form class="form-inline" style="margin: 0 0 10px -200px">
 
 				<label>Teams</label>
 				<select class="form-control team-filter" style="width: 10%; margin-right: 20px">
@@ -41,7 +41,7 @@
 			</form>
 		</div>
 
-		<div class="col-lg-12">
+		<div class="col-lg-12 wide">
 			<table id="player-pool" style="font-size: 85%" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
@@ -55,6 +55,8 @@
 						<th>bPts</th>
 						<th>rPts</th>
 						<th>ruPts</th>
+						<th>mPts</th>
+						<th>muPts</th>
 						<th>Sal</th>
 						<th>bVr</th>
 						<th>rVr</th>
@@ -83,12 +85,14 @@
 					    	<td>{{ $dkPlayer->fpts_bat }}</td>
 					    	<td>{{ $dkPlayer->fpts_razzball }}</td>
 					    	<td>{{ $dkPlayer->upside_fpts_razzball }}</td>
+					    	<td>{{ $dkPlayer->mPts }}</td>
+					    	<td>{{ $dkPlayer->muPts }}</td>
 					    	<td>{{ $dkPlayer->salary }}</td>
-					    	<td>{{ numFormat($dkPlayer->fpts_bat / ($dkPlayer->salary / 1000), 2) }}</td>
-					    	<td>{{ numFormat($dkPlayer->fpts_razzball / ($dkPlayer->salary / 1000), 2) }}</td>
-					    	<td>{{ numFormat($dkPlayer->upside_fpts_razzball / ($dkPlayer->salary / 1000), 2) }}</td>
-					    	<td>{{ numFormat(($dkPlayer->fpts_bat + $dkPlayer->fpts_razzball) / ($dkPlayer->salary / 1000), 2) }}</td>
-					    	<td>{{ numFormat(($dkPlayer->fpts_bat + $dkPlayer->upside_fpts_razzball) / ($dkPlayer->salary / 1000), 2) }}</td>
+					    	<td>{{ $dkPlayer->bVr }}</td>
+					    	<td>{{ $dkPlayer->rVr }}</td>
+					    	<td>{{ $dkPlayer->ruVr }}</td>
+					    	<td>{{ $dkPlayer->mVr }}</td>
+					    	<td>{{ $dkPlayer->muVr }}</td>
 					    </tr>
 					@endforeach
 				</tbody>
@@ -102,7 +106,7 @@
 			
 			"scrollY": "600px",
 			"paging": false,
-			"order": [[14, "desc"]]
+			"order": [[16, "desc"]]
 		});
 
 		$('#player-pool_filter').hide();
