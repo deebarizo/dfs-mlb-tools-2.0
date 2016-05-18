@@ -207,10 +207,11 @@ class RazzballHitterProjectionsParserTest extends TestCase {
 
         $dkPlayer = DkPlayer::find(2);
 
-        $this->assertContains((string)$dkPlayer->lineup_razzball, 'Lst7');
+        $this->assertContains($dkPlayer->lineup_razzball, 'Lst7');
         $this->assertContains((string)$dkPlayer->percent_start_razzball, '88');
         $this->assertContains((string)$dkPlayer->fpts_razzball, '9.90');
         $this->assertContains((string)$dkPlayer->upside_fpts_razzball, '19.40');
+        $this->assertContains($dkPlayer->opp_pitcher, 'JEickhoff(R)');
     }
 
 }

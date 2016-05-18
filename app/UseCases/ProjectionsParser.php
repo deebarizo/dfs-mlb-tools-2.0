@@ -101,6 +101,7 @@ trait ProjectionsParser {
                     set_time_limit(60);
                 
                     $razzballName = $row[1];
+                    $oppPitcher = $row[9];
                     $lineup = $row[11];
                     $percentStart = $row[10];
                     $fpts = $row[21];
@@ -152,6 +153,7 @@ trait ProjectionsParser {
                         DB::table('dk_players')
                             ->where('id', $dkPlayer->id)
                             ->update([
+                                'opp_pitcher' => $oppPitcher, 
                                 'lineup_razzball' => $lineup,
                                 'percent_start_razzball' => $percentStart,
                                 'fpts_razzball' => $fpts,
