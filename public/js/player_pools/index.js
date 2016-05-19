@@ -16,25 +16,6 @@ $(document).ready(function() {
 
 		// https://datatables.net/reference/api/column().search()
 
-		if (this.type === 'salary') {
-
-			var salary = Number(this.value);
-
-			if (this.modifier === 'greater-than') {
-
-				console.log(this);
-				console.log(salary);
-
-				playerPoolTable.column(this.columnIndex).data().filter(function(value, salary) {
-
-					return value > salary ? true : false; 
-				}); 
-
-			} else if (this.modifier === 'less-than' ){
-
-			}
-		}
-
 		if (this.type === 'position') {
 
 			if (this.value !== 'Hitters' && this.value !== 'SP' && this.value !== 'All') {
