@@ -113,7 +113,7 @@
 			
 			"scrollY": "600px",
 			"paging": false,
-			"order": [[17, "desc"]],
+			"order": [[16, "desc"]],
 	        "aoColumns": [
 	            null,
 	            null,
