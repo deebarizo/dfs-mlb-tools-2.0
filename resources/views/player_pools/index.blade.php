@@ -54,16 +54,21 @@
 						<th>%St</th>
 						<th>rLu</th>
 						<th>bPts</th>
-						<th>rPts</th>
-						<th>ruPts</th>
-						<th>mPts</th>
-						<th>muPts</th>
-						<th>Sal</th>
 						<th>bVr</th>
+						<th>rPts</th>
 						<th>rVr</th>
+						<th>ruPts</th>
 						<th>ruVr</th>
+						<th>mPts</th>
 						<th>mVr</th>
+						<th>muPts</th>
 						<th>muVr</th>
+						<th>Sal</th>
+						
+						
+						
+						
+						
 					</tr>
 				</thead>
 				<tbody>
@@ -85,16 +90,16 @@
 					    	<td>{{ $dkPlayer->percent_start_razzball }}</td>
 					    	<td>{{ $dkPlayer->lineup_razzball }}</td>
 					    	<td>{{ $dkPlayer->fpts_bat }}</td>
-					    	<td>{{ $dkPlayer->fpts_razzball }}</td>
-					    	<td>{{ $dkPlayer->upside_fpts_razzball }}</td>
-					    	<td>{{ $dkPlayer->mPts }}</td>
-					    	<td>{{ $dkPlayer->muPts }}</td>
-					    	<td>{{ $dkPlayer->salary }}</td>
 					    	<td>{{ $dkPlayer->bVr }}</td>
+					    	<td>{{ $dkPlayer->fpts_razzball }}</td>
 					    	<td>{{ $dkPlayer->rVr }}</td>
+					    	<td>{{ $dkPlayer->upside_fpts_razzball }}</td>
 					    	<td>{{ $dkPlayer->ruVr }}</td>
+					    	<td>{{ $dkPlayer->mPts }}</td>
 					    	<td>{{ $dkPlayer->mVr }}</td>
+					    	<td>{{ $dkPlayer->muPts }}</td>
 					    	<td>{{ $dkPlayer->muVr }}</td>
+					    	<td>{{ $dkPlayer->salary }}</td>
 					    </tr>
 					@endforeach
 				</tbody>
@@ -108,7 +113,28 @@
 			
 			"scrollY": "600px",
 			"paging": false,
-			"order": [[17, "desc"]]
+			"order": [[17, "desc"]],
+	        "aoColumns": [
+	            null,
+	            null,
+	            null,
+	            null,
+	            null,
+	            null,
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] },
+	            { "orderSequence": [ "desc", "asc" ] }
+	        ]
 		});
 
 		$('#player-pool_filter').hide();

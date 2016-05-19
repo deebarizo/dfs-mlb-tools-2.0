@@ -36,11 +36,6 @@ class PlayerPoolsController extends Controller {
 						->where('player_pools.id', $id)
 						->get();
 
-		foreach ($dkPlayers as $dkPlayer) {
-			
-
-		}
-
 		$teams = Team::all();
 
 		foreach ($dkPlayers as $dkPlayer) {
@@ -96,13 +91,29 @@ class PlayerPoolsController extends Controller {
 			}
 
 			$dkPlayer->mPts = numFormat(($dkPlayer->fpts_razzball + $dkPlayer->fpts_bat) / 2, 2);
-			$dkPlayer->muPts = numFormat(($dkPlayer->upside_fpts_razzball + $dkPlayer->fpts_bat) / 2, 2);
+
+			if ($dkPlayer->position === 'SP' || $dkPlayer->position === 'RP') {
+
+				$dkPlayer->muPts = numFormat(0, 2);
+
+				$dkPlayer->ruVr = numFormat(0, 2);
+
+				$dkPlayer->muVr = numFormat(0, 2);
+			
+			} else {
+
+				$dkPlayer->muPts = numFormat(($dkPlayer->upside_fpts_razzball + $dkPlayer->fpts_bat) / 2, 2);
+
+				$dkPlayer->ruVr = numFormat($dkPlayer->upside_fpts_razzball / ($dkPlayer->salary / 1000), 2);
+
+				$dkPlayer->muVr = numFormat(($dkPlayer->fpts_bat + $dkPlayer->upside_fpts_razzball) / ($dkPlayer->salary / 1000) / 2, 2);
+			}
+
 
 			$dkPlayer->bVr = numFormat($dkPlayer->fpts_bat / ($dkPlayer->salary / 1000), 2);
 			$dkPlayer->rVr = numFormat($dkPlayer->fpts_razzball / ($dkPlayer->salary / 1000), 2);
-			$dkPlayer->ruVr = numFormat($dkPlayer->upside_fpts_razzball / ($dkPlayer->salary / 1000), 2);
+			
 			$dkPlayer->mVr = numFormat(($dkPlayer->fpts_bat + $dkPlayer->fpts_razzball) / ($dkPlayer->salary / 1000) / 2, 2);
-			$dkPlayer->muVr = numFormat(($dkPlayer->fpts_bat + $dkPlayer->upside_fpts_razzball) / ($dkPlayer->salary / 1000) / 2, 2);
 		}
 
 		$teams = DB::table('teams')

@@ -67,7 +67,7 @@ $(document).ready(function() {
 
 	        var modifier = $('input:radio[name=salary-toggle]:checked').val();
 
-	        var salary = parseFloat(data[13]) || 0; // use data for the salary column
+	        var salary = parseFloat(data[18]) || 0; // use data for the salary column
 
 	        if (modifier === 'greater-than') {
 

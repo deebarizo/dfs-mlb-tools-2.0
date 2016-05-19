@@ -99,7 +99,7 @@ trait ProjectionsParser {
                 if ($i > 0) { 
 
                     set_time_limit(60);
-                
+
                     $razzballName = $row[1];
                     $oppPitcher = $row[9];
                     $lineup = $row[11];
