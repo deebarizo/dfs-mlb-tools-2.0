@@ -9,7 +9,7 @@ class MasterViewTest extends TestCase {
 	/** @test */
     public function shows_navigation_links() {
 
-       	$this->visit('/');
+       	$this->visit('/player_pools');
        	$this->see('Admin');
     }
 

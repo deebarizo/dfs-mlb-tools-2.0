@@ -11,7 +11,7 @@ PLAYER POOLS
 
 Route::get('/', function() {
 
-	$latestPlayerPool = PlayerPool::take(1)->orderBy('id', 'desc')->get()[0];
+	$latestPlayerPool = PlayerPool::orderBy('id', 'desc')->first();
 
 	return redirect('/player_pools/'.$latestPlayerPool->id);
 });
