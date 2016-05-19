@@ -1,7 +1,8 @@
 <?php
 
-use App\DkActualLineup;
+use App\PlayerPool;
 use App\DkPlayer;
+use App\DkActualLineup;
 
 
 /****************************************************************************************
@@ -10,7 +11,9 @@ PLAYER POOLS
 
 Route::get('/', function() {
 
-	return redirect('/player_pools');
+	$latestPlayerPool = PlayerPool::take(1)->orderBy('id', 'desc')->get()[0];
+
+	return redirect('/player_pools/'.$latestPlayerPool->id);
 });
 
 Route::get('/player_pools', 'PlayerPoolsController@showPlayerPools');
