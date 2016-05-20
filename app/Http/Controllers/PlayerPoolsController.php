@@ -36,6 +36,8 @@ class PlayerPoolsController extends Controller {
 						->where('player_pools.id', $id)
 						->get();
 
+						# ddAll($dkPlayers);
+
 		$teams = Team::all();
 
 		foreach ($dkPlayers as $dkPlayer) {

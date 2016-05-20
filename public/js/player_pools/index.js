@@ -22,21 +22,15 @@ $(document).ready(function() {
 
 				playerPoolTable.column(this.columnIndex).search(this.value, true, false, false); 
 
+				showOnlyHitterStats();
+
+				showAllTeams();
+
 			} else if (this.value === 'SP') {
 
-				playerPoolTable.column(this.columnIndex).search('(SP|RP)', true, false, false); 
+				showOnlyPitcherStats();
 
-				playerPoolTable.column(10).visible(true);
-				playerPoolTable.column(11).visible(true);
-				playerPoolTable.column(14).visible(true);
-				playerPoolTable.column(15).visible(true);
-
-				playerPoolTable.column(12).visible(false);
-				playerPoolTable.column(13).visible(false);
-				playerPoolTable.column(16).visible(false);
-				playerPoolTable.column(17).visible(false);
-
-				playerPoolTable.column(14).order('desc');
+				showAllTeams();
 
 				playerPoolTable.draw(); 
 
@@ -44,25 +38,16 @@ $(document).ready(function() {
 
 			} else if (this.value === 'Hitters') {
 
-				// http://stackoverflow.com/questions/1538512/how-can-i-invert-a-regular-expression-in-javascript
-				playerPoolTable.column(this.columnIndex).search('^(?!.*P)', true, false, false); 
+				showOnlyHitterStats();
+
+				showAllTeams();
 			
 			} else if (this.value === 'All') {
 
 				playerPoolTable.column(this.columnIndex).search('.*', true, false, false); 
+
+				showAllTeams();
 			}
-
-			playerPoolTable.column(12).visible(true);
-			playerPoolTable.column(13).visible(true);
-			playerPoolTable.column(16).visible(true);
-			playerPoolTable.column(17).visible(true);
-
-			playerPoolTable.column(10).visible(false);
-			playerPoolTable.column(11).visible(false);
-			playerPoolTable.column(14).visible(false);
-			playerPoolTable.column(15).visible(false);
-
-			playerPoolTable.column(16).order('desc');
 		}
 		
 		if (this.type === 'team') {
@@ -70,7 +55,9 @@ $(document).ready(function() {
 			if (this.value !== 'All') {
 
 				playerPoolTable.column(this.columnIndex).search(this.value, true, false, false); 
-			
+
+				showOnlyHitterStats();
+
 			} else if (this.value === 'All') {
 
 				playerPoolTable.column(this.columnIndex).search('.*', true, false, false); 
@@ -79,6 +66,51 @@ $(document).ready(function() {
 
 		playerPoolTable.draw();
 	};
+
+	function showAllTeams() {
+
+		playerPoolTable.column(1).search('.*', true, false, false); 
+		$('select.team-filter').val('All');
+	}
+
+	function showOnlyPitcherStats() {
+
+		playerPoolTable.column(10).visible(true);
+		playerPoolTable.column(11).visible(true);
+		playerPoolTable.column(14).visible(true);
+		playerPoolTable.column(15).visible(true);
+
+		playerPoolTable.column(12).visible(false);
+		playerPoolTable.column(13).visible(false);
+		playerPoolTable.column(16).visible(false);
+		playerPoolTable.column(17).visible(false);
+
+		playerPoolTable.column(14).order('desc');
+
+		playerPoolTable.column(4).search('(SP|RP)', true, false, false); 
+
+		$('select.position-filter').val('SP');
+	}
+
+	function showOnlyHitterStats() {
+
+		playerPoolTable.column(12).visible(true);
+		playerPoolTable.column(13).visible(true);
+		playerPoolTable.column(16).visible(true);
+		playerPoolTable.column(17).visible(true);
+
+		playerPoolTable.column(10).visible(false);
+		playerPoolTable.column(11).visible(false);
+		playerPoolTable.column(14).visible(false);
+		playerPoolTable.column(15).visible(false);
+
+		playerPoolTable.column(16).order('desc');
+
+		// http://stackoverflow.com/questions/1538512/how-can-i-invert-a-regular-expression-in-javascript
+		playerPoolTable.column(4).search('^(?!.*P)', true, false, false); 
+
+		$('select.position-filter').val('Hitters');
+	}
 
 
 	/****************************************************************************************

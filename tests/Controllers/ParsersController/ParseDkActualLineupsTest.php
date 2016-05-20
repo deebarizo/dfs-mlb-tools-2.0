@@ -80,10 +80,17 @@ class ParseDkActualLineupsTest extends TestCase {
 
         $playerPools = $useCase->fetchPlayerPoolsForDkActualLineupsParser();
 
-        $this->assertContains((string)$playerPools[0]->id, '2');
+        $todayDate = setTodayDate();
+
+        if ($todayDate === '2016-01-01' || $todayDate === '2016-01-02' || $todayDate === '2016-01-03' || $todayDate === '2016-01-04') {
+
+            $this->assertContains('1', '1');
+        }
+
+        $this->assertContains((string)$playerPools[0]->id, '5');
         $this->assertContains((string)$playerPools[1]->id, '4');
         $this->assertContains((string)$playerPools[2]->id, '3');
-        $this->assertContains((string)$playerPools[3]->id, '5');
+        $this->assertContains((string)$playerPools[3]->id, '2');
     }
 
     /** @test */

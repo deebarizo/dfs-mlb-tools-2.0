@@ -24,7 +24,8 @@ trait DkActualLineupsParser {
                     ->select('player_pools.id', 'player_pools.date', 'player_pools.time_period', 'player_pools.site')
                     ->groupBy('player_pools.id')
                     ->whereNull('dk_actual_lineups.player_pool_id')
-                    ->orderBy(DB::raw('`date` asc, FIELD(player_pools.time_period, "Early", "Late", "All Day")'))
+                    ->where('date', '<', setTodayDate())
+                    ->orderBy(DB::raw('`date` desc, FIELD(player_pools.time_period, "Early", "Late", "All Day")'))
                     ->get();
     }
 
