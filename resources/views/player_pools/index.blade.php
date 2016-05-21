@@ -4,11 +4,13 @@
 	<div class="row">
 		<div class="col-lg-12 wide">
 			<h2>{{ $h2Tag }}</h2>
+
+			<h4><a target="_blank" href="/stacks/{{ $dkPlayers[0]->player_pool_id }}">Stacks</a></h4>
 		</div>
 	</div>
 	
 	<div class="row">
-		<div class="col-lg-12 wide" style="margin: 15px 0">
+		<div class="col-lg-12 wide" style="margin: 5px 0 15px 0">
 			<form class="form-inline" style="margin: 0 0 10px -200px">
 
 				<label>Teams</label>
@@ -18,6 +20,8 @@
 					  	<option value="{{ $team }}">{{ $team }}</option>
 				  	@endforeach
 				</select>	
+
+				
 
 				<label>Positions</label>
 				<select class="form-control position-filter" style="width: 10%; margin-right: 20px">
@@ -37,7 +41,6 @@
 				<input class="form-control" type="radio" name="salary-toggle" id="greater-than" value="greater-than">>=
 				<input class="form-control" type="radio" name="salary-toggle" id="less-than" value="less-than" checked="checked"><=				
 				<input style="width: 10%; margin-right: 20px; outline: none; margin-left: 5px" class="salary-reset btn btn-default" name="salary-reset" value="Salary Reset">
-
 			</form>
 		</div>
 
@@ -64,11 +67,6 @@
 						<th>muPts</th>
 						<th>muVr</th>
 						<th>Sal</th>
-						
-						
-						
-						
-						
 					</tr>
 				</thead>
 				<tbody>

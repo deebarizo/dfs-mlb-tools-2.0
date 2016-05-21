@@ -10,4 +10,6 @@ class UseCase {
 	use DkActualLineupsParser;
 	use DkActualLineupPlayersParser;
 	use DkOwnershipsParser;
+
+	use VrsCalculator;
 }
