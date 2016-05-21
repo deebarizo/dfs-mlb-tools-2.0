@@ -4,11 +4,18 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Input;
 
+use App\PlayerPool;
+
 use DB;
 
 class StacksController extends Controller {
 
 	public function showStacks($playerPoolId) {
+
+		$playerPool = PlayerPool::find($playerPoolId);
+
+		$titleTag = $playerPool->date.' - '.$playerPool->time_period.' - Stacks | ';
+		$h2Tag = $playerPool->date.' - '.$playerPool->time_period.' - Stacks';
 
 		$teams = DB::table('dk_players')
 					->select('teams.name_dk', 'teams.id')
@@ -115,8 +122,24 @@ class StacksController extends Controller {
 				$totalMuPts += $dkPlayer->muPts;
 			}
 
-			$team->stackVr = numFormat($totalMuPts / 5, 2);
+			$team->avgMuPts = numFormat($totalMuPts / 5, 2);
+
+			$team->takenPositions = '';
+
+			foreach ($takenPositions as $key => $takenPosition) {
+
+				if ($key === 4) {
+
+					$team->takenPositions .= $takenPosition;
+
+					break;
+				}
+				
+				$team->takenPositions .= $takenPosition.', ';
+			}
 		}
+
+		return view('player_pools/show_stacks', compact('titleTag', 'h2Tag', 'playerPoolId', 'teams'));
 	}
 
 }

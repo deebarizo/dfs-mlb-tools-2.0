@@ -134,7 +134,7 @@ class ShowStacksTest extends TestCase {
 
     	$this->setUpPlayerPool(); $this->setUpPlayers();
 
-       	$this->visit('/stacks/1');
+       	$this->visit('/player_pools/1/stacks');
         $this->see('LAD');
         $this->see('10.54');
     }

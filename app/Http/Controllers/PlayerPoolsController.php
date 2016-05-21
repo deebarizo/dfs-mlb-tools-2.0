@@ -67,7 +67,7 @@ class PlayerPoolsController extends Controller {
 					->orderBy('teams.name_dk', 'asc')
 					->lists('teams.name_dk');
 
-		return view('player_pools/index', compact('titleTag', 'h2Tag', 'teams', 'dkPlayers'));
+		return view('player_pools/show', compact('titleTag', 'h2Tag', 'teams', 'dkPlayers'));
 	}
 
 	public function showPlayerPools() {

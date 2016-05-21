@@ -5,7 +5,7 @@
 		<div class="col-lg-12 wide">
 			<h2>{{ $h2Tag }}</h2>
 
-			<h4><a target="_blank" href="/stacks/{{ $dkPlayers[0]->player_pool_id }}">Stacks</a></h4>
+			<h4><a target="_blank" href="/player_pools/{{ $dkPlayers[0]->player_pool_id }}/stacks">Stacks</a></h4>
 		</div>
 	</div>
 	
@@ -20,8 +20,6 @@
 					  	<option value="{{ $team }}">{{ $team }}</option>
 				  	@endforeach
 				</select>	
-
-				
 
 				<label>Positions</label>
 				<select class="form-control position-filter" style="width: 10%; margin-right: 20px">

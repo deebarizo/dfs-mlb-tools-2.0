@@ -25,7 +25,7 @@ Route::get('/player_pools/{id}', 'PlayerPoolsController@showPlayerPool');
 STACKS
 ****************************************************************************************/
 
-Route::get('/stacks/{playerPoolId}', 'StacksController@showStacks');
+Route::get('/player_pools/{id}/stacks', 'StacksController@showStacks');
 
 
 /****************************************************************************************
