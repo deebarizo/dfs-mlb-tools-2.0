@@ -9,7 +9,7 @@
 	
 	<div class="row">
 		<div class="col-lg-9" style="margin-top: 15px">
-			<table id="stacks" class="table table-striped table-bordered table-hover table-condensed">
+			<table id="stacks" class="stacks table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
 						<th>Team</th>
@@ -36,11 +36,13 @@
 
 	<script type="text/javascript">
 
+		var columnIndex = localStorage.getItem('columnIndex') || 1;
+
 		var stacksTable = $('#stacks').DataTable({
 			
 			"scrollY": "600px",
 			"paging": false,
-			"order": [[1, "desc"]],
+			"order": [[columnIndex, "desc"]],
 	        "aoColumns": [
 	            null,
 	            { "orderSequence": [ "desc", "asc" ] },
@@ -51,6 +53,18 @@
 		});
 
 		$('#stacks_filter').hide();
+
+		$(document).ready(function() {
+
+			$('table.stacks thead').on('click', 'th', function() { // can't use #stacks selector because DataTables removes the selector
+			  	
+			  	var columnIndex = stacksTable.column(this).index();
+			  	
+			  	localStorage.setItem('columnIndex', columnIndex);
+			});
+		});
+
+
 
 	</script>
 @stop
