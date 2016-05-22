@@ -47,7 +47,8 @@ class StacksController extends Controller {
 										  dk_players.team_id,
 										  teams.name_dk, 
 										  (fpts_bat + upside_fpts_razzball) / 2 as muPts,
-										  position'))
+										  position,
+										  salary'))
 						->join('player_pools', 'player_pools.id', '=', 'dk_players.player_pool_id')
 						->join('players', 'players.id', '=', 'dk_players.player_id')
 						->join('teams', 'teams.id', '=', 'dk_players.team_id')
@@ -70,7 +71,8 @@ class StacksController extends Controller {
 										  dk_players.team_id,
 										  teams.name_dk, 
 										  (fpts_bat + upside_fpts_razzball) / 2 as muPts,
-										  position'))
+										  position,
+										  salary'))
 						->join('player_pools', 'player_pools.id', '=', 'dk_players.player_pool_id')
 						->join('players', 'players.id', '=', 'dk_players.player_id')
 						->join('teams', 'teams.id', '=', 'dk_players.team_id')
@@ -89,6 +91,7 @@ class StacksController extends Controller {
 			}
 
 			$totalMuPts = 0;
+			$totalSalary = 0;
 			$takenPositions = [];
 
 			foreach ($dkPlayers as $dkPlayer) {
@@ -120,9 +123,12 @@ class StacksController extends Controller {
 				array_push($takenPositions, $dkPlayer->position);
 
 				$totalMuPts += $dkPlayer->muPts;
+				$totalSalary += $dkPlayer->salary;
 			}
 
 			$team->avgMuPts = numFormat($totalMuPts / 5, 2);
+			$team->avgMuVr = numFormat($totalMuPts / ($totalSalary / 1000), 2);
+			$team->avgSalary = preg_replace('/,/', '', numFormat($totalSalary / 5, 0));
 
 			$team->takenPositions = '';
 

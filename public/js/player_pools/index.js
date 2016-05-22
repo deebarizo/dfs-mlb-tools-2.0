@@ -203,4 +203,14 @@ $(document).ready(function() {
 		filter.execute();
 	});
 
+	/****************************************************************************************
+	SHOW PITCHERS ON LOAD
+	****************************************************************************************/
+
+	$('select.position-filter').val('SP');
+			
+	var filter = new Filter('position', 4, 'SP', null);
+
+	filter.execute();
+
 });
