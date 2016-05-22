@@ -34,14 +34,14 @@ function setActive($path, $active = 'active') {
 SET DATES
 ****************************************************************************************/
 
-function setTodayDate() {
+function getTodayDate() {
 
 	date_default_timezone_set('America/Chicago'); 
 	
 	return date('Y-m-d');	
 }
 
-function setYesterdayDate() {
+function getYesterdayDate() {
 
 	date_default_timezone_set('America/Chicago'); 
 	

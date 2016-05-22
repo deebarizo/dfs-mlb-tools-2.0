@@ -80,7 +80,7 @@ class ParseDkActualLineupsTest extends TestCase {
 
         $playerPools = $useCase->fetchPlayerPoolsForDkActualLineupsParser();
 
-        $todayDate = setTodayDate();
+        $todayDate = getTodayDate();
 
         if ($todayDate === '2016-01-01' || $todayDate === '2016-01-02' || $todayDate === '2016-01-03' || $todayDate === '2016-01-04') {
 

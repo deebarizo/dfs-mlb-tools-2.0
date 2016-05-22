@@ -88,7 +88,7 @@ Route::get('/admin/parsers/dk_ownerships', ['as' => 'admin.parsers.dk_ownerships
 	$numOfUnparsedDkPlayers = DB::table('dk_players')
 									->join('player_pools', 'player_pools.id', '=', 'dk_players.player_pool_id')
 									->where('ownerships_parsed', 0)
-									->where('date', '<', setTodayDate())
+									->where('date', '<', getTodayDate())
 									->count();
 
 	return View::make('/admin/parsers/dk_ownerships', compact('titleTag', 'h2Tag', 'numOfUnparsedDkPlayers'));

@@ -22,7 +22,7 @@ class ParsersController extends Controller {
 
         $useCase = new UseCase;
 
-        $playerPools = $useCase->fetchPlayerPoolsForProjectionsParsers(setTodayDate());
+        $playerPools = $useCase->fetchPlayerPoolsForProjectionsParsers(getTodayDate());
 
         return view('/admin/parsers/projections', compact('titleTag', 'h2Tag', 'playerPools'));
     }
