@@ -5,7 +5,7 @@
 		<div class="col-lg-12 wide">
 			<h2>{{ $h2Tag }}</h2>
 
-			<h4><a target="_blank" href="/player_pools/{{ $dkPlayers[0]->player_pool_id }}/stacks">Stacks</a></h4>
+			<h4><a target="_blank" href="/player_pools/{{ $dkPlayers[0]->player_pool_id }}/stacks">Stacks</a> | <a target="_blank" href="/player_pools/{{ $dkPlayers[0]->player_pool_id }}/lineups/create">Create Lineup</a></h4>
 		</div>
 	</div>
 	
