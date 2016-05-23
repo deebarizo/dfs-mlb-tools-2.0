@@ -14,8 +14,10 @@ class StacksController extends Controller {
 
 		$playerPool = PlayerPool::find($playerPoolId);
 
-		$titleTag = $playerPool->date.' - '.$playerPool->time_period.' - Stacks | ';
-		$h2Tag = $playerPool->date.' - '.$playerPool->time_period.' - Stacks';
+		$titleAndHeadingPhrase = 'Stacks';
+
+		$titleTag = $playerPool->date.' - '.$playerPool->time_period.' - '.$titleAndHeadingPhrase.' | ';
+		$h2Tag = $playerPool->date.' - '.$playerPool->time_period.' - '.$titleAndHeadingPhrase;
 
 		$teams = DB::table('dk_players')
 					->select('teams.name_dk', 'teams.id')

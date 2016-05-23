@@ -19,12 +19,21 @@
 		@endif
 
 		@if (Session::has('message'))
-			<div class="alert <?php echo (Session::get('message') === 'Success!' ? 'alert-info' : 'alert-danger'); ?> fade in success-message" role="alert">
+			<div class="alert <?php echo (Session::get('message') === 'Success!' ? 'alert-info success-alert' : 'alert-danger'); ?> fade in success-message" role="alert">
 				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
 
 				{!! Session::get('message') !!}
 		    </div>
 		@endif
 	</div>
+
+	<script type="text/javascript">
+		
+		$("div.success-alert").fadeTo(1000, 500).slideUp(500, function(){
+		    
+		    $("div.success-alert").alert('close');
+		});
+
+	</script>
 </div>
 
