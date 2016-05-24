@@ -50,28 +50,28 @@
 		<div class="col-lg-6">
 			<h4 class="lineup">Lineup</h4>
 
-			<table id="lineup" class="table table-striped table-bordered table-hover table-condensed">
+			<table id="lineup" style="font-size: 85%" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
 						<th>Pos</th>					
 						<th>Name</th>
 						<th>Team</th>
 						<th>Opp</th>
-						<th>Salary</th>
+						<th>Sal</th>
 						<th>Fpts</th>
-						<th>Remove</th>
+						<th>Rem</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php for ($i = 0; $i < 9; $i++) { ?>
 						<tr class="lineup-row lineup-player-row">
-							<td style="width: 5%" class="lineup-player-position">SP</td>
-							<td style="width: 25%" class="lineup-player-name">Bob Jones</td>
-							<td style="width: 10%" class="lineup-player-team">LAD</td>
-							<td style="width: 10%" class="lineup-player-opp">Sea</td>
-							<td style="width: 15%" class="lineup-player-salary">9000</td>
-							<td style="width: 15%" class="lineup-player-bat-fpts">22.3</td>
-							<td style="width: 10%"><a href="" class="remove-lineup-player-link"></a></td>
+							<td style="width: 5%" class="lineup-player-position"></td>
+							<td style="width: 40%" class="lineup-player-name"></td>
+							<td style="width: 5%" class="lineup-player-team"></td>
+							<td style="width: 5%" class="lineup-player-opp"></td>
+							<td style="width: 15%" class="lineup-player-salary"></td>
+							<td style="width: 15%" class="lineup-player-bat-fpts"></td>
+							<td style="width: 5%"><a href="" class="remove-lineup-player-link"><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td>
 						</tr>
 					<?php } ?>
 					<tr class="lineup-row">
@@ -115,4 +115,6 @@
 		$('#dk-players_filter').hide();
 
 	</script>
+
+	<script scr="/js/lineups/create.js"></script>
 @stop

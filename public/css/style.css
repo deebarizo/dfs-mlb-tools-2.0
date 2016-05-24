@@ -14,6 +14,7 @@ LINEUPS
 ****************************************************************************************/
 
 div.circle-plus-icon {
+    
     color: green;
     display: inline;
 }
@@ -21,4 +22,9 @@ div.circle-plus-icon {
 div.circle-plus-icon.second-position {
 
 	margin-left: 10px;
+}
+
+div.circle-minus-icon {
+
+	color: red;
 }
