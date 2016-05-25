@@ -25,6 +25,6 @@ describe('Create Lineup', function () {
   		expect(tableRow).toExist();
  
  		tableRow.find('a.add-dk-player-link').trigger('click');
-    	expect($('tr[data-name="Chris Sale"]')).toHaveClass('bob');
+    	expect($('tr[data-name="Chris Sale"]')).toHaveCss({'text-decoration': 'line-through'});
   	});
 });

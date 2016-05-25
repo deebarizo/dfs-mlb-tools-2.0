@@ -40,7 +40,7 @@
 							<td>{{ $dkPlayer->opp_team->name_dk }}</td>
 							<td>{{ $dkPlayer->salary }}</td>
 							<td>0.00</td>
-							<td class="dk-player-add"><a class="add-dk-player-link" href=""><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span></div><?php if (strpos($dkPlayer->position, '/') !== false) echo '<a class="add-dk-player-link second-position" href=""><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span>'; ?></td>
+							<td class="dk-player-add"><a class="add-dk-player-link" href="#"><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span></div></a><?php if (strpos($dkPlayer->position, '/') !== false) echo '<a class="add-dk-player-link second-position" href=""><div class="circle-plus-icon second-position"><span class="glyphicon glyphicon-plus"></span></div></a>'; ?></td>
 						</tr>		
 					@endforeach	
 				</tbody>

@@ -4,6 +4,6 @@ $(document).ready(function() {
 
 		e.preventDefault();
 
-		$(this).closest('tr.player-row').addClass('bob');
+		$(this).closest('tr.player-row').css('text-decoration', 'line-through');
 	});
 });
