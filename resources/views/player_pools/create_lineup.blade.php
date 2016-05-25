@@ -40,7 +40,7 @@
 							<td>{{ $dkPlayer->opp_team->name_dk }}</td>
 							<td>{{ $dkPlayer->salary }}</td>
 							<td>0.00</td>
-							<td class="dk-player-update"><a class="update-dk-player-link" href=""><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span></div><?php if (strpos($dkPlayer->position, '/') !== false) echo '<a class="update-dk-player-link" href=""><div class="circle-plus-icon second-position"><span class="glyphicon glyphicon-plus"></span>'; ?></td>
+							<td class="dk-player-add"><a class="add-dk-player-link" href=""><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span></div><?php if (strpos($dkPlayer->position, '/') !== false) echo '<a class="add-dk-player-link second-position" href=""><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span>'; ?></td>
 						</tr>		
 					@endforeach	
 				</tbody>
@@ -50,7 +50,7 @@
 		<div class="col-lg-6">
 			<h4 class="lineup">Lineup</h4>
 
-			<table id="lineup" style="font-size: 85%" class="table table-striped table-bordered table-hover table-condensed">
+			<table id="lineup" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
 					<tr>
 						<th>Pos</th>					
@@ -104,17 +104,7 @@
 		});
 
 		$('#dk-players_filter').hide();
-
-		var lineupTable = $('#lineup').DataTable({
-			
-			"scrollY": "600px",
-			"paging": false,
-			"order": [[4, "desc"]]
-		});
-
-		$('#dk-players_filter').hide();
-
 	</script>
 
-	<script scr="/js/lineups/create.js"></script>
+	<script src="/js/lineups/create.js"></script>
 @stop
