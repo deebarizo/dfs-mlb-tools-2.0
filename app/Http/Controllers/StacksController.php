@@ -64,6 +64,8 @@ class StacksController extends Controller {
 						})
 						->orderBy('muPts', 'desc')
 						->get();
+
+				$team->lineupIsOut = 'false';
 			}
 
 			if ($lineupIsOut) {
@@ -90,6 +92,8 @@ class StacksController extends Controller {
 						})
 						->orderBy('muPts', 'desc')
 						->get();
+
+				$team->lineupIsOut = 'true';
 			}
 
 			$totalMuPts = 0;

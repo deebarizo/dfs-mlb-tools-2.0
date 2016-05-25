@@ -16,6 +16,7 @@
 						<th>Avg muPts</th>
 						<th>Avg muVr</th>
 						<th>Avg Salary</th>
+						<th>Lineup is Out</th>
 						<th>Pos</th>
 					</tr>
 				</thead>
@@ -26,6 +27,7 @@
 					    	<td>{{ $team->avgMuPts }}</td>
 					    	<td>{{ $team->avgMuVr }}</td>
 					    	<td>{{ $team->avgSalary }}</td>
+					    	<td>{{ $team->lineupIsOut }}</td>
 					    	<td>{{ $team->takenPositions }}</td>
 					    </tr>
 					@endforeach
@@ -45,6 +47,7 @@
 			"order": [[columnIndex, "desc"]],
 	        "aoColumns": [
 	            null,
+	            { "orderSequence": [ "desc", "asc" ] },
 	            { "orderSequence": [ "desc", "asc" ] },
 	            { "orderSequence": [ "desc", "asc" ] },
 	            { "orderSequence": [ "desc", "asc" ] },
