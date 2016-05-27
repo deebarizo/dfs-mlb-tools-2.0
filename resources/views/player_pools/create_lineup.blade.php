@@ -25,22 +25,25 @@
 				</thead>
 				<tbody>
 					@foreach ($dkPlayers as $dkPlayer)
-						<tr class="player-row" 
-							data-dk-player-id="{{ $dkPlayer->id }}" 
+						<?php if (strpos($dkPlayer->position, 'P') !== false) { $fpts = numFormat(($dkPlayer->fpts_razzball + $dkPlayer->fpts_bat) / 2, 2); } else { $fpts = numFormat(($dkPlayer->upside_fpts_razzball + $dkPlayer->fpts_bat) / 2, 2); } ?>
+						<tr class="dk-player" 
+							data-id="{{ $dkPlayer->id }}" 
+							data-player-pool-id="{{ $dkPlayer->player_pool_id }}"
 							data-position="{{ $dkPlayer->position }}"
-							data-name="{{ $dkPlayer->player->name_dk }}"
+							data-name-dk="{{ $dkPlayer->player->name_dk }}"
 							data-team-id="{{ $dkPlayer->team_id }}"
 							data-team-name-dk="{{ $dkPlayer->team->name_dk }}"
 							data-opp-team-id="{{ $dkPlayer->opp_team_id }}"
 							data-opp-team-name-dk="{{ $dkPlayer->opp_team->name_dk }}"
-							data-salary="{{ $dkPlayer->salary }}">
+							data-salary="{{ $dkPlayer->salary }}"
+							data-fpts="{{ $fpts }}">
 							<td>{{ $dkPlayer->position }}</td>
 							<td>{{ $dkPlayer->player->name_dk }}</td>
 							<td>{{ $dkPlayer->team->name_dk }}</td>
 							<td>{{ $dkPlayer->opp_team->name_dk }}</td>
 							<td>{{ $dkPlayer->salary }}</td>
-							<td>0.00</td>
-							<td class="dk-player-add"><a class="add-dk-player-link" href="#"><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span></div></a><?php if (strpos($dkPlayer->position, '/') !== false) echo '<a class="add-dk-player-link second-position" href=""><div class="circle-plus-icon second-position"><span class="glyphicon glyphicon-plus"></span></div></a>'; ?></td>
+							<td>{{ $fpts }}</td>
+							<td class="dk-player-add"><a class="add-dk-player-link" href="#"><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span></div></a><?php if (strpos($dkPlayer->position, '/') !== false) { echo '<a class="add-dk-player-link second-position" href=""><div class="circle-plus-icon second-position"><span class="glyphicon glyphicon-plus"></span></div></a>'; } ?></td>
 						</tr>		
 					@endforeach	
 				</tbody>
@@ -63,28 +66,29 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php for ($i = 0; $i < 9; $i++) { ?>
-						<tr class="lineup-row lineup-player-row">
-							<td style="width: 5%" class="lineup-player-position"></td>
-							<td style="width: 40%" class="lineup-player-name"></td>
-							<td style="width: 5%" class="lineup-player-team"></td>
-							<td style="width: 5%" class="lineup-player-opp"></td>
-							<td style="width: 15%" class="lineup-player-salary"></td>
-							<td style="width: 15%" class="lineup-player-bat-fpts"></td>
-							<td style="width: 5%"><a href="" class="remove-lineup-player-link"><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td>
+					@foreach ($positions as $position)
+						<tr class="dk-lineup dk-lineup-player"
+							data-position="{{ $position }}">
+							<td style="width: 5%" class="dk-lineup-player-position">{{ $position }}</td>
+							<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
+							<td style="width: 5%" class="dk-lineup-player-team"></td>
+							<td style="width: 5%" class="dk-lineup-player-opp"></td>
+							<td style="width: 15%" class="dk-lineup-player-salary"></td>
+							<td style="width: 15%" class="dk-lineup-player-bat-fpts"></td>
+							<td style="width: 5%"><a href="" class="remove-dk-lineup-player-link"><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td>
 						</tr>
-					<?php } ?>
-					<tr class="lineup-row">
+					@endforeach
+					<tr class="dk-lineup">
 						<td colspan="4">
 							<div class="input-group inline" style="margin: 0 auto">
 						  		<span class="input-group-addon">$</span>
 						  		<input style="width: 75px; margin-right: 30px" type="text" class="form-control lineup-buy-in-amount" value=""> 
 
-						  		<div style="display: inline-block; margin-top: 8px"><strong>Avg/Player: </strong> $<span class="avg-salary-per-player-left"></span></div>
+						  		<div style="display: inline-block; margin-top: 8px"><strong>Avg/Player: </strong> $<span class="avg-salary-per-dk-lineup-player-left"></span></div>
 							</div>
 						</td>
-						<td><span class="lineup-salary-total"></span></td>
-						<td><span class="lineup-bat-fpts-total"></span></td>
+						<td><span class="dk-lineup-salary-total"></span></td>
+						<td><span class="dk-lineup-fpts-total"></span></td>
 						<td></td>
 					</tr>	
 				</tbody>

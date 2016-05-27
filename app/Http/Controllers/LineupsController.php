@@ -27,7 +27,9 @@ class LineupsController extends Controller {
 								->where('player_pool_id', $playerPoolId)
 								->where('fpts_razzball', '!=', 0)->get();
 
-		return view('player_pools/create_lineup', compact('titleTag', 'h2Tag', 'dkPlayers'));
+		$positions = ['P', 'P', '1B', '2B', '3B', 'SS', 'OF', 'OF', 'OF'];
+
+		return view('player_pools/create_lineup', compact('titleTag', 'h2Tag', 'dkPlayers', 'positions'));
 	}
 	
 }
