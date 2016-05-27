@@ -54,4 +54,14 @@ function DkPlayer(trDkPlayer) {
 		}
 	}
 
+	if (trDkPlayer.hasClass('strikethrough') === false) {
+
+		$('span.lineup-error').text('');
+
+		$('div.alert.lineup').hide();
+
+    	$('span.lineup-error').text('The "'+this.position+'" position is already filled.');
+
+    	$('div.alert.lineup').show();
+	}
 }

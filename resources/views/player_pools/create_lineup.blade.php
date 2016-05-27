@@ -8,7 +8,7 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-lg-6" style="margin-top: 15px">
+		<div class="col-lg-6">
 			<h4>Players in Player Pool</h4>
 
 			<table id="dk-players" style="font-size: 85%" class="table table-striped table-bordered table-hover table-condensed">
@@ -52,6 +52,12 @@
 
 		<div class="col-lg-6">
 			<h4 class="lineup">Lineup</h4>
+
+			<div class="lineup alert alert-danger fade in" role="alert" style="display: none">
+				<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+
+				<span class="lineup-error"></span>
+		    </div>
 
 			<table id="lineup" class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
@@ -110,5 +116,64 @@
 		$('#dk-players_filter').hide();
 	</script>
 
-	<script src="/js/lineups/create.js"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function() {
+		
+			$('a.add-dk-player-link').on('click', function(e) {
+
+				e.preventDefault();
+
+				var trDkPlayer = $(this).closest('tr.dk-player');
+
+				if (trDkPlayer.hasClass('strikethrough') === false) {
+				 
+					var position = trDkPlayer.attr('data-position');
+
+					if (position.indexOf('P') > -1) {
+
+						position = 'P';
+					}
+
+					switch(position) {
+
+					    case 'P':
+					        var positionCount = 2;
+					        break;
+					    
+					    case 'OF':
+					        var positionCount = 3;
+					        break;
+					    
+					    default:
+					        var positionCount = 1;
+					}
+
+					var positionFull = true;
+
+					for (var i = 0; i < positionCount; i++) { 
+						
+						var lineupPlayerNameDk = $('tr.dk-lineup-player[data-position="'+position+'"]').eq(i).find('td.dk-lineup-player-name-dk');
+
+						if (lineupPlayerNameDk.text().trim() == '') {
+
+							positionFull = false;
+
+							break;
+						}
+					}
+
+					if (positionFull) {
+
+						alert('The "'+position+'" position is already full.');
+					}
+				}
+			});
+		});
+
+	</script>
+
+	<script src="/js/jasmine/src/lineups/create.js"></script>
+
+
 @stop
