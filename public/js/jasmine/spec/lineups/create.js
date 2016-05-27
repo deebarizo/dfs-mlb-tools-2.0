@@ -92,10 +92,10 @@ describe('Clicking the "Add" link for your 3rd pitcher', function () {
         expect($('tr.dk-lineup-player[data-position="P"]').eq(1).find('td.dk-lineup-player-name-dk')).toHaveText('Bernie Sanders');
     });
 
-    it('should show an error', function () {
+    it('should show an alert', function () {
 
-        expect($('span.lineup-error')).toHaveText('The "P" position is already filled.');
+        this.dkPlayer = new DkPlayer(this.trDkPlayer);
 
-        expect($('div.alert.lineup')).not.toBeHidden();
+        expect(this.dkPlayer.alert).toBe(true);
     });
 });

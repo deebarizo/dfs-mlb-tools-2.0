@@ -6,7 +6,10 @@ $(document).ready(function() {
 
 		var trDkPlayer = $(this).closest('tr.dk-player');
 
-		var dkPlayer = new DkPlayer(trDkPlayer);
+		if (trDkPlayer.hasClass('strikethrough') === false) {
+
+			var dkPlayer = new DkPlayer(trDkPlayer);
+		}
 	});
 });
 
@@ -26,42 +29,16 @@ function DkPlayer(trDkPlayer) {
 		this.position = 'P';
 	}
 
-	switch(this.position) {
+	var nameField = $('tr.dk-lineup-player[data-position="'+this.position+'"] td.dk-lineup-player-name-dk:empty:first');
 
-	    case 'P':
-	        var positionCount = 2;
-	        break;
-	    
-	    case 'OF':
-	        var positionCount = 3;
-	        break;
-	    
-	    default:
-	        var positionCount = 1;
-	}
+	if (nameField.length > 0) {
 
-	for (var i = 0; i < positionCount; i++) { 
-		
-		var lineupPlayerNameDk = $('tr.dk-lineup-player[data-position="'+this.position+'"]').eq(i).find('td.dk-lineup-player-name-dk');
+		trDkPlayer.addClass('strikethrough');
 
-		if (lineupPlayerNameDk.text().trim() == '') {
+		nameField.text(this.nameDk);
+	
+	} else {
 
-			lineupPlayerNameDk.text(this.nameDk);
-
-			trDkPlayer.addClass('strikethrough');
-
-			break;
-		}
-	}
-
-	if (trDkPlayer.hasClass('strikethrough') === false) {
-
-		$('span.lineup-error').text('');
-
-		$('div.alert.lineup').hide();
-
-    	$('span.lineup-error').text('The "'+this.position+'" position is already filled.');
-
-    	$('div.alert.lineup').show();
+		this.alert = true;
 	}
 }
