@@ -130,17 +130,26 @@
 				var trDkPlayer = $(this).closest('tr.dk-player');
 
 				if (trDkPlayer.hasClass('strikethrough') === false) {
+
+					var isSecondPosition = false;
+
+					if ($(this).hasClass('second-position')) {
+
+						isSecondPosition = true;
+					}
 				 
-					var position = trDkPlayer.attr('data-position');
+					if (isSecondPosition) {
 
-					if (position.indexOf('P') > -1) {
+						var position = trDkPlayer.attr('data-position').replace(/(\w+)(\/)(\w+)/, '$3');
 
-						position = 'P';
+					} else {
+
+						var position = trDkPlayer.attr('data-position').replace(/(\w+)(\/)(\w+)/, '$1');
 					}
 
 					switch(position) {
 
-					    case 'P':
+					    case 'SP':
 					        var positionCount = 2;
 					        break;
 					    

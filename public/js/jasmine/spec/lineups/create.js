@@ -118,3 +118,107 @@ describe('Clicking the "Add" link for your 3rd pitcher', function () {
         expect(this.dkPlayer.alert).toBe(true);
     });
 });
+
+describe('Clicking the first "Add" link of a player with two positions', function () {
+
+    beforeEach(function() {
+
+        loadFixtures('lineups/create.html');
+
+        this.trDkPlayer = $('tr.dk-player[data-name-dk="Manny Machado"]');
+
+        this.trDkPlayer.find('a.add-dk-player-link').eq(0).trigger('click');
+    }); 
+
+    it('should add the "strikethrough" class', function () {
+
+        expect(this.trDkPlayer).toHaveClass('strikethrough');
+    });
+
+    it('should show player data on lineup row', function () {
+
+        var trLineupPlayer = $('tr.dk-lineup-player[data-position="3B"]');
+
+         expect(trLineupPlayer.find('td.dk-lineup-player-name-dk')).toHaveText('Manny Machado');
+        expect(trLineupPlayer.find('td.dk-lineup-player-team-name-dk')).toHaveText('Bal');
+        expect(trLineupPlayer.find('td.dk-lineup-player-opp-team-name-dk')).toHaveText('Cle');
+        expect(trLineupPlayer.find('td.dk-lineup-player-salary')).toHaveText('4800');
+        expect(trLineupPlayer.find('td.dk-lineup-player-fpts')).toHaveText('12.85');
+    });
+
+    it('should add player data to data elements in lineup row', function () {
+
+        var trLineupPlayer = $('tr.dk-lineup-player[data-position="3B"]');
+
+        expect(trLineupPlayer.attr('data-player-pool-id')).toBe('12');
+        expect(trLineupPlayer.attr('data-dk-player-id')).toBe('9395');
+    });    
+});
+
+describe('Clicking the second "Add" link of a player with two positions', function () {
+
+    beforeEach(function() {
+
+        loadFixtures('lineups/create.html');
+
+        this.trDkPlayer = $('tr.dk-player[data-name-dk="Manny Machado"]');
+
+        this.trDkPlayer.find('a.add-dk-player-link.second-position').trigger('click');
+    }); 
+
+    it('should add the "strikethrough" class', function () {
+
+        expect(this.trDkPlayer).toHaveClass('strikethrough');
+    });
+
+    it('should show player data on lineup row', function () {
+
+        var trLineupPlayer = $('tr.dk-lineup-player[data-position="SS"]');
+
+        expect(trLineupPlayer.find('td.dk-lineup-player-name-dk')).toHaveText('Manny Machado');
+        expect(trLineupPlayer.find('td.dk-lineup-player-team-name-dk')).toHaveText('Bal');
+        expect(trLineupPlayer.find('td.dk-lineup-player-opp-team-name-dk')).toHaveText('Cle');
+        expect(trLineupPlayer.find('td.dk-lineup-player-salary')).toHaveText('4800');
+        expect(trLineupPlayer.find('td.dk-lineup-player-fpts')).toHaveText('12.85');
+    });
+
+    it('should add player data to data elements in lineup row', function () {
+
+        var trLineupPlayer = $('tr.dk-lineup-player[data-position="SS"]');
+
+        expect(trLineupPlayer.attr('data-player-pool-id')).toBe('12');
+        expect(trLineupPlayer.attr('data-dk-player-id')).toBe('9395');
+    });    
+});
+
+describe('Clicking the remove link of a player', function () {
+
+    beforeEach(function() {
+
+        loadFixtures('lineups/create.html');
+
+        this.trLineupPlayer = $('tr.dk-lineup-player[data-dk-player-id="9393"]');
+
+        this.trLineupPlayer.find('a.remove-dk-lineup-player-link').trigger('click');
+    }); 
+
+    it('should remove the "strikethrough" class', function () {
+
+        expect($('tr.dk-player[data-id="9393"]')).not.toHaveClass('strikethrough');
+    });
+
+    it('should remove the player data on lineup row', function () {
+
+        expect(this.trLineupPlayer.find('td.dk-lineup-player-name-dk')).toHaveText('');
+        expect(this.trLineupPlayer.find('td.dk-lineup-player-team-name-dk')).toHaveText('');
+        expect(this.trLineupPlayer.find('td.dk-lineup-player-opp-team-name-dk')).toHaveText('');
+        expect(this.trLineupPlayer.find('td.dk-lineup-player-salary')).toHaveText('');
+        expect(this.trLineupPlayer.find('td.dk-lineup-player-fpts')).toHaveText('');
+    });
+
+    it('should blank out data elements in lineup row', function () {
+
+        expect(this.trLineupPlayer.attr('data-player-pool-id')).toBe('');
+        expect(this.trLineupPlayer.attr('data-dk-player-id')).toBe('');
+    }); 
+});
