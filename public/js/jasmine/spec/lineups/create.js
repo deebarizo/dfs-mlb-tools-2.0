@@ -58,6 +58,16 @@ describe('Clicking the "Add" link for your 1st pitcher', function () {
 
         expect(trLineupPlayer.attr('data-player-pool-id')).toBe('11');
         expect(trLineupPlayer.attr('data-dk-player-id')).toBe('7482');
+    }); 
+
+    it('should show "Avg Left", "Total Left", total salary, and total fpts', function () {
+
+        var trLineupMetadata = $('tr.lineup-metadata');
+
+        expect(trLineupMetadata.find('span.avg-salary-per-dk-lineup-player-left').text()).toBe('4025');
+        expect(trLineupMetadata.find('span.salary-left').text()).toBe('32200');
+        expect(trLineupMetadata.find('span.dk-lineup-salary-total').text()).toBe('17800');
+        expect(trLineupMetadata.find('span.dk-lineup-fpts-total').text()).toBe('32.18');
     });    
 });
 
@@ -188,6 +198,7 @@ describe('Clicking the second "Add" link of a player with two positions', functi
 
         expect(trLineupPlayer.attr('data-player-pool-id')).toBe('12');
         expect(trLineupPlayer.attr('data-dk-player-id')).toBe('9395');
+        expect(trLineupPlayer.attr('data-dk-player-fpts')).toBe('12.85');
     });    
 });
 
@@ -220,5 +231,41 @@ describe('Clicking the remove link of a player', function () {
 
         expect(this.trLineupPlayer.attr('data-player-pool-id')).toBe('');
         expect(this.trLineupPlayer.attr('data-dk-player-id')).toBe('');
+        expect(this.trLineupPlayer.attr('data-dk-player-fpts')).toBe('');
     }); 
+});
+
+describe('Clicking the submit link with an empty lineup', function () {
+
+    beforeEach(function() {
+
+        loadFixtures('lineups/create.html');
+
+        this.trLineupPlayer = $('tr.dk-lineup-player[data-dk-player-id="9393"]');
+
+        this.trLineupPlayer.find('td.dk-lineup-player-name-dk').text('');
+        this.trLineupPlayer.find('td.dk-lineup-player-team-name-dk').text('');
+        this.trLineupPlayer.find('td.dk-lineup-player-opp-team-name-dk').text('');
+        this.trLineupPlayer.find('td.dk-lineup-player-salary').text('');
+        this.trLineupPlayer.find('td.dk-lineup-player-fpts').text('');   
+
+        $('button.submit-lineup').trigger('click');     
+    }); 
+
+    it('should show an alert', function () {
+
+        var isEmptyLineup = true;
+
+        $('td.dk-lineup-player-name-dk').each(function() {
+
+            if ($(this).text() != '') {
+
+                isEmptyLineup = false;
+
+                return;
+            }
+        });
+
+        expect(isEmptyLineup).toBe(true);
+    });
 });

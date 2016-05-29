@@ -16,6 +16,8 @@ $(document).ready(function() {
 			}
 
 			var dkPlayer = new DkPlayer(trDkPlayer, isSecondPosition);
+
+			updateLineupMetadata();
 		}
 	});
 
@@ -37,8 +39,59 @@ $(document).ready(function() {
 
         trLineupPlayer.attr('data-player-pool-id', '');
         trLineupPlayer.attr('data-dk-player-id', '');
+        trLineupPlayer.attr('data-dk-player-fpts', '');
+
+        updateLineupMetadata();
 	});
 });
+
+function updateLineupMetadata() {
+
+	var totalSalary = 0;
+	var emptyLineupSpots = 10;
+
+	$('td.dk-lineup-player-salary').each(function() {
+
+		var salary = Number($(this).text());
+
+		if (salary !== 0) {
+
+			emptyLineupSpots--;
+		}
+
+		totalSalary += salary;
+	});
+
+	var salaryLeft = 50000 - totalSalary;
+
+	if (emptyLineupSpots !== 0) {
+
+		var avgSalaryLeft = salaryLeft / emptyLineupSpots;
+		avgSalaryLeft = avgSalaryLeft.toFixed(0);
+	
+	} else {
+
+		var avgSalaryLeft = 'N/A';
+	}
+
+	var totalFpts = 0;
+
+	$('td.dk-lineup-player-fpts').each(function() {
+
+		var fpts = Number($(this).text());
+
+		totalFpts += fpts;
+	});
+
+	totalFpts = totalFpts.toFixed(2);
+
+	var trLineupMetadata = $('tr.lineup-metadata');
+
+	trLineupMetadata.find('span.avg-salary-per-dk-lineup-player-left').text(avgSalaryLeft);
+	trLineupMetadata.find('span.salary-left').text(salaryLeft);
+	trLineupMetadata.find('span.dk-lineup-salary-total').text(totalSalary);
+	trLineupMetadata.find('span.dk-lineup-fpts-total').text(totalFpts);
+}
 
 function DkPlayer(trDkPlayer, isSecondPosition) {
 
@@ -83,4 +136,5 @@ function DkPlayer(trDkPlayer, isSecondPosition) {
 
 	trLineupPlayer.attr('data-player-pool-id', this.playerPoolId);
 	trLineupPlayer.attr('data-dk-player-id', this.id);
+	trLineupPlayer.attr('data-dk-player-fpts', this.fpts);
 }

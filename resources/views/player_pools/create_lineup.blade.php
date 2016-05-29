@@ -25,7 +25,7 @@
 				</thead>
 				<tbody>
 					@foreach ($dkPlayers as $dkPlayer)
-						<?php if (strpos($dkPlayer->position, 'P') !== false) { $fpts = numFormat(($dkPlayer->fpts_razzball + $dkPlayer->fpts_bat) / 2, 2); } else { $fpts = numFormat(($dkPlayer->upside_fpts_razzball + $dkPlayer->fpts_bat) / 2, 2); } ?>
+						<?php if (strpos($dkPlayer->position, 'P') !== false) { $fpts = numFormat(($dkPlayer->fpts_razzball + $dkPlayer->fpts_bat) / 2, 2); } else { $fpts = numFormat(($dkPlayer->fpts_razzball + $dkPlayer->fpts_bat) / 2, 2); } ?>
 						<tr class="dk-player" 
 							data-id="{{ $dkPlayer->id }}" 
 							data-player-pool-id="{{ $dkPlayer->player_pool_id }}"
@@ -77,27 +77,29 @@
 							data-position="{{ $position }}"
 							data-player-pool-id=""
 							data-dk-player-id=""
-							data-position="">
+							data-dk-player-fpts="">
 							<td style="width: 5%" class="dk-lineup-player-position">{{ $position }}</td>
 							<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
-							<td style="width: 5%" class="dk-lineup-player-team-name-dk"></td>
-							<td style="width: 5%" class="dk-lineup-player-opp-team-name-dk"></td>
-							<td style="width: 15%" class="dk-lineup-player-salary"></td>
-							<td style="width: 15%" class="dk-lineup-player-fpts"></td>
+							<td style="width: 8%" class="dk-lineup-player-team-name-dk"></td>
+							<td style="width: 8%" class="dk-lineup-player-opp-team-name-dk"></td>
+							<td style="width: 12%" class="dk-lineup-player-salary"></td>
+							<td style="width: 12%" class="dk-lineup-player-fpts"></td>
 							<td style="width: 5%"><a href="" class="remove-dk-lineup-player-link"><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td>
 						</tr>
 					@endforeach
-					<tr class="dk-lineup">
+					<tr class="dk-lineup lineup-metadata">
 						<td colspan="4">
 							<div class="input-group inline" style="margin: 0 auto">
 						  		<span class="input-group-addon">$</span>
-						  		<input style="width: 75px; margin-right: 30px" type="text" class="form-control lineup-buy-in-amount" value=""> 
+						  		<input style="width: 55px; margin-right: 10px" type="text" class="form-control lineup-buy-in-amount" value="3"> 
 
-						  		<div style="display: inline-block; margin-top: 8px"><strong>Avg/Player: </strong> $<span class="avg-salary-per-dk-lineup-player-left"></span></div>
+						  		<div style="display: inline-block; margin-top: 8px; margin-right: 10px"><strong>Avg Left: </strong> <span class="avg-salary-per-dk-lineup-player-left">5000</span></div>
+
+						  		<div style="display: inline-block; margin-top: 8px"><strong>Total Left: </strong> <span class="salary-left">50000</span></div>
 							</div>
 						</td>
-						<td><span class="dk-lineup-salary-total"></span></td>
-						<td><span class="dk-lineup-fpts-total"></span></td>
+						<td style="padding-top: 13px"><span class="dk-lineup-salary-total">0</span></td>
+						<td style="padding-top: 13px"><span class="dk-lineup-fpts-total">0.00</span></td>
 						<td></td>
 					</tr>	
 				</tbody>
@@ -179,6 +181,26 @@
 
 						alert('The "'+position+'" position is already full.');
 					}
+				}
+			});
+
+			$('button.submit-lineup').on('click', function(e) {
+
+				var isEmptyLineup = true;
+
+				$('td.dk-lineup-player-name-dk').each(function() {
+
+					if ($(this).text() != '') {
+
+						isEmptyLineup = false;
+
+						return;
+					}
+				});
+
+				if (isEmptyLineup) {
+
+					alert('You cannot submit an empty lineup.');
 				}
 			});
 		});

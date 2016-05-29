@@ -102,7 +102,7 @@
 					<td>Bob Jones</td>
 					<td>CWS</td>
 					<td>Cle</td>
-					<td>13800</td>
+					<td>13000</td>
 					<td>0.00</td>
 					<td class="dk-player-add"><a class="add-dk-player-link" href="#"><div class="circle-plus-icon"><span class="glyphicon glyphicon-plus"></span></div></a></td>
 				</tr>
@@ -174,7 +174,7 @@
 					data-position="SP"
 					data-player-pool-id=""
 					data-dk-player-id=""
-					data-position="">
+					data-dk-player-fpts="">
 					<td style="width: 5%" class="dk-lineup-player-position">SP</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
 					<td style="width: 5%" class="dk-lineup-player-team-name-dk"></td>
@@ -187,8 +187,21 @@
 					data-position="SP"
 					data-player-pool-id=""
 					data-dk-player-id=""
-					data-position="">
+					data-dk-player-fpts="">
 					<td style="width: 5%" class="dk-lineup-player-position">SP</td>
+					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
+					<td style="width: 5%" class="dk-lineup-player-team"></td>
+					<td style="width: 5%" class="dk-lineup-player-opp"></td>
+					<td style="width: 15%" class="dk-lineup-player-salary"></td>
+					<td style="width: 15%" class="dk-lineup-player-bat-fpts"></td>
+					<td style="width: 5%"><a href="#" class="remove-dk-lineup-player-link"><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td>
+				</tr>
+				<tr class="lineup-row dk-lineup-player"
+					data-position="C"
+					data-player-pool-id=""
+					data-dk-player-id=""
+					data-dk-player-fpts="">
+					<td style="width: 5%" class="dk-lineup-player-position">C</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
 					<td style="width: 5%" class="dk-lineup-player-team"></td>
 					<td style="width: 5%" class="dk-lineup-player-opp"></td>
@@ -200,7 +213,7 @@
 					data-position="1B"
 					data-player-pool-id=""
 					data-dk-player-id=""
-					data-position="">
+					data-dk-player-fpts="">
 					<td style="width: 5%" class="dk-lineup-player-position">1B</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
 					<td style="width: 5%" class="dk-lineup-player-team"></td>
@@ -212,7 +225,8 @@
 				<tr class="dk-lineup dk-lineup-player" 
 					data-position="2B" 
 					data-player-pool-id="12" 
-					data-dk-player-id="9393">
+					data-dk-player-id="9393"
+					data-dk-player-fpts="11.97">
 					<td style="width: 5%" class="dk-lineup-player-position">2B</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk">Jason Kipnis</td>
 					<td style="width: 5%" class="dk-lineup-player-team-name-dk">Cle</td>
@@ -225,7 +239,7 @@
 					data-position="3B"
 					data-player-pool-id=""
 					data-dk-player-id=""
-					data-position="">
+					data-dk-player-fpts="">
 					<td style="width: 5%" class="dk-lineup-player-position">3B</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
 					<td style="width: 5%" class="dk-lineup-player-team-name-dk"></td>
@@ -238,7 +252,7 @@
 					data-position="SS"
 					data-player-pool-id=""
 					data-dk-player-id=""
-					data-position="">
+					data-dk-player-fpts="">
 					<td style="width: 5%" class="dk-lineup-player-position">SS</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
 					<td style="width: 5%" class="dk-lineup-player-team-name-dk"></td>
@@ -251,7 +265,7 @@
 					data-position="OF"
 					data-player-pool-id=""
 					data-dk-player-id=""
-					data-position="">
+					data-dk-player-fpts="">
 					<td style="width: 5%" class="dk-lineup-player-position">OF</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
 					<td style="width: 5%" class="dk-lineup-player-team"></td>
@@ -264,7 +278,7 @@
 					data-position="OF"
 					data-player-pool-id=""
 					data-dk-player-id=""
-					data-position="">
+					data-dk-player-fpts="">
 					<td style="width: 5%" class="dk-lineup-player-position">OF</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
 					<td style="width: 5%" class="dk-lineup-player-team"></td>
@@ -277,7 +291,7 @@
 					data-position="OF"
 					data-player-pool-id=""
 					data-dk-player-id=""
-					data-position="">
+					data-dk-player-fpts="">
 					<td style="width: 5%" class="dk-lineup-player-position">OF</td>
 					<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
 					<td style="width: 5%" class="dk-lineup-player-team"></td>
@@ -286,19 +300,21 @@
 					<td style="width: 15%" class="dk-lineup-player-bat-fpts"></td>
 					<td style="width: 5%"><a href="#" class="remove-dk-lineup-player-link"><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td>
 				</tr>
-				<tr class="lineup-row">
+				<tr class="dk-lineup lineup-metadata">
 					<td colspan="4">
 						<div class="input-group inline" style="margin: 0 auto">
 					  		<span class="input-group-addon">$</span>
-					  		<input style="width: 75px; margin-right: 30px" type="text" class="form-control lineup-buy-in-amount" value=""> 
+					  		<input style="width: 55px; margin-right: 10px" type="text" class="form-control lineup-buy-in-amount" value="3"> 
 
-					  		<div style="display: inline-block; margin-top: 8px"><strong>Avg/Player: </strong> $<span class="avg-salary-per-player-left"></span></div>
+					  		<div style="display: inline-block; margin-top: 8px; margin-right: 10px"><strong>Avg Left: </strong> <span class="avg-salary-per-dk-lineup-player-left">5000</span></div>
+
+					  		<div style="display: inline-block; margin-top: 8px"><strong>Total Left: </strong> <span class="salary-left">50000</span></div>
 						</div>
 					</td>
-					<td><span class="lineup-salary-total"></span></td>
-					<td><span class="lineup-bat-fpts-total"></span></td>
+					<td style="padding-top: 13px"><span class="dk-lineup-salary-total">0</span></td>
+					<td style="padding-top: 13px"><span class="dk-lineup-fpts-total">0.00</span></td>
 					<td></td>
-				</tr>	
+				</tr>		
 			</tbody>
 		</table>
 
