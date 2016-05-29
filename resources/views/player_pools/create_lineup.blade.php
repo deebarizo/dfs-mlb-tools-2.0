@@ -74,13 +74,16 @@
 				<tbody>
 					@foreach ($positions as $position)
 						<tr class="dk-lineup dk-lineup-player"
-							data-position="{{ $position }}">
+							data-position="{{ $position }}"
+							data-player-pool-id=""
+							data-dk-player-id=""
+							data-position="">
 							<td style="width: 5%" class="dk-lineup-player-position">{{ $position }}</td>
 							<td style="width: 40%" class="dk-lineup-player-name-dk"></td>
-							<td style="width: 5%" class="dk-lineup-player-team"></td>
-							<td style="width: 5%" class="dk-lineup-player-opp"></td>
+							<td style="width: 5%" class="dk-lineup-player-team-name-dk"></td>
+							<td style="width: 5%" class="dk-lineup-player-opp-team-name-dk"></td>
 							<td style="width: 15%" class="dk-lineup-player-salary"></td>
-							<td style="width: 15%" class="dk-lineup-player-bat-fpts"></td>
+							<td style="width: 15%" class="dk-lineup-player-fpts"></td>
 							<td style="width: 5%"><a href="" class="remove-dk-lineup-player-link"><div class="circle-minus-icon"><span class="glyphicon glyphicon-minus"></span></div></a></td>
 						</tr>
 					@endforeach

@@ -24,11 +24,6 @@ function DkPlayer(trDkPlayer) {
 	this.salary = trDkPlayer.attr('data-salary');
 	this.fpts = trDkPlayer.attr('data-fpts');
 
-	if (this.position.indexOf('P') > -1) {
-
-		this.position = 'P';
-	}
-
 	var nameField = $('tr.dk-lineup-player[data-position="'+this.position+'"] td.dk-lineup-player-name-dk:empty:first');
 
 	if (nameField.length > 0) {
@@ -40,5 +35,17 @@ function DkPlayer(trDkPlayer) {
 	} else {
 
 		this.alert = true;
+
+		return;
 	}
+
+	var trLineupPlayer = nameField.closest('tr');
+
+	trLineupPlayer.find('td.dk-lineup-player-team-name-dk').text(this.teamNameDk);
+	trLineupPlayer.find('td.dk-lineup-player-opp-team-name-dk').text(this.oppTeamNameDk);
+	trLineupPlayer.find('td.dk-lineup-player-salary').text(this.salary);
+	trLineupPlayer.find('td.dk-lineup-player-fpts').text(this.fpts);
+
+	trLineupPlayer.attr('data-player-pool-id', this.playerPoolId);
+	trLineupPlayer.attr('data-dk-player-id', this.id);
 }
