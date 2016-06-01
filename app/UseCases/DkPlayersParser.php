@@ -68,6 +68,11 @@ trait DkPlayersParser {
 						return $this;				    	
 				    }
 
+				    if ($this->dkPlayers[$i]['position'] === 'RP') {
+
+				    	$this->dkPlayers[$i]['position'] = 'SP';
+				    }
+
 				    $gameInfo = $row[16];
 				    $gameInfo = preg_replace("/(\w+@\w+)(\s)(.*)/", "$1", $gameInfo);
 				    $gameInfo = preg_replace("/@/", "", $gameInfo);

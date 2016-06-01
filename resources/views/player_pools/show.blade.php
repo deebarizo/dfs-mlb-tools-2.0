@@ -77,7 +77,7 @@
 					    	data-salary="{{ $dkPlayer->salary }}"
 					    	data-name="{{ $dkPlayer->name_dk }}"
 					    	class="player-row">
-					    	<td>{{ $dkPlayer->name_dk }}</td>
+					    	<td><a target="_blank" href="/players/{{ $dkPlayer->player_id }}/edit">{{ $dkPlayer->name_dk }}</td>
 					    	<td>{{ $dkPlayer->team_name_dk }}</td>
 					    	<td>{{ $dkPlayer->opp_team_name_dk }}</td>
 					    	<td>{{ $dkPlayer->opp_pitcher }}</td>
